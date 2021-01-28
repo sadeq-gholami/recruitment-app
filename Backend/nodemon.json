@@ -1,0 +1,5 @@
+{
+    "env":{
+        "MONGO_ATLAS_URI": "mongodb+srv://IV1201:IV1201@cluster0.ctnb8.mongodb.net/Cluster0?retryWrites=true&w=majority"
+    }
+}
