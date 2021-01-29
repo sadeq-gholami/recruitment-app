@@ -13,7 +13,7 @@ class RequestHandler{
       }
 
     async getController(){
-        this.controller = await Controller.createController();
+        this.controller = await Controller.createController().catch(err=>{console.log(err)});
     }
 
 }

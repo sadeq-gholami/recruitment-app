@@ -10,12 +10,9 @@ class UserSignup extends RequestHandler{
       }
   async appHandler(){
      
-      try{
-          await this.getController();
+          await this.getController().catch(err=>{console.log(err)});
           this.router.post('/', async (req, res, next)=>{
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            console.log(hashedPassword);
-            console.log(this.controller);
             const user = {
                 id: new mongoose.Types.ObjectId(),
                 firstname: req.body.firstname,
@@ -23,19 +20,16 @@ class UserSignup extends RequestHandler{
                 ssn: req.body.ssn,
                 email: req.body.email,
                 password: hashedPassword,
-                role:req.body.role,
+                role: req.body.role,
                 username: req.body.username 
             }
-            console.log(user);
-            await this.controller.createUser(user);
-            res.sendStatus(200);
+            await this.controller.createUser(user).then(result =>{
+                res.status(200).json({result:result});
+            })
+            .catch(err=>{
+                res.status(400).json({err:err});
+            });
           })
-        
-          
-
-      }catch(err){
-          console.log(err);
-      }
   }
 }
 

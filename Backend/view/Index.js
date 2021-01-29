@@ -1,6 +1,7 @@
 'use strict';
 
 const UserSignup = require('./UserSignup');
+const UserLogin = require('./UserLogin');
 
 
 /**
@@ -45,5 +46,6 @@ class RequestHandlerLoader {
 
 const loader = new RequestHandlerLoader();
 loader.addRequestHandler(new UserSignup());
+loader.addRequestHandler(new UserLogin());
 
 module.exports = loader;

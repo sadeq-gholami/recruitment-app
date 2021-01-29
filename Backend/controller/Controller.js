@@ -13,18 +13,20 @@ class Controller {
       this.userDAO = new UserDAO();
   }
 
-  /**
-   * Instantiates a new Controller object.
-   *
-   * @return {Controller} The newly created controller.
-   */
+//Instantiate new Controller object
   static async createController() {
     const contr = new Controller();
     return contr;
   }
 
   async createUser(user){
-     await this.userDAO.createUser(user);
+    return await this.userDAO.createUser(user)
+      .catch(err=>{throw err});
+  }
+
+  async login(username, password){
+    return await this.userDAO.login(username, password)
+      .catch(err=>{throw err});
   }
 }
 module.exports = Controller;
