@@ -20,7 +20,7 @@ class UserSignup extends RequestHandler{
                 ssn: req.body.ssn,
                 email: req.body.email,
                 password: hashedPassword,
-                role: req.body.role,
+                role: "applicant",
                 username: req.body.username 
             }
             await this.controller.createUser(user).then(result =>{

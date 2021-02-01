@@ -2,7 +2,8 @@
 
 const UserSignup = require('./UserSignup');
 const UserLogin = require('./UserLogin');
-
+const Applicant = require('./Applicant');
+const Recruiter = require('./Recruiter');
 
 /**
  * Contains all request handlers.
@@ -47,5 +48,6 @@ class RequestHandlerLoader {
 const loader = new RequestHandlerLoader();
 loader.addRequestHandler(new UserSignup());
 loader.addRequestHandler(new UserLogin());
-
+loader.addRequestHandler(new Applicant());
+loader.addRequestHandler(new Recruiter());
 module.exports = loader;

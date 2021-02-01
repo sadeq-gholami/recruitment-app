@@ -51,5 +51,16 @@ class UserDAO {
         throw err;
       }
   }
+
+  async getAllApplicants(){
+    const users = User.find({role:"applicant"})
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      throw err;
+    });
+    return users;
+  }
 }
 module.exports = UserDAO;
