@@ -20,37 +20,34 @@ class Recruiter extends RequestHandler {
         .catch((err) => {
           res.status(500).json({ error: err });
         });
-     await results.forEach(async (user) => {
-        await this.controller
-          .getAvailability(user._id)
-          .then((availability) => {
-            if (availability == null) {
-              availability = {
-                fromDate: null,
-                toDate: null,
-              };
-            }
-            fullApplication.push({
-              userId: user._id,
-              firstname: user.firstname,
-              surname: user.surname,
-              ssn: user.ssn,
-              email: user.email,
-              username: user.username,
-              availability: {
-                fromDate: availability.fromDate,
-                toDate: availability.toDate,
-              },
-            });
-          })
-          .catch((err) => {
+        for(const user of results) {
+        var avail = await this.controller
+          .getAvailability(user._id).then(results=> {
+            return results;
+          }).catch((err) => {
             res.status(500).json({ error: err });
           });
-         
-      });
+          if (avail == null) {
+            avail = {
+              fromDate: null,
+              toDate: null,
+            };
+          }
+          //console.log(avail);
+            fullApplication.push({
+            userId: user._id,
+            firstname: user.firstname,
+            surname: user.surname,
+            ssn: user.ssn,
+            email: user.email,
+            username: user.username,
+            availability: {
+              fromDate: avail.fromDate,
+              toDate: avail.toDate,
+            },
+          });
+      };
       res.status(200).json({ result: fullApplication });
-    }).then(res=>{
-        
     });
   }
 }
