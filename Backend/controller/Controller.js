@@ -40,8 +40,30 @@ class Controller {
       throw err;
     });
   }
-  async postProfile(comProf){
-    return await this.ApplicationDAO.postProfile(comProf)
+
+  async getCompetenceById(competenceID) {
+    return await this.CompetenceDAO.getCompetenceById(competenceID)
+    .catch((err) => {
+      throw err;
+    });
+  }
+
+  async getCompetenceProfile(userId) {
+    return await this.CompetenceDAO.getCompetenceProfile(userId)
+    .catch((err) => {
+      throw err;
+    });
+  } 
+
+  async postCompetenceProfile(compProf){
+    return await this.ApplicationDAO.postCompetenceProfile(compProf)
+    .catch(err=>{
+      throw err;
+    });
+  }
+
+  async postApplicationStatus(personID){
+    return await this.ApplicationDAO.postApplicationStatus(personID)
     .catch(err=>{
       throw err;
     });
@@ -63,6 +85,20 @@ class Controller {
 
   async getAvailability(userID){
     return await this.ApplicationDAO.getAvailability(userID)
+    .catch(err=>{
+      throw err;
+    });
+  }
+
+  async getStatus(userID){
+    return await this.ApplicationDAO.getStatus(userID)
+    .catch(err=>{
+      throw err;
+    });
+  }
+
+  async updateStatus(userID, status){
+    return await this.ApplicationDAO.updateStatus(userID, status)
     .catch(err=>{
       throw err;
     });

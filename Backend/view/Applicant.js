@@ -23,11 +23,20 @@ class Applicant extends RequestHandler {
         this.router.post('/competence_profile/:userId', async (req,res,next) => {
             const userId = req.params.userId;
             const compProfile= {
-                personId: userId,
-                competenceId: req.body.competenceId,
+                personID: userId,
+                competenceID: req.body.competenceID,
                 yearsOfExperience:req.body.yearsOfExperience
             };
-            await this.controller.postProfile(compProfile).then(result=>{
+            await this.controller.postCompetenceProfile(compProfile).then(result=>{
+                res.status(200).json({result: result})
+            }).catch(err=>{
+                res.status(500).json({err:err});
+            });
+        });
+
+        this.router.post('/application_status/:userId', async (req,res,next) => {
+            const userId = req.params.userId;
+            await this.controller.postApplicationStatus(userId).then(result=>{
                 res.status(200).json({result: result})
             }).catch(err=>{
                 res.status(500).json({err:err});

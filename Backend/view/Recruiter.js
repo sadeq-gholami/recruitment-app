@@ -12,6 +12,7 @@ class Recruiter extends RequestHandler {
     });
     this.router.get("/get_applicants", async (req, res, next) => {
       var fullApplication = [];
+      var fullCompetenceProfile = [];
       const results = await this.controller
         .getAllApplicants()
         .then((result) => {
@@ -33,6 +34,48 @@ class Recruiter extends RequestHandler {
               toDate: null,
             };
           }
+          var comp = await this.controller
+          .getCompetenceProfile(user._id).then(results=> {
+            return results;
+          }).catch((err) => {
+            res.status(500).json({ error: err });
+          });
+          if(comp == null){
+            comp = {
+              competenceID: null,
+              yearsOfExperience: null,
+              _id: null,
+              personID: null,
+            };
+            fullCompetenceProfile.push({
+              name: null,
+              yearsOfExperience: null
+            });
+          }else{
+            for(const competence of comp){
+              await this.controller.getCompetenceById(competence.competenceID).then(results=> {
+                fullCompetenceProfile.push({
+                  name: results.name,
+                  yearsOfExperience: competence.yearsOfExperience
+                });
+              }).catch((err) => {
+                res.status(500).json({ error: err });
+              });
+            }
+          }
+          var status = await this.controller
+          .getStatus(user._id).then(results=> {
+            return results;
+          }).catch((err) => {
+            res.status(500).json({ error: err });
+          });
+          if(status == null){
+            status = {
+              status: null
+            };
+          }
+          
+
           //console.log(avail);
             fullApplication.push({
             userId: user._id,
@@ -45,9 +88,19 @@ class Recruiter extends RequestHandler {
               fromDate: avail.fromDate,
               toDate: avail.toDate,
             },
+            competence: fullCompetenceProfile,
+            status: status.status,
           });
+          fullCompetenceProfile = [];
       };
       res.status(200).json({ result: fullApplication });
+    });
+    this.router.put('/update_status/:userId', async(req, res, next)=>{
+      await this.controller.updateStatus(req.params.userId, req.body.status).then(result=>{
+        res.status(200).json({result : result});
+      }).catch(err =>{
+        res.status(500).json({err : err});
+      });
     });
   }
 }
