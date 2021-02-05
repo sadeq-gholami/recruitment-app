@@ -57,6 +57,14 @@ class Applicant extends RequestHandler {
             });
         });
 
+        this.router.put('/update_ready/:userId', async(req, res, next)=>{
+            await this.controller.updateReady(req.params.userId).then(result=>{
+              res.status(200).json({result : result});
+            }).catch(err =>{
+              res.status(500).json({err : err});
+            });
+          });
+
     }
 }
 

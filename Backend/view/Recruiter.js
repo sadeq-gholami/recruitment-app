@@ -95,6 +95,7 @@ class Recruiter extends RequestHandler {
       };
       res.status(200).json({ result: fullApplication });
     });
+    
     this.router.put('/update_status/:userId', async(req, res, next)=>{
       await this.controller.updateStatus(req.params.userId, req.body.status).then(result=>{
         res.status(200).json({result : result});

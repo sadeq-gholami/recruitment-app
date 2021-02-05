@@ -48,8 +48,8 @@ class Controller {
     });
   }
 
-  async getCompetenceProfile(userId) {
-    return await this.CompetenceDAO.getCompetenceProfile(userId)
+  async getCompetenceProfile(personID) {
+    return await this.CompetenceDAO.getCompetenceProfile(personID)
     .catch((err) => {
       throw err;
     });
@@ -83,22 +83,37 @@ class Controller {
     });
   }
 
-  async getAvailability(userID){
-    return await this.ApplicationDAO.getAvailability(userID)
+  async getAvailability(personID){
+    return await this.ApplicationDAO.getAvailability(personID)
     .catch(err=>{
       throw err;
     });
   }
 
-  async getStatus(userID){
-    return await this.ApplicationDAO.getStatus(userID)
+  async getStatus(personID){
+    return await this.ApplicationDAO.getStatus(personID)
     .catch(err=>{
       throw err;
     });
   }
 
-  async updateStatus(userID, status){
-    return await this.ApplicationDAO.updateStatus(userID, status)
+  async updateStatus(personID, status){
+    return await this.ApplicationDAO.updateStatus(personID, status)
+    .catch(err=>{
+      throw err;
+    });
+  }
+
+  async createReadyTable(personID){
+    console.log("PERSONID USER " + personID);
+    return await this.UserDAO.createReadyTable(personID)
+    .catch(err=>{
+      throw err;
+    });
+  }
+
+  async updateReady(personID){
+    return await this.UserDAO.updateReady(personID)
     .catch(err=>{
       throw err;
     });
