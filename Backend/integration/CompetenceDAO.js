@@ -2,8 +2,11 @@ const Competence = require("../model/Competence");
 const CompetenceProfile = require("../model/CompetenceProfile");
 
 class CompetenceDAO {
-  constructor() {}
+  constructor() { }
 
+  /**
+   * Get all competences
+   */
   async getCompetence() {
     const competences = await Competence.find()
       .exec()
@@ -14,11 +17,15 @@ class CompetenceDAO {
         throw err;
       });
 
-      return competences;
+    return competences;
   }
 
+  /**
+   * Get competence by id
+   * @param {} competenceID 
+   */
   async getCompetenceById(competenceID) {
-    const competences = await Competence.find({_id:competenceID})
+    const competences = await Competence.find({ _id: competenceID })
       .exec()
       .then((docs) => {
         return docs;
@@ -27,11 +34,15 @@ class CompetenceDAO {
         throw err;
       });
 
-      return competences[0];
+    return competences[0];
   }
 
+  /**
+   * Get competence profile
+   * @param {*} userId 
+   */
   async getCompetenceProfile(userId) {
-    const competenceProf = await CompetenceProfile.find({personID:userId})
+    const competenceProf = await CompetenceProfile.find({ personID: userId })
       .exec()
       .then((docs) => {
         return docs;
@@ -39,11 +50,11 @@ class CompetenceDAO {
       .catch((err) => {
         throw err;
       });
-      if(competenceProf < 1){
-        return null;
-      }else{
-        return competenceProf;
-      }
+    if (competenceProf < 1) {
+      return null;
+    } else {
+      return competenceProf;
+    }
   }
 }
 module.exports = CompetenceDAO;

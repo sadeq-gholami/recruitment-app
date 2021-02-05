@@ -5,6 +5,10 @@ const ApplicationStatus = require("../model/ApplicationStatus");
 class ApplicationDAO {
   constructor() { }
 
+  /**
+   * Post competence profile
+   * @param {*} compProf 
+   */
   async postCompetenceProfile(compProf) {
     const competence_profile = new CompetenceProfile({
       _id: new mongoose.Types.ObjectId(),
@@ -23,6 +27,10 @@ class ApplicationDAO {
     return savedcomProf;
   }
 
+  /**
+   * Post avaiability
+   * @param {*} avail 
+   */
   async postAvailability(avail) {
     const availability = new Availability({
       _id: new mongoose.Types.ObjectId(),
@@ -41,6 +49,10 @@ class ApplicationDAO {
     return savedAvailability;
   }
 
+  /**
+   * Post application status
+   * @param {*} personID 
+   */
   async postApplicationStatus(personID) {
     const appStatus = new ApplicationStatus({
       _id: new mongoose.Types.ObjectId(),
@@ -58,16 +70,25 @@ class ApplicationDAO {
     return savedAppStatus;
   }
 
+  /**
+   * Update status
+   * @param {*} personID 
+   * @param {*} status 
+   */
   async updateStatus(personID, status) {
-    const updatedStatus = await ApplicationStatus.findOneAndUpdate({ personID: personID }, {status: status}, {new: true, upsert: true})
-    .then(res => {
-      return res;
-    }).catch(err => {
-      throw err;
-    });
+    const updatedStatus = await ApplicationStatus.findOneAndUpdate({ personID: personID }, { status: status }, { new: true, upsert: true })
+      .then(res => {
+        return res;
+      }).catch(err => {
+        throw err;
+      });
     return updatedStatus;
   }
 
+  /**
+   * get status
+   * @param {*} userId 
+   */
   async getStatus(userId) {
     const currentStatus = await ApplicationStatus.find({ personID: userId })
       .then(res => {
@@ -83,6 +104,10 @@ class ApplicationDAO {
     }
   }
 
+  /**
+   * get availabilty
+   * @param {*} userId 
+   */
   async getAvailability(userId) {
     const avail = await Availability.find({ personID: userId })
       .then(res => {

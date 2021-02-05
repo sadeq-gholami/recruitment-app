@@ -12,7 +12,7 @@ class Controller {
    */
   constructor() {
     this.userDAO = new UserDAO();
-    this.CompetenceDAO= new CompetenceDAO();
+    this.CompetenceDAO = new CompetenceDAO();
     this.ApplicationDAO = new ApplicationDAO();
   }
 
@@ -22,8 +22,32 @@ class Controller {
     return contr;
   }
 
+  /**
+   * Create user
+   * @param {all parameters for user} user 
+   */
   async createUser(user) {
     return await this.userDAO.createUser(user).catch((err) => {
+      throw err;
+    });
+  }
+
+  /**
+   * Update user
+   * @param {all parameters for user} user 
+   */
+  async updateUser(user) {
+    return await this.userDAO.updateUser(user).catch((err) => {
+      throw err;
+    });
+  }
+
+   /**
+   * Delete user
+   * @param {all parameters for user} user 
+   */
+  async deleteUser(personID) {
+    return await this.userDAO.deleteUser(personID).catch((err) => {
       throw err;
     });
   }
@@ -36,97 +60,97 @@ class Controller {
 
   async getCompetence() {
     return await this.CompetenceDAO.getCompetence()
-    .catch((err) => {
-      throw err;
-    });
+      .catch((err) => {
+        throw err;
+      });
   }
 
   async getCompetenceById(competenceID) {
     return await this.CompetenceDAO.getCompetenceById(competenceID)
-    .catch((err) => {
-      throw err;
-    });
+      .catch((err) => {
+        throw err;
+      });
   }
 
   async getCompetenceProfile(personID) {
     return await this.CompetenceDAO.getCompetenceProfile(personID)
-    .catch((err) => {
-      throw err;
-    });
-  } 
+      .catch((err) => {
+        throw err;
+      });
+  }
 
-  async postCompetenceProfile(compProf){
+  async postCompetenceProfile(compProf) {
     return await this.ApplicationDAO.postCompetenceProfile(compProf)
-    .catch(err=>{
-      throw err;
-    });
+      .catch(err => {
+        throw err;
+      });
   }
 
-  async postApplicationStatus(personID){
+  async postApplicationStatus(personID) {
     return await this.ApplicationDAO.postApplicationStatus(personID)
-    .catch(err=>{
-      throw err;
-    });
+      .catch(err => {
+        throw err;
+      });
   }
 
-  async postAvailability(avail){
+  async postAvailability(avail) {
     return await this.ApplicationDAO.postAvailability(avail)
-    .catch(err=>{
-      throw err;
-    });
+      .catch(err => {
+        throw err;
+      });
   }
 
-  async getAllApplicants(){
+  async getAllApplicants() {
     return await this.userDAO.getAllApplicants()
-    .catch(err => {
-      throw err;
-    });
+      .catch(err => {
+        throw err;
+      });
   }
 
-  async getAvailability(personID){
+  async getAvailability(personID) {
     return await this.ApplicationDAO.getAvailability(personID)
-    .catch(err=>{
-      throw err;
-    });
+      .catch(err => {
+        throw err;
+      });
   }
 
-  async getStatus(personID){
+  async getStatus(personID) {
     return await this.ApplicationDAO.getStatus(personID)
-    .catch(err=>{
-      throw err;
-    });
+      .catch(err => {
+        throw err;
+      });
   }
 
-  async updateStatus(personID, status){
+  async updateStatus(personID, status) {
     return await this.ApplicationDAO.updateStatus(personID, status)
-    .catch(err=>{
-      throw err;
-    });
+      .catch(err => {
+        throw err;
+      });
   }
 
- 
 
-  async updateReady(personID){
+
+  async updateReady(personID) {
     return await this.userDAO.updateReady(personID)
-    .catch(err=>{
-      throw err;
-    });
+      .catch(err => {
+        throw err;
+      });
   }
 
-  async createReadyTable(personID){
+  async createReadyTable(personID) {
     return await this.userDAO.createReadyTable(personID)
-    .catch(err=>{
-      console.log(err);
-      throw err;
-    });
+      .catch(err => {
+        console.log(err);
+        throw err;
+      });
   }
 
-  async getReady(personID){
+  async getReady(personID) {
     return await this.userDAO.getReady(personID)
-    .catch(err=>{
-      console.log(err);
-      throw err;
-    });
+      .catch(err => {
+        console.log(err);
+        throw err;
+      });
   }
 }
 
