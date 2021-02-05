@@ -75,8 +75,15 @@ class Recruiter extends RequestHandler {
             };
           }
           
+          var ready = await this.controller.getReady(user._id).then(result=>{
+            return result;
+          }).catch(err=>{
+            res.status(500).json({error:err})
+          });
+          if (ready==null){
+            ready = {date:null};
+          }
 
-          //console.log(avail);
             fullApplication.push({
             userId: user._id,
             firstname: user.firstname,
@@ -90,8 +97,10 @@ class Recruiter extends RequestHandler {
             },
             competence: fullCompetenceProfile,
             status: status.status,
+            ready:ready.date
           });
           fullCompetenceProfile = [];
+         
       };
       res.status(200).json({ result: fullApplication });
     });

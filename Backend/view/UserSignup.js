@@ -23,13 +23,18 @@ class UserSignup extends RequestHandler{
                 role: "applicant",
                 username: req.body.username 
             }
-            await this.controller.createUser(user).then(async result =>{
-                await this.controller.createReadyTable(user.id)
-                .catch(err=>{console.log(err)});
-                res.status(200).json({result:result});
+            const createdUser = await this.controller.createUser(user).then(result =>{
+                return result;
             })
             .catch(err=>{
                 res.status(400).json({err:err});
+            });
+            await this.controller.createReadyTable(createdUser._id)
+            .then(result=>{
+                res.status(200).json({createUser:createdUser})
+            })
+            .catch(err=>{
+                res.status(500).json({error:err});
             });
           })
 

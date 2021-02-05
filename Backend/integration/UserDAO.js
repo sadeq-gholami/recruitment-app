@@ -1,7 +1,7 @@
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
 const ApplicationReady = require('../model/ApplicationReady');
-
+const mongoose = require('mongoose');
 class UserDAO {
 
   constructor() {
@@ -27,7 +27,7 @@ class UserDAO {
         throw err;
 
       });
-    return user;
+    return savedUser;
   }
 
   //Get user for log in
@@ -65,7 +65,6 @@ class UserDAO {
   }
 
   async createReadyTable(personID){
-    console.log("PERSONID " + personID);
     const userReady = new ApplicationReady({
       _id: new mongoose.Types.ObjectId(),
       personID: personID,
@@ -91,6 +90,21 @@ class UserDAO {
       throw err;
     });
     return updatedReady;
+  }
+
+  async getReady(personID) {
+    const appReady = await ApplicationReady.find({personID:personID})
+      .exec()
+      .then((docs) => {
+        return docs;
+      })
+      .catch((err) => {
+        throw err;
+      });
+      if(appReady.length < 1){
+        return null;
+      }else
+        return appReady[0];
   }
 }
 module.exports = UserDAO;

@@ -104,19 +104,30 @@ class Controller {
     });
   }
 
-  async createReadyTable(personID){
-    console.log("PERSONID USER " + personID);
-    return await this.UserDAO.createReadyTable(personID)
+ 
+
+  async updateReady(personID){
+    return await this.userDAO.updateReady(personID)
     .catch(err=>{
       throw err;
     });
   }
 
-  async updateReady(personID){
-    return await this.UserDAO.updateReady(personID)
+  async createReadyTable(personID){
+    return await this.userDAO.createReadyTable(personID)
     .catch(err=>{
+      console.log(err);
+      throw err;
+    });
+  }
+
+  async getReady(personID){
+    return await this.userDAO.getReady(personID)
+    .catch(err=>{
+      console.log(err);
       throw err;
     });
   }
 }
+
 module.exports = Controller;
