@@ -2,16 +2,18 @@ const User = require('../model/User');
 const bcrypt = require('bcrypt');
 const ApplicationReady = require('../model/ApplicationReady');
 const mongoose = require('mongoose');
-const UserSignup = require('../view/UserSignup');
-
+/**
+ * Handles database-integrations that are connected to user schema   
+ */
 class UserDAO {
 
   constructor() {
   }
 
   /**
-   *Create user
-   * @param {*} newUser 
+   * Creates a new user and saves it in database  
+   * @param {all properties of a the user to be created} newUser 
+   * @returns the saved user
    */
   async createUser(newUser) {
     const user = new User({
@@ -37,8 +39,9 @@ class UserDAO {
   }
 
   /**
-   * Update user
+   * Update the existing user with the new information 
    * @param {all parameters for user} user 
+   * @returns the updated user
    */
   async updateUser(user) {
     console.log(user);
@@ -63,7 +66,8 @@ class UserDAO {
 
   /**
    * Delete user by id
-   * @param {} personID 
+   * @param {Id for the user to be deleted} personID 
+   * @returns the deleted user  
    */
   async deleteUser(personID) {
     console.log(personID);
@@ -79,9 +83,11 @@ class UserDAO {
   }
 
   /**
-   * Get user for log in
-   * @param {*} username 
-   * @param {*} password 
+   * Get user for log in and compare it against 
+   * the given username and password 
+   * @param {the given username} username 
+   * @param {the given password} password 
+   * @return the validated user if the validation pass, else returns null 
    */
   async login(username, password) {
     const user = await User.find({ username: username })
@@ -107,6 +113,7 @@ class UserDAO {
 
   /**
    * Get all applicants
+   * @return a list with all applicants 
    */
   async getAllApplicants() {
     const users = User.find({ role: "applicant" })
@@ -120,8 +127,9 @@ class UserDAO {
   }
 
   /**
-   * Create ready table for user
-   * @param {} personID 
+   * Create ready table for user, ready signifies if the application is done or not
+   * @param {The id of the user to have the ready table} personID 
+   * @return the created ready table
    */
   async createReadyTable(personID) {
     const userReady = new ApplicationReady({
@@ -142,7 +150,8 @@ class UserDAO {
 
   /**
    * Update ready status for user
-   * @param {} personID 
+   * @param {the id of the user to be updated} personID 
+   * @return the updated ready table
    */
   async updateReady(personID) {
     const updatedReady = await ApplicationReady
@@ -157,7 +166,7 @@ class UserDAO {
 
   /**
    * Get ready status for user
-   * @param {*} personID 
+   * @param {The id of the user to have the ready table} personID 
    */
   async getReady(personID) {
     const appReady = await ApplicationReady.find({ personID: personID })

@@ -1,11 +1,14 @@
 const Competence = require("../model/Competence");
 const CompetenceProfile = require("../model/CompetenceProfile");
-
+/**
+ * Handles database-integrations that are connected to competence schema    
+ */
 class CompetenceDAO {
   constructor() { }
 
   /**
    * Get all competences
+   * @return a list that contains all the available competences
    */
   async getCompetence() {
     const competences = await Competence.find()
@@ -22,7 +25,8 @@ class CompetenceDAO {
 
   /**
    * Get competence by id
-   * @param {} competenceID 
+   * @param {the id of the competence} competenceID 
+   * @return the specified competence
    */
   async getCompetenceById(competenceID) {
     const competences = await Competence.find({ _id: competenceID })
@@ -38,8 +42,9 @@ class CompetenceDAO {
   }
 
   /**
-   * Get competence profile
-   * @param {*} userId 
+   * Get competence profile of a specific user
+   * @param {the id of the user} userId 
+   * @return the competence profile of the specified user 
    */
   async getCompetenceProfile(userId) {
     const competenceProf = await CompetenceProfile.find({ personID: userId })

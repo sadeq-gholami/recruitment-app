@@ -2,12 +2,16 @@ const CompetenceProfile = require("../model/CompetenceProfile");
 const Availability = require("../model/Availability");
 const mongoose = require("mongoose");
 const ApplicationStatus = require("../model/ApplicationStatus");
+/**
+ *  Handles database-integrations that are connected to the full application
+ */
 class ApplicationDAO {
   constructor() { }
 
   /**
-   * Post competence profile
-   * @param {*} compProf 
+   * create a new competence profile for the referenced user
+   * @param {all the parameters for the competence profile} compProf 
+   * @return the saved competence profile
    */
   async postCompetenceProfile(compProf) {
     const competence_profile = new CompetenceProfile({
@@ -28,8 +32,9 @@ class ApplicationDAO {
   }
 
   /**
-   * Post avaiability
-   * @param {*} avail 
+   * create availability for the referenced user
+   * @param {all the parameters for availability schema} avail 
+   *  @return the created availability object
    */
   async postAvailability(avail) {
     const availability = new Availability({
@@ -50,8 +55,10 @@ class ApplicationDAO {
   }
 
   /**
-   * Post application status
-   * @param {*} personID 
+   * Create application status for the referenced user 
+   * it is Unhandled by default and can be updated by recruiter 
+   * @param {the id of the user} personID 
+   * @return created application status
    */
   async postApplicationStatus(personID) {
     const appStatus = new ApplicationStatus({
@@ -71,9 +78,10 @@ class ApplicationDAO {
   }
 
   /**
-   * Update status
-   * @param {*} personID 
-   * @param {*} status 
+   * Update status of the specified user
+   * @param {the id of the user} personID 
+   * @param {the new status} status 
+   * @return updated application status schema 
    */
   async updateStatus(personID, status) {
     const updatedStatus = await ApplicationStatus.findOneAndUpdate({ personID: personID }, { status: status }, { new: true, upsert: true })
@@ -86,8 +94,9 @@ class ApplicationDAO {
   }
 
   /**
-   * get status
-   * @param {*} userId 
+   * get application status of the specified user
+   * @param {the id of the user} userId 
+   * @return the application status schema
    */
   async getStatus(userId) {
     const currentStatus = await ApplicationStatus.find({ personID: userId })
@@ -105,8 +114,9 @@ class ApplicationDAO {
   }
 
   /**
-   * get availabilty
-   * @param {*} userId 
+   * get availability for the specified user 
+   * @param {the id of the user} userId 
+   * @return the availability schema
    */
   async getAvailability(userId) {
     const avail = await Availability.find({ personID: userId })
