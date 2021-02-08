@@ -1,50 +1,41 @@
 'use strict';
-
 const UserSignup = require('./UserSignup');
 const UserLogin = require('./UserLogin');
 const Applicant = require('./Applicant');
 const Recruiter = require('./Recruiter');
 
 /**
- * Contains all request handlers.
+ * Handles all requests handler loaders
  */
 class RequestHandlerLoader {
-  /**
-   * Creates a new instance.
-   */
   constructor() {
-    this.reqHandlers = [];
+    this.requestHandlersList = [];
   }
 
   /**
-   * Adds a new request handler.
-   *
-   * @param {RequestHandler} reqHandler The request handler that will be added.
+   * Add request handler to list
+   * @param {request handler to be added to list} requestHandler 
    */
-  addRequestHandler(reqHandler) {
-    this.reqHandlers.push(reqHandler);
+  addRequestHandler(requestHandler) {
+    this.requestHandlersList.push(requestHandler);
   }
 
- 
-
   /**
-   * Makes all request handlers available in the specified express
-   * Application object.
-   *
-   * @param {Application} app The express application hosting the
-   *                          request handlers.
+   * Loads all request handlers and calls all polymorphic methods,
+   * set path and router for application
+   * @param {application from express()} application 
    */
-  loadHandlers(app) {
-    this.reqHandlers.forEach((reqHandler) => {
-      reqHandler.appHandler();
-      app.use(reqHandler.path, reqHandler.router);
+  loadRequestHandlers(application) {
+    this.requestHandlersList.forEach((requestHandler) => {
+      requestHandler.appHandler();
+      application.use(requestHandler.path, requestHandler.router);
     });
   }
-
-  
-
 }
 
+/**
+ * Initiate the request handler loader class and load all request handlers
+ */
 const loader = new RequestHandlerLoader();
 loader.addRequestHandler(new UserSignup());
 loader.addRequestHandler(new UserLogin());

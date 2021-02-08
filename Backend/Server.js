@@ -16,7 +16,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }
 app.use(bodyParser.json());
 app.use(cors());
 const reqHandlerLoader = require('./view');
-reqHandlerLoader.loadHandlers(app);
+reqHandlerLoader.loadRequestHandlers(app);
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });

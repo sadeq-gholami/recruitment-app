@@ -1,6 +1,10 @@
 const RequestHandler = require('./RequestHandler');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+/**
+ * Handles user signup. Can create a new user, update and delete it.
+ * Inherits the requestHandler class
+ */
 class UserSignup extends RequestHandler {
     constructor() {
         super()
@@ -8,6 +12,9 @@ class UserSignup extends RequestHandler {
     get path() {
         return '/signup';
     }
+    /**
+     * Polymorphic method that handles REST requests
+     */
     async appHandler() {
         /**
          * Get controller
@@ -15,7 +22,9 @@ class UserSignup extends RequestHandler {
         await this.getController().catch(err => { console.log(err) });
 
         /**
-         * Create user
+         * Create user with all necessary parameters as json object
+         * Sends 200 when successful and returns user
+         * On error send 500 and error as json object
          */
         this.router.post('/', async (req, res, next) => {
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -45,7 +54,10 @@ class UserSignup extends RequestHandler {
         })
 
         /**
-         * Update user
+         * Update one user with specified user id from url,
+         * with all parameters as json object
+         * Sends 200 when successful and returns user
+         * On error send 500 and error as json object
          */
         this.router.put('/update_user/:userId', async (req, res, next) => {
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -67,7 +79,9 @@ class UserSignup extends RequestHandler {
         });
 
         /**
-         * Delete user
+         * Delete one user with specified user id from url,
+         * Sends 200 when successful and returns user
+         * On error send 500 and error as json object
          */
         this.router.delete('/delete_user/:userId', async (req, res, next) => {
             const id = req.params.userId;

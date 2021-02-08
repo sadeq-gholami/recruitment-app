@@ -1,7 +1,8 @@
 const express = require('express');
-
 const Controller = require('../controller/Controller');
-
+/**
+ * Super class to initiate controller and routers
+ */
 class RequestHandler {
     constructor() {
         this.router = express.Router();
