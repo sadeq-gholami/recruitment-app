@@ -1,3 +1,4 @@
+"use strict";
 const Competence = require("../model/Competence");
 const CompetenceProfile = require("../model/CompetenceProfile");
 /**

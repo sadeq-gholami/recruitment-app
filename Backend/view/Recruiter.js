@@ -1,3 +1,4 @@
+"use strict";
 const RequestHandler = require("./RequestHandler");
 /**
  * Get list of all applicant and change status for specified applicant

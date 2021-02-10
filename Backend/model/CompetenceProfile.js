@@ -1,4 +1,4 @@
-const { Double } = require('mongodb');
+"use strict";
 const mongoose = require('mongoose');
 /**
  * Schema for competence profile

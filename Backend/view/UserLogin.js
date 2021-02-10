@@ -1,3 +1,4 @@
+"use strict";
 const RequestHandler = require('./RequestHandler');
 /**
  * Handles user login. User sends username and password 

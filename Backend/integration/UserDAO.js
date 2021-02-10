@@ -1,3 +1,4 @@
+"use strict";
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
 const ApplicationReady = require('../model/ApplicationReady');

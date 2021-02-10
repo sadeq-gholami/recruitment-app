@@ -1,3 +1,4 @@
+"use strict";
 const CompetenceProfile = require("../model/CompetenceProfile");
 const Availability = require("../model/Availability");
 const mongoose = require("mongoose");

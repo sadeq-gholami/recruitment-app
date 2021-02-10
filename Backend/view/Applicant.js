@@ -1,3 +1,4 @@
+"use strict";
 const RequestHandler = require('./RequestHandler');
 /**
  * Handles applicant, gets and updates information about an applicant

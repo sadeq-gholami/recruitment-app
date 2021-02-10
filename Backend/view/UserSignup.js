@@ -1,3 +1,4 @@
+"use strict";
 const RequestHandler = require('./RequestHandler');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
