@@ -1,0 +1,21 @@
+.signuplogin-div{
+    height: 150px;
+    margin-bottom: 200px;
+    margin-top: 200px;
+}
+.signup, .login{
+    color: #ffffff;
+    background-color: rgb(42, 59, 95);
+    margin: 50px;
+    width: 80px;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.signup:hover, .login:hover{
+}
+
+
+  

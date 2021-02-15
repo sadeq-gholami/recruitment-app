@@ -13,13 +13,21 @@ class App extends Component {
 
   render(){
     return (   
+      <div className = "App">
+        <header className = "App-header">
+          <div className = "header">
+            <p className = "jobs">Jobs</p>
+            <p className = "aboutus">About us</p>
+            <p className = "contact">Contact</p>
+          </div>
+        </header>
           <Router>
-            <Route exact path="/"  exact render={(props)=>{
-              
-                return <Home {...props}/>
-               }}/>
+            <Route exact path="/"  exact render={(props)=>{return <Home {...props}/>}}/>
           </Router>
+      </div>
+      
     );
+     
   }
  
 }
