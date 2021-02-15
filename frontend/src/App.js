@@ -15,6 +15,7 @@ class App extends Component {
     return (   
           <Router>
             <Route exact path="/"  exact render={(props)=>{
+              
                 return <Home {...props}/>
                }}/>
           </Router>
