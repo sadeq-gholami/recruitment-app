@@ -23,9 +23,14 @@ class App extends Component {
             <p className = "contact">Contact</p>
           </div>
         </header>
+        
           <Router>
             <Route exact path="/"  exact render={(props)=>{return <Login {...props}/>}}/>
           </Router>
+
+          <footer className = "footer">
+            <p className = "contactfooter">Contact</p>
+          </footer>
       </div>
       
     );

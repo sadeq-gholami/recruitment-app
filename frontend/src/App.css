@@ -1,8 +1,13 @@
+body{
+  margin: 0;
+  height: max-content;
+}
+
 .App {
   text-align: center;
 }
 
-.header {
+.header{
   height: 56px;
   /*width: 940px;*/
   margin-left:auto;
@@ -12,9 +17,27 @@
   box-shadow: 0 0 1px 0 rgba(10,31,68,0.08), 0 8px 10px 0 rgba(10,31,68,0.1);
   margin-bottom: 40px;
 }
+
+.footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius: 8px 8px 0 0 ;
+  background-color: rgb(76, 95, 136);
+  box-shadow: 0 0 5px 0 rgba(10,31,68,0.08), 0 8px 10px 0 rgba(10,31,68,0.1);
+  height: 56px;
+}
+
 .jobs, .aboutus, .contact {
 	color: #8A94A6;
   margin-right: 20px;
+}
+
+.contactfooter{
+  color:#ffffff;
 }
 
 .jobs:hover, .aboutus:hover, .contact:hover{
