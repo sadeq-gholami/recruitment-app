@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Home from "./view/Home";
 import './App.css';
+import Signup from "./view/Signup";
 
 class App extends Component {
   constructor(props){
@@ -22,7 +23,7 @@ class App extends Component {
           </div>
         </header>
           <Router>
-            <Route exact path="/"  exact render={(props)=>{return <Home {...props}/>}}/>
+            <Route exact path="/"  exact render={(props)=>{return <Signup {...props}/>}}/>
           </Router>
       </div>
       
