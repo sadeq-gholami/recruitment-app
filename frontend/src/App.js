@@ -4,6 +4,7 @@ import Home from "./view/Home";
 import './App.css';
 import Signup from "./view/Signup";
 import Login from "./view/Login";
+import ApplicantFirstPage from "./view/ApplicantFirstPage";
 
 class App extends Component {
   constructor(props){
@@ -25,7 +26,7 @@ class App extends Component {
         </header>
         
           <Router>
-            <Route exact path="/"  exact render={(props)=>{return <Login {...props}/>}}/>
+            <Route exact path="/"  exact render={(props)=>{return <ApplicantFirstPage {...props}/>}}/>
           </Router>
 
           <footer className = "footer">
