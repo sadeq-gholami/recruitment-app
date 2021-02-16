@@ -7,6 +7,11 @@
     display: block;
 }
 
+.extext, .yearstext{
+    text-align: left;
+    margin: auto;
+}
+
 .inputdiv1, .inputdiv2{
     display: flex;
 }
@@ -22,31 +27,11 @@
     color: green;
 }
 
-.dropdown-content {
-	display: none;
-	position: absolute;
-	background-color: #0c0707;
-	position: relative;
-	margin: auto;
-	width: fit-content;
-	height: fit-content;	
-	font-weight: lighter;
+.select1, .select2{
+    width: 500px;
+    margin: auto;
+    font-family: 'Courier New', Courier, monospace;
 }
-
-.n10{
-	color: #0A1F44;
-	font-family: "Palatino Linotype";
-	font-size: 18px;
-	line-height: 20px;
-	text-align: center;
-	
-  }
-  
-  .n10:hover{
-	background-color: #EFEFEF;
-	height: 20px;
-
-  }
 
 /*Second page*/
 

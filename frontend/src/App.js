@@ -26,7 +26,7 @@ class App extends Component {
         </header>
         
           <Router>
-            <Route exact path="/"  exact render={(props)=>{return <ApplicantFirstPage {...props}/>}}/>
+            <Route exact path="/"  exact render={(props)=>{return <Home {...props}/>}}/>
           </Router>
 
           <footer className = "footer">
@@ -35,7 +35,6 @@ class App extends Component {
       </div>
       
     );
-     
   }
  
 }
