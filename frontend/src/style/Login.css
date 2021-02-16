@@ -1,3 +1,7 @@
+.login-base{
+    display: block;
+    height:max-content;
+}
 .inputfielddiv{
     margin: auto;
     width: auto;
@@ -10,23 +14,23 @@
     margin-bottom: 20px;
 }
 
-.firstnametext, .surnametext, .emailtext, .dottext, .usernametext, .passwordtext{
+.usernametext, .passwordtext{
     text-align: left;
     margin: auto;
 }
-.firstnamediv, .surnamediv, .emaildiv, .dotdiv, .usernamediv, .passworddiv{
+.usernamediv, .passworddiv{
     width: 100px;
     margin: auto;
     margin-top: 20px;
-}
-
-.confirmbuttondiv{
-    margin-top: 50px;
     display: block;
-    
 }
 
-.confirmbutton{
+.loginbuttondiv{
+    margin-top: 50px;
+    display: block; 
+}
+
+.loginbutton{
     color: #ffffff;
     background-color: rgb(42, 59, 95);
     width: 150px;
@@ -36,24 +40,24 @@
     line-height: 20px;
 }
 
-.confirmbutton:hover{
+.loginbutton:hover{
     background-color: rgb(76, 76, 119);
 }
 
-.check1, .check2, .check3, .check4, .check5, .check6{
+.check1, .check2{
     content: "\2713";
     margin-left: 20px;
     color: green;
 }
 
-.inputdiv1, .inputdiv2, .inputdiv3, .inputdiv4, .inputdiv5, .inputdiv6{
+.inputdiv1, .inputdiv2{
     display: flex;
 }
 
-.inputdiv1, .input1, .inputdiv2, .input2 , .inputdiv3, .input3, .inputdiv4, .input4, .inputdiv5, .input5, .inputdiv6, .input6{
+.inputdiv1, .input1, .inputdiv2, .input2{
     flex: 1;
 }
-.inputdiv1, .check1, .inputdiv2, .check2, .inputdiv3, .check3, .inputdiv4, .check4, .inputdiv5, .check5, .inputdiv6, .check6{
+.inputdiv1, .check1, .inputdiv2, .check2{
     flex: 1;
 }
 
