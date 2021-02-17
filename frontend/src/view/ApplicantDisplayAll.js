@@ -42,7 +42,7 @@ class ApplicantDisplayAll extends Component {
                 </div>
             </div>
             <div className = "savebuttondiv">
-                <Link to = "/applicantsecondpage">
+                <Link to = "/applicantconfirm">
                     <button className = "savebutton">Submit</button>
                 </Link>
             </div>

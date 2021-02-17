@@ -35,7 +35,7 @@ class App extends Component {
         </header>
         
           <Router>
-            <Route exact path="/"  exact render={(props)=>{return <ApplicantConfirm {...props}/>}}/>
+            <Route exact path="/"  exact render={(props)=>{return <Home {...props}/>}}/>
             
             <Route path="/signup" component={Signup}/>
             <Route path="/login" component={Login}/>
@@ -44,7 +44,7 @@ class App extends Component {
             <Route path="/applicantsecondpage" component={ApplicantSecondPage}/>
             <Route path="/applicantseconddisplay" component={ApplicantSecondDisplay}/>
             <Route path="/applicantdisplayall" component={ApplicantDisplayAll}/>
-            <Route path="/applicantdisplayall" component={ApplicantConfirm}/>
+            <Route path="/applicantconfirm" component={ApplicantConfirm}/>
             
           </Router>
 
