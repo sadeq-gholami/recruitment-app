@@ -4,7 +4,9 @@ import Home from "./view/Home";
 import './App.css';
 import Signup from "./view/Signup";
 import Login from "./view/Login";
-import ApplicantFirstPage from "./view/ApplicantFirstPage";
+import RecruiterThirdPage from "./view/RecruiterThirdPage";
+import RecruiterFirstPage from "./view/RecruiterFirstPage";
+import RecruiterSecondPage from "./view/RecruiterSecondPage";
 
 class App extends Component {
   constructor(props){
@@ -22,6 +24,7 @@ class App extends Component {
             <p className = "jobs">Jobs</p>
             <p className = "aboutus">About us</p>
             <p className = "contact">Contact</p>
+            
           </div>
         </header>
         
