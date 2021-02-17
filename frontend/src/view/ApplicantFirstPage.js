@@ -17,7 +17,20 @@ class ApplicantFirstPage extends Component {
             <div className = "exdiv">
                 <p className = "extext">Expertise</p>
                 <div className = "inputdiv1">
-                    <select className = "select1"></select>
+                    <select className = "select1">
+                        <option></option>
+                        <option>Korvgrillning</option>
+                        <option>Diskning</option>
+                        <option></option>
+                        <option></option>
+                        <option></option>
+                        <option></option>
+                        <option></option>
+                        <option></option>
+                        <option></option>
+                        <option></option>
+                        <option></option>
+                    </select>
                     <span className = "check1">&#10003;</span>
                 </div>
             </div>
@@ -25,6 +38,7 @@ class ApplicantFirstPage extends Component {
                 <p className = "yearstext">Years of experience</p>
                 <div className = "inputdiv2">
                     <select className = "select2">
+                        <option></option>
                         <option>0</option>
                         <option>0.5</option>
                         <option>1</option>

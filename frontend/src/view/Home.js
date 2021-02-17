@@ -10,8 +10,8 @@ class Home extends Component {
   render() {
     return (
       <div className="welcome">
-          <div className = "welcometext">
-            <p>Welcome to the Tivoli recruitment app</p>
+          <div className = "welcomediv">
+            <p className = "welcometext">Welcome to the Tivoli recruitment app</p>
           </div>
           <div className = "signuplogin-div">
               <button className = "signup">Sign up</button>
