@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import "../style/Applicant.css";
 
 class ApplicantFirstPage extends Component {
@@ -55,8 +55,10 @@ class ApplicantFirstPage extends Component {
                     <span className = "check2">&#10003;</span>
                 </div>
             </div>
-            <div className = "loginbuttondiv">
-                <button className = "loginbutton">Login</button>
+            <div className = "savebuttondiv">
+                <Link to = "/applicantfirstdisplay">
+                    <button className = "savebutton">Save</button>
+                </Link>
             </div>
         </div>
       </div>
