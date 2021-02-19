@@ -13,16 +13,19 @@ import ApplicantSecondPage from "./view/ApplicantSecondPage";
 import ApplicantSecondDisplay from "./view/ApplicantSecondDisplay";
 import ApplicantDisplayAll from "./view/ApplicantDisplayAll";
 import ApplicantConfirm from "./view/ApplicantConfirm";
+import Model from "./model/Model";
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
+      model: new Model(),
       title: "Recruitment App"
     };
   }
 
   render(){
+
     return (   
       <div className = "App">
         <header className = "App-header">
@@ -35,9 +38,9 @@ class App extends Component {
         </header>
         
           <Router>
-            <Route exact path="/"  exact render={(props)=>{return <Home {...props}/>}}/>
+            <Route exact path="/"  exact render={(props)=>{return <Home {...props}model = {this.state.model}/>}}/>
             
-            <Route path="/signup" component={Signup}/>
+            <Route path="/signup" render={(props)=>{return <Signup {...props}model = {this.state.model}/>}}/>
             <Route path="/login" component={Login}/>
             <Route path="/applicantfirstpage" component={ApplicantFirstPage}/>
             <Route path="/applicantfirstdisplay" component={ApplicantFirstDisplay}/>

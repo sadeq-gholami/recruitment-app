@@ -1,7 +1,7 @@
 .inputfielddiv{
     margin: auto;
     width: auto;
-    margin-right: 50px;
+    display: block;
 }
 
 .credtext{
@@ -21,9 +21,8 @@
 }
 
 .confirmbuttondiv{
-    margin-top: 50px;
-    display: block;
-    
+    display: inline-block;
+    margin-top: 20px;
 }
 
 .confirmbutton{

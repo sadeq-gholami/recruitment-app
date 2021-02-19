@@ -5,6 +5,27 @@ import "../style/Login.css";
 class Login extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            username: "", //log in 
+            password: "", //log in
+        }
+    }
+
+    handleUsername = e => {
+        this.setState({ username: e.target.value });
+    }
+
+    handlePassword = e => {
+        this.setState({ password: e.target.value });
+    }
+
+    submitLogin = async e =>{
+        e.preventDefault();      
+        await this.props.model.login(this.state.username, this.state.password).then(result =>{
+            console.log(result)
+        }).catch(err =>{
+            console.log(err)
+        });
     }
 
     render() {
