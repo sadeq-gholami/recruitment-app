@@ -7,6 +7,10 @@ body{
   text-align: center;
 }
 
+.welcometext{
+  font-size: x-large;
+}
+
 .header{
   height: 56px;
   /*width: 940px;*/
@@ -32,6 +36,10 @@ body{
 }
 
 .jobs, .aboutus, .contact {
+	color: #8A94A6;
+  margin-right: 20px;
+}
+.search {
 	color: #8A94A6;
   margin-right: 20px;
 }

@@ -1,13 +1,13 @@
 /*First page*/
 
-.exdiv, .yearsdiv{
+.exdiv, .yearsdiv, .timediv{
     width: 150px;
     margin: auto;
     margin-top: 20px;
     display: block;
 }
 
-.extext, .yearstext{
+.extext, .yearstext, .timetext{
     text-align: left;
     margin: auto;
 }
@@ -33,6 +33,43 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
-/*Second page*/
+.savebuttondiv{
+    margin-top: 50px;
+    display: block; 
+}
+
+.savebutton{
+    color: #ffffff;
+    background-color: rgb(42, 59, 95);
+    width: 150px;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.savebutton:hover{
+    background-color: rgb(76, 76, 119);
+}
+
+.yearschoice, .exchoice, .timechoice{
+    border: black;
+    border-style: solid;
+    height: 20px;
+    width: 200px;
+}
+
+.expertise, .years, .time{
+    font-size: small;
+    margin: 0;
+}
+
+.handletext{
+    margin-top: 100px;
+    font-size: medium;
+}
+
+/* Second page */
+
 
 /*Third page*/
