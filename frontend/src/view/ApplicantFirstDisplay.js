@@ -7,7 +7,21 @@ class ApplicantFirstDisplay extends Component {
         super(props);
       }
 
+componentDidMount(){
+    
+}
+
   render() {
+    let competence1 = this.props.model.getCompetence();
+    let competence2 = JSON.parse(competence1)
+    let key = 0;
+    let c = competence2.map(comp =>(
+        <div key={key++}>
+            <p>{comp.name}</p>
+            <p>{comp.yearsOfExperience}</p>
+        </div>
+    ));
+      
     return (
       <div className="applicantfirstdisplay-base">
             <div className = "credtext">
@@ -18,7 +32,7 @@ class ApplicantFirstDisplay extends Component {
                 <p className = "extext">Expertise</p>
                 <div className = "inputdiv1">
                 <div className = "exchoice">
-                        <p className = "expertise">expertise</p>
+                        {c}
                     </div>
                     <span className = "check1">&#10003;</span>
                 </div>

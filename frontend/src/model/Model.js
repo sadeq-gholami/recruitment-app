@@ -1,45 +1,48 @@
 import ObservableModel from "./ObservableModel";
 
-class Model extends ObservableModel{
+class Model extends ObservableModel {
     constructor() {
-      super();
-      this.user = {
-        firstname: null,
-        surname: null,
-        email: null,
-        ssn: null, 
-        username: null, //log in 
-        password: null //log in
-      }
+        super();
+        this.user = {
+            firstname: null,
+            surname: null,
+            email: null,
+            ssn: null,
+            username: null, //log in 
+            password: null //log in
+        }
 
-      this.competence = {
-        name: null,
-      }
+        this.competence = {
+            competenceArray: [],
+        };
+
     }
-  
 
-    async signup(){
+
+    async signup() {
         return fetch("http://localhost:5000/signup", {
-            method: 'POST', 
+            method: 'POST',
             headers: {
-                'Content-Type':'application/json'}, 
-                body: JSON.stringify({
-                    firstname: this.user.firstname, 
-                    surname: this.user.surname, 
-                    email: this.user.email, 
-                    ssn: this.user.ssn, 
-                    username: this.user.username, 
-                    password: this.user.password})
-        }).then(response =>{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                firstname: this.user.firstname,
+                surname: this.user.surname,
+                email: this.user.email,
+                ssn: this.user.ssn,
+                username: this.user.username,
+                password: this.user.password
+            })
+        }).then(response => {
             console.log("RESPONS " + response);
             return response;
-        }).catch(error =>{
+        }).catch(error => {
             console.log("ERROR " + error);
             throw error;
         })
     }
 
-    setSignup(user){
+    setSignup(user) {
         this.user.firstname = user.firstname;
         this.user.surname = user.surname;
         this.user.email = user.email;
@@ -48,68 +51,76 @@ class Model extends ObservableModel{
         this.user.password = user.password;
     }
 
-    getSignup(){
+    getSignup() {
         return this.user;
     }
 
-    async login(name, pass){
+    async login(name, pass) {
         console.log(name + "   " + pass);
         return fetch("http://localhost:5000/login", {
-            method: 'POST', 
+            method: 'POST',
             headers: {
-                'Content-Type':'application/json'}, 
-                body: JSON.stringify({
-                    username: name, 
-                    password: pass})
-        }).then(response =>{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: name,
+                password: pass
+            })
+        }).then(response => {
             return response;
-        }).catch(error =>{
+        }).catch(error => {
             console.log('error');
             throw error
         })
 
     }
 
-    setCompetence(competence){
-        this.competence.name = competence.name;
-        this.competence._id = competence._id;
+    setCompetence(comp) {
+        this.competence.competenceArray.push({
+            _id: comp._id,
+            yearsOfExperience: comp.yearsOfExperience,
+            name: comp.name
+        });
+        localStorage.setItem("competence", JSON.stringify(this.competence.competenceArray));
     }
 
-    getCompetence(){
-        return this.competence;
+    getCompetence() {
+        return localStorage.getItem("competence");
     }
 
-    getAllCompetences(){
+    getAllCompetences() {
         return fetch("http://localhost:5000/applicant/competence", {
-            method: 'GET', 
+            method: 'GET',
             headers: {
-                'Content-Type':'application/json'}
-        }).then(response =>{
-            console.log("RESPONS " + response);
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            console.log("RESPONSE " + response);
             return response.json();
-        }).catch(error =>{
+        }).catch(error => {
             console.log("ERROR " + error);
             throw error;
         })
     }
 
-    async postCompetence(){
+    async postCompetence() {
         return fetch("http://localhost:5000/", {
-            method: 'POST', 
+            method: 'POST',
             headers: {
-                'Content-Type':'application/json'}, 
-                body: JSON.stringify({
-                    name: this.competence.name
-                    })
-        }).then(response =>{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: this.competence.name
+            })
+        }).then(response => {
             console.log("RESPONS " + response);
             return response;
-        }).catch(error =>{
+        }).catch(error => {
             console.log("ERROR " + error);
             throw error;
         })
     }
 
-  }
-  
-  export default Model;
+}
+
+export default Model;

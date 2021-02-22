@@ -43,7 +43,7 @@ class App extends Component {
             <Route path="/signup" render={(props)=>{return <Signup {...props}model = {this.state.model}/>}}/>
             <Route path="/login" render={(props)=>{return <Login {...props}model = {this.state.model}/>}}/>
             <Route path="/applicantfirstpage" render={(props)=>{return <ApplicantFirstPage {...props}model = {this.state.model}/>}}/>
-            <Route path="/applicantfirstdisplay" component={ApplicantFirstDisplay}/>
+            <Route path="/applicantfirstdisplay"  render={(props)=>{return <ApplicantFirstDisplay {...props}model = {this.state.model}/>}}/>
             <Route path="/applicantsecondpage" component={ApplicantSecondPage}/>
             <Route path="/applicantseconddisplay" component={ApplicantSecondDisplay}/>
             <Route path="/applicantdisplayall" component={ApplicantDisplayAll}/>

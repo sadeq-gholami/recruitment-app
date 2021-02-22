@@ -7,8 +7,10 @@ class ApplicantFirstPage extends Component {
         super(props);
         this.state = {
             status: "LOADING",
-            compentence: {},
+            competence: {},
+            _id: null,
             yearsOfExperience: null,
+            name: null
         }
     }
 
@@ -42,7 +44,7 @@ class ApplicantFirstPage extends Component {
                     console.log(competence);
                     this.setState({
                         status: "LOADED",
-                        compentence: competence
+                        competence: competence
                     });
                 })
                 .catch(() => {
@@ -51,32 +53,50 @@ class ApplicantFirstPage extends Component {
                     });
                 });
         }
-        console.log("HEJSAN");
-        console.log(this.state.compentence);
     }
 
+    submitCompetence = async e => {
+        this.setState({ _id: e.target.value });
+        let name;
+        for (let index in this.state.competence.competences) {
+            if (this.state.competence.competences[index]._id == e.target.value) {
+                name = this.state.competence.competences[index].name;
+            }
+        }
+        this.setState({ name: name });
+    }
+
+    submitYears = async e => {
+        this.setState({ yearsOfExperience: e.target.value });
+    }
+
+    submitComp = async e => {
+        e.preventDefault();
+        console.log(this.state._id + "    " + this.state.yearsOfExperience);
+        console.log(this.state);
+        this.props.model.setCompetence({
+            _id: this.state._id,
+            yearsOfExperience: this.state.yearsOfExperience,
+            name: this.state.name
+        });
+        this.props.model.getCompetence();
+       // window.location.href = '/applicantfirstdisplay';
+
+    }
 
     render() {
-
-        let competences = null;
+        let c = null;
         switch (this.state.status) {
             case "LOADING":
-                competences = "loading...";
+                c = "loading...";
+                break;
             case "LOADED":
-                console.log(this.state.compentence);
-                console.log("COMP");
-                
-                for(let name in this.state.compentence.competences){
-                    console.log(name);
-                    console.log(this.state.compentence.compentences.find());
-                    console.log(`${name}: ${this.state.compentence.compentences[name]}`);
-                }
-
-                /*competences = this.state.compentence.map(comp => {
-                    console.log("HEJ");
-                })
-                console.log(competences);*/
-                
+                c = this.state.competence.competences.map(comp => (
+                    <option key={comp._id} value={comp._id}>{comp.name}</option>
+                ));
+                break;
+            default:
+                break;
         }
 
         return (
@@ -88,8 +108,8 @@ class ApplicantFirstPage extends Component {
                     <div className="exdiv">
                         <p className="extext">Expertise</p>
                         <div className="inputdiv1">
-                            <select className="select1">
-                                
+                            <select onChange={this.submitCompetence} className="select1">
+                                {c}
                             </select>
                             <span className="check1">&#10003;</span>
                         </div>
@@ -97,29 +117,30 @@ class ApplicantFirstPage extends Component {
                     <div className="yearsdiv">
                         <p className="yearstext">Years of experience</p>
                         <div className="inputdiv2">
-                            <select className="select2">
-                                <option></option>
-                                <option>0</option>
-                                <option>0.5</option>
-                                <option>1</option>
-                                <option>1.5</option>
-                                <option>2</option>
-                                <option>2.5</option>
-                                <option>3</option>
-                                <option>3.5</option>
-                                <option>4</option>
-                                <option>4.5</option>
-                                <option>5</option>
-                                <option>5.5</option>
+                            <select onChange={this.submitYears} className="select2">
+                                <option value="0">0</option>
+                                <option value="0.5">0.5</option>
+                                <option value="1">1</option>
+                                <option value="1.5">1.5</option>
+                                <option value="2">2</option>
+                                <option value="2.5">2.5</option>
+                                <option value="3">3</option>
+                                <option value="3.5">3.5</option>
+                                <option value="4">4</option>
+                                <option value="4.5">4.5</option>
+                                <option value="5">5</option>
+                                <option value="5+">5+</option>
                             </select>
                             <span className="check2">&#10003;</span>
                         </div>
                     </div>
+                    
                     <div className="savebuttondiv">
-                        <Link to="/applicantfirstdisplay">
-                            <button className="savebutton">Save</button>
+                    <Link to="/applicantfirstdisplay">
+                        <button className="savebutton" onClick={this.submitComp}>Save</button>
                         </Link>
                     </div>
+                    
                 </div>
             </div>
         );
