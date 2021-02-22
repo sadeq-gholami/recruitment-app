@@ -16,9 +16,15 @@ componentDidMount(){
     let competence2 = JSON.parse(competence1)
     let key = 0;
     let c = competence2.map(comp =>(
-        <div key={key++}>
-            <p>{comp.name}</p>
-            <p>{comp.yearsOfExperience}</p>
+        <div key={key++} className = "competencechoice">
+            <p className = "extext">Expertise:</p>
+            <div className = "compNamediv">
+                <p className = "compName">{comp.name}</p>
+            </div>
+            <p className = "yearstext">Years of experience:</p>
+            <div className = "compYeardiv">
+                <p className = "compYear">{comp.yearsOfExperience}</p>
+            </div>
         </div>
     ));
       
@@ -29,23 +35,11 @@ componentDidMount(){
             </div>
           <div className="inputfielddiv">
             <div className = "exdiv">
-                <p className = "extext">Expertise</p>
-                <div className = "inputdiv1">
-                <div className = "exchoice">
+                <div className = "competencediv">
                         {c}
-                    </div>
-                    <span className = "check1">&#10003;</span>
                 </div>
             </div>
-            <div className = "yearsdiv">
-                <p className = "yearstext">Years of experience</p>
-                <div className = "inputdiv2">
-                    <div className = "yearschoice">
-                        <p className = "years">years</p>
-                    </div>
-                    <span className = "check2">&#10003;</span>
-                </div>
-            </div>
+            
             <div className = "savebuttondiv">
                 <Link to = "/applicantsecondpage">
                     <button className = "savebutton">Save & continue</button>

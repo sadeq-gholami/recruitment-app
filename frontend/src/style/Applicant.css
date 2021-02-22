@@ -69,6 +69,24 @@
     font-size: medium;
 }
 
+.competencediv{
+    display: block;
+}
+
+.competencechoice{
+    display: block;
+}
+
+.compNamediv, .compYeardiv{
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    margin: 10px;
+}
+
+.compName, .compYear{
+    margin: 0;
+}
 /* Second page */
 
 
