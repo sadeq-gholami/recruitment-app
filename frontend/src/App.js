@@ -26,40 +26,40 @@ class App extends Component {
 
   render(){
 
-    return (   
+    return (
       <div className = "App">
         <header className = "App-header">
           <div className = "header">
             <p className = "jobs">Jobs</p>
             <p className = "aboutus">About us</p>
             <p className = "contact">Contact</p>
-            
+
           </div>
         </header>
-        
+
           <Router>
             <Route exact path="/"  exact render={(props)=>{return <Home {...props}model = {this.state.model}/>}}/>
-            
+
             <Route path="/signup" render={(props)=>{return <Signup {...props}model = {this.state.model}/>}}/>
             <Route path="/login" render={(props)=>{return <Login {...props}model = {this.state.model}/>}}/>
-            <Route path="/applicantfirstpage" component={ApplicantFirstPage}/>
+            <Route path="/applicantfirstpage" render={(props)=>{return <ApplicantFirstPage {...props}model = {this.state.model}/>}}/>
             <Route path="/applicantfirstdisplay" component={ApplicantFirstDisplay}/>
             <Route path="/applicantsecondpage" component={ApplicantSecondPage}/>
             <Route path="/applicantseconddisplay" component={ApplicantSecondDisplay}/>
             <Route path="/applicantdisplayall" component={ApplicantDisplayAll}/>
             <Route path="/applicantconfirm" component={ApplicantConfirm}/>
-            
+
           </Router>
 
-          
+
           <footer className = "footer">
             <p className = "contactfooter">Contact</p>
           </footer>
       </div>
-      
+
     );
   }
- 
+
 }
 
 export default App;
