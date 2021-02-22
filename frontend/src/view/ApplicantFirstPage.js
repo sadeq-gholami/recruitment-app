@@ -80,7 +80,7 @@ class ApplicantFirstPage extends Component {
             name: this.state.name
         });
         this.props.model.getCompetence();
-       // window.location.href = '/applicantfirstdisplay';
+        window.location.href = '/applicantfirstdisplay';
 
     }
 

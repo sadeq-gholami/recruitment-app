@@ -25,9 +25,11 @@ class Login extends Component {
         await this.props.model.login(this.state.username, this.state.password).then(result =>{
             console.log("res  ");
             console.log(result);
+            //auth - window replace
         }).catch(err =>{
             console.log(err)
         });
+        
     }
 
     render() {
