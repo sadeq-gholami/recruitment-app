@@ -1,7 +1,7 @@
 //Copyright (c) 2018 Code Capers
 module.exports = {
 
-    sqlConnectionString: "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:/Users/inari/Documents/GitHub/IV1201-Project/DatabaseMigration/DatabaseTest.accdb;", //"<connection-string-for-your-sql-database-goes-here>", // Insert your connection string here.
+    sqlConnectionString: "postgres://postgres:root@127.0.0.1:5433/postgres", //"<connection-string-for-your-sql-database-goes-here>", // Insert your connection string here.
     mongoConnectionString: "mongodb+srv://IV1201:IV1201@cluster0.ctnb8.mongodb.net/Cluster0?retryWrites=true&w=majority", //"mongodb://localhost:27017", // This puts the resulting database in MongoDB running on your local PC.
     targetDatabaseName: "Cluster0", //"target-database", // Specify the MongoDB database where the data will end up.
     skip: [

@@ -20,9 +20,11 @@ class Login extends Component {
     }
 
     submitLogin = async e =>{
-        e.preventDefault();      
+        console.log("hej  " + this.props.model);
+        e.preventDefault();     
         await this.props.model.login(this.state.username, this.state.password).then(result =>{
-            console.log(result)
+            console.log("res  ");
+            console.log(result);
         }).catch(err =>{
             console.log(err)
         });
@@ -38,20 +40,20 @@ class Login extends Component {
                     <div className="usernamediv">
                         <p className="usernametext">Username</p>
                         <div className="inputdiv1">
-                            <input className="input1"></input>
+                            <input className="input1" onChange={this.handleUsername}></input>
                             <span className="check1">&#10003;</span>
                         </div>
                     </div>
                     <div className="passworddiv">
                         <p className="passwordtext">Password</p>
                         <div className="inputdiv2">
-                            <input className="input2"></input >
+                            <input className="input2" onChange={this.handlePassword}></input >
                             <span className="check2">&#10003;</span>
                         </div>
                     </div>
                     <div className="loginbuttondiv">
                         <Link to = "/applicantfirstpage">
-                            <button className="loginbutton">Login</button>
+                            <button className="loginbutton" onClick={this.submitLogin}>Login</button>
                         </Link>
                     </div>
                 </div>

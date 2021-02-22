@@ -41,7 +41,7 @@ class App extends Component {
             <Route exact path="/"  exact render={(props)=>{return <Home {...props}model = {this.state.model}/>}}/>
             
             <Route path="/signup" render={(props)=>{return <Signup {...props}model = {this.state.model}/>}}/>
-            <Route path="/login" component={Login}/>
+            <Route path="/login" render={(props)=>{return <Login {...props}model = {this.state.model}/>}}/>
             <Route path="/applicantfirstpage" component={ApplicantFirstPage}/>
             <Route path="/applicantfirstdisplay" component={ApplicantFirstDisplay}/>
             <Route path="/applicantsecondpage" component={ApplicantSecondPage}/>

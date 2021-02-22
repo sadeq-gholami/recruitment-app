@@ -49,6 +49,7 @@ class Model extends ObservableModel{
     }
 
     async login(name, pass){
+        console.log(name + "   " + pass);
         return fetch("http://localhost:5000/login", {
             method: 'POST', 
             headers: {
@@ -59,7 +60,8 @@ class Model extends ObservableModel{
         }).then(response =>{
             return response;
         }).catch(error =>{
-            console.error('error', error);
+            console.log('error');
+            throw error
         })
 
     }

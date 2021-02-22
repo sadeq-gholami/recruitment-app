@@ -120,7 +120,9 @@ async function main () {
     const mongoClient = await mongodb.MongoClient.connect(config.mongoConnectionString);
     const targetDb = mongoClient.db(config.targetDatabaseName);
     
+    console.log("hejhejehejehej");
     const sqlPool = await sql.connect(config.sqlConnectionString);
+    console.log(" test  " + sqlPool);
 
     const primaryKeysQuery = "SELECT A.TABLE_NAME, A.CONSTRAINT_NAME, B.COLUMN_NAME\n" +
         "FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS A, INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE B\n" +

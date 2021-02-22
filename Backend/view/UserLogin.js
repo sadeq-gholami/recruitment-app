@@ -24,6 +24,7 @@ class UserLogin extends RequestHandler {
         /**
          * Post request to validate user. Send in username and password 
          * and it is checked against the database
+         * Sends 500 if connection to database failed
          * Sends 401 if validation failed
          * Sends 200 with user object on success
          */
@@ -32,7 +33,7 @@ class UserLogin extends RequestHandler {
                 return result;
             })
                 .catch(err => {
-                    res.status(401).json({ err: err });
+                    res.status(500).json({ err: err });
                 });
             if (user == null) {
                 res.status(401).json({ error: 'Login failed' });
