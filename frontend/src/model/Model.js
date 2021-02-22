@@ -11,6 +11,10 @@ class Model extends ObservableModel{
         username: null, //log in 
         password: null //log in
       }
+
+      this.competence = {
+        name: null,
+      }
     }
   
 
@@ -62,6 +66,46 @@ class Model extends ObservableModel{
             console.error('error', error);
         })
 
+    }
+
+    setCompetence(competence){
+        this.competence.name = competence.name;
+        this.competence._id = competence._id;
+    }
+
+    getCompetence(){
+        return this.competence;
+    }
+
+    getAllCompetences(){
+        return fetch("http://localhost:5000/applicant/competence", {
+            method: 'GET', 
+            headers: {
+                'Content-Type':'application/json'}
+        }).then(response =>{
+            console.log("RESPONS " + response);
+            return response.json();
+        }).catch(error =>{
+            console.log("ERROR " + error);
+            throw error;
+        })
+    }
+
+    async postCompetence(){
+        return fetch("http://localhost:5000/", {
+            method: 'POST', 
+            headers: {
+                'Content-Type':'application/json'}, 
+                body: JSON.stringify({
+                    name: this.competence.name
+                    })
+        }).then(response =>{
+            console.log("RESPONS " + response);
+            return response;
+        }).catch(error =>{
+            console.log("ERROR " + error);
+            throw error;
+        })
     }
 
   }

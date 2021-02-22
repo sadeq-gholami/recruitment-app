@@ -54,15 +54,7 @@ class Signup extends Component {
         await this.props.model.signup().then(result => {
             if(result.status == 200){
                 window.location.replace('/applicantfirstpage');
-            }
-            /*else if (result.err.keyPattern == "ssn"){
-                window.alert("Ssn is already in use");
-            }else if (result.err.keyPattern == "email"){
-                window.alert("Email is already in use");
-            }else if (result.err.keyPattern == "username"){
-                window.alert("Username is already in use");
-            }*/
-            console.log("RESULT " + result);
+            }   
         }).catch(err => {
             window.alert(err);
             console.log(err);
