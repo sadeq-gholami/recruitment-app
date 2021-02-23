@@ -53,6 +53,7 @@ class Signup extends Component {
         });
         await this.props.model.signup().then(result => {
             if(result.status == 200){
+                this.props.model.saveState();
                 window.location.replace('/applicantfirstpage');
             }   
         }).catch(err => {

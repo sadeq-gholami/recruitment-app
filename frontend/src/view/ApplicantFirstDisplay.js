@@ -8,15 +8,20 @@ class ApplicantFirstDisplay extends Component {
     }
 
     componentDidMount() {
+    }
 
+    resetLocalstorage(){
+        //save state
+        localStorage.removeItem("listSelected");
     }
 
     render() {
-        console.log(localStorage.getItem("competence"));
-        let competence1 = this.props.model.getCompetence();
-        let competence2 = JSON.parse(competence1)
+        this.props.model.restoreState();
+
+        let competence = this.props.model.getCompetence();
         let key = 0;
-        let c = competence2.map(comp => (
+        console.log(competence);
+        let c = competence.map(comp => (
             <div key={key++} className="competencechoice">
                 <p className="extext">Expertise:</p>
                 <div className="compNamediv">
@@ -42,7 +47,7 @@ class ApplicantFirstDisplay extends Component {
                     </div>
                     <div className="savebuttondiv">
                         <Link to="/applicantsecondpage">
-                            <button className="savebutton">Save & continue</button>
+                            <button className="savebutton" onClick={this.resetLocalstorage}>Save & continue</button>
                         </Link>
                     </div>
                     <div className="savebuttondiv">

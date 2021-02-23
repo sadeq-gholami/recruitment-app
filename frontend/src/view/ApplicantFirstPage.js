@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
 import "../style/Applicant.css";
+let c = null;
+let addedComp = null;
 
 class ApplicantFirstPage extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
             status: "LOADING",
             competence: {},
             _id: null,
-            yearsOfExperience: null,
+            yearsOfExperience: 0,
             name: null,
             listSelected: []
         }
@@ -17,21 +20,25 @@ class ApplicantFirstPage extends Component {
 
     componentDidMount() {
         this.props.model.addObserver(this);
-            this.props.model
-                .getAllCompetences()
-                .then(competence => {
-                    console.log(competence);
-                    this.setState({
-                        status: "LOADED",
-                        competence: competence
-                    });
-                })
-                .catch(() => {
-                    this.setState({
-                        status: "ERROR"
-                    });
+        this.props.model
+            .getAllCompetences()
+            .then(competence => {
+                if(localStorage.getItem("listSelected") != null){
+                    this.setState({status: "ADDED"});
+                    this.setState({listSelected: JSON.parse(localStorage.getItem("listSelected"))});
+                }
+                console.log(competence);
+                this.setState({
+                    status: "LOADED",
+                    competence: competence
                 });
-        
+                this.setState({ name: competence.competences[0].name}); 
+            })
+            .catch(() => {
+                this.setState({
+                    status: "ERROR"
+                });
+            });
     }
 
     submitCompetence = async e => {
@@ -51,47 +58,35 @@ class ApplicantFirstPage extends Component {
 
     submitComp = async e => {
         e.preventDefault();
-        console.log(this.state._id + "    " + this.state.yearsOfExperience);
-        console.log(this.state);
-        this.props.model.setCompetence({
-            _id: this.state._id,
-            yearsOfExperience: this.state.yearsOfExperience,
-            name: this.state.name
-        });
-        this.props.model.getCompetence();
-        //window.location.href = '/applicantfirstdisplay';
-
+        this.props.model.setCompetence(this.state.listSelected);
+        this.props.model.saveState();
+        window.location.href = '/applicantfirstdisplay';
     }
 
     addComp = async e => {
-        //e.preventDefault();
+        e.preventDefault();
         console.log("ADD ");
-        /*this.state.listSelected.push({
-            competence: this.state.name,
-            yearsOfExperience: this.state.yearsOfExperience,
-        });*/
-        let test = e.target.value;
-        console.log(test);
-        
-        //console.log(this.state.listSelected);
-        this.setState = ({
+        this.state.listSelected.push({
+            _id: this.state._id,
+            name: this.state.name,
             yearsOfExperience: this.state.yearsOfExperience,
         });
-        //this.props.model.notifyObserversModel();
+
+        localStorage.setItem("listSelected", JSON.stringify(this.state.listSelected));
+
+        await this.setState({
+            status: "ADDED"
+        });
     }
 
-    update(){
-        console.log("UPDATE ");
-        this.setState = ({
-            status: "ADDED",
-        });
-        console.log(this.state);
+    update() {
     }
 
     render() {
+        this.props.model.restoreState();
+
         console.log("RENDER ");
-        let c = null;
-        let addedComp = null;
+
         switch (this.state.status) {
             case "LOADING":
                 c = "loading...";
@@ -102,11 +97,12 @@ class ApplicantFirstPage extends Component {
                 ));
                 break;
             case "ADDED":
+                let key = 0;
                 console.log("CASE ");
                 addedComp = this.state.listSelected.map(selected => (
-                    <div>
-                        <p>{selected.competence}</p>
-                        <p>{selected.yearsOfExperience}</p>
+                    <div key={key++}>
+                        <p key={key++}>{selected.name}</p>
+                        <p key={key++}>{selected.yearsOfExperience}</p>
                     </div>
                 ));
                 break;
@@ -149,16 +145,16 @@ class ApplicantFirstPage extends Component {
                             <span className="check2">&#10003;</span>
                         </div>
                     </div>
-                    <div className = "selected">
-                        {this.state.status}
+                    <div className="selected">
+                        {addedComp}
                     </div>
                     <div className="savebuttondiv">
-                        <button className = "savebutton" onClick={this.addComp}>Add expertise</button>
-                    <Link to="/applicantfirstdisplay">
-                        <button className="savebutton" onClick={this.submitComp}>Save</button>
+                        <button className="savebutton" onClick={this.addComp}>Add expertise</button>
+                        <Link to="/applicantfirstdisplay">
+                            <button className="savebutton" onClick={this.submitComp}>Save</button>
                         </Link>
                     </div>
-                    
+
                 </div>
             </div>
         );

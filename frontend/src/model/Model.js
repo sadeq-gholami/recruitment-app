@@ -12,12 +12,19 @@ class Model extends ObservableModel {
             password: null //log in
         }
 
-        this.competence = {
-            competenceArray: [],
-        };
+        this.competence = {};
 
     }
 
+    saveState(){
+        localStorage.setItem("user", JSON.stringify(this.user));
+        localStorage.setItem("competence", JSON.stringify(this.competence));
+    }
+
+    restoreState(){
+        this.user = JSON.parse(localStorage.getItem("user"));
+        this.competence = JSON.parse(localStorage.getItem("competence"));
+    }
 
     async signup() {
         return fetch("http://localhost:5000/signup", {
@@ -76,17 +83,11 @@ class Model extends ObservableModel {
     }
 
     setCompetence(comp) {
-        this.competence.competenceArray.push({
-            _id: comp._id,
-            yearsOfExperience: comp.yearsOfExperience,
-            name: comp.name
-        });
-        console.log(this.competence.competenceArray);
-        localStorage.setItem("competence", JSON.stringify(this.competence.competenceArray));
+        this.competence = comp;
     }
 
     getCompetence() {
-        return localStorage.getItem("competence");
+        return this.competence;
     }
 
     getAllCompetences() {
