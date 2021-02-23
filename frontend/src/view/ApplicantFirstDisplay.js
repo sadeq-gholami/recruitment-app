@@ -12,6 +12,7 @@ class ApplicantFirstDisplay extends Component {
     }
 
     render() {
+        console.log(localStorage.getItem("competence"));
         let competence1 = this.props.model.getCompetence();
         let competence2 = JSON.parse(competence1)
         let key = 0;

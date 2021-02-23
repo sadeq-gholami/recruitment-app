@@ -10,34 +10,13 @@ class ApplicantFirstPage extends Component {
             competence: {},
             _id: null,
             yearsOfExperience: null,
-            name: null
+            name: null,
+            listSelected: []
         }
     }
 
-    /*
-    submitSignup = async e => {
-      e.preventDefault();
-      this.props.model.setSignup({
-          firstname: this.state.firstname,
-          surname: this.state.surname,
-          email: this.state.email,
-          ssn: this.state.ssn,
-          username: this.state.username,
-          password: this.state.password
-      });
-      await this.props.model.signup().then(result => {
-          if(result.status == 200){
-              window.location.replace('/applicantfirstpage');
-          }   
-      }).catch(err => {
-          window.alert(err);
-          console.log(err);
-      });
-  }
-    
-    */
     componentDidMount() {
-        {
+        this.props.model.addObserver(this);
             this.props.model
                 .getAllCompetences()
                 .then(competence => {
@@ -52,7 +31,7 @@ class ApplicantFirstPage extends Component {
                         status: "ERROR"
                     });
                 });
-        }
+        
     }
 
     submitCompetence = async e => {
@@ -80,12 +59,39 @@ class ApplicantFirstPage extends Component {
             name: this.state.name
         });
         this.props.model.getCompetence();
-        window.location.href = '/applicantfirstdisplay';
+        //window.location.href = '/applicantfirstdisplay';
 
     }
 
+    addComp = async e => {
+        //e.preventDefault();
+        console.log("ADD ");
+        /*this.state.listSelected.push({
+            competence: this.state.name,
+            yearsOfExperience: this.state.yearsOfExperience,
+        });*/
+        let test = e.target.value;
+        console.log(test);
+        
+        //console.log(this.state.listSelected);
+        this.setState = ({
+            yearsOfExperience: this.state.yearsOfExperience,
+        });
+        //this.props.model.notifyObserversModel();
+    }
+
+    update(){
+        console.log("UPDATE ");
+        this.setState = ({
+            status: "ADDED",
+        });
+        console.log(this.state);
+    }
+
     render() {
+        console.log("RENDER ");
         let c = null;
+        let addedComp = null;
         switch (this.state.status) {
             case "LOADING":
                 c = "loading...";
@@ -93,6 +99,15 @@ class ApplicantFirstPage extends Component {
             case "LOADED":
                 c = this.state.competence.competences.map(comp => (
                     <option key={comp._id} value={comp._id}>{comp.name}</option>
+                ));
+                break;
+            case "ADDED":
+                console.log("CASE ");
+                addedComp = this.state.listSelected.map(selected => (
+                    <div>
+                        <p>{selected.competence}</p>
+                        <p>{selected.yearsOfExperience}</p>
+                    </div>
                 ));
                 break;
             default:
@@ -134,8 +149,11 @@ class ApplicantFirstPage extends Component {
                             <span className="check2">&#10003;</span>
                         </div>
                     </div>
-                    
+                    <div className = "selected">
+                        {this.state.status}
+                    </div>
                     <div className="savebuttondiv">
+                        <button className = "savebutton" onClick={this.addComp}>Add expertise</button>
                     <Link to="/applicantfirstdisplay">
                         <button className="savebutton" onClick={this.submitComp}>Save</button>
                         </Link>

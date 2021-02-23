@@ -81,6 +81,7 @@ class Model extends ObservableModel {
             yearsOfExperience: comp.yearsOfExperience,
             name: comp.name
         });
+        console.log(this.competence.competenceArray);
         localStorage.setItem("competence", JSON.stringify(this.competence.competenceArray));
     }
 
@@ -119,6 +120,10 @@ class Model extends ObservableModel {
             console.log("ERROR " + error);
             throw error;
         })
+    }
+
+    notifyObserversModel(){
+        this.notifyObservers();
     }
 
 }
