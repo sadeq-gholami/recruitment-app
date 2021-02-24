@@ -84,8 +84,6 @@ class ApplicantSecondPage extends Component {
               <p>To date:</p>
               <input className="timeInput" type="date" name="trip-end" defaultValue="2021-01-01"
                 min="2021-01-01" max="2021-12-31" onChange={this.submitTimeEnd}></input>
-
-              <span className="check1">&#10003;</span>
             </div>
           </div>
           <div className="selectedTime">
