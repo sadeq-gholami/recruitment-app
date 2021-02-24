@@ -10,9 +10,9 @@ class ApplicantFirstDisplay extends Component {
     componentDidMount() {
     }
 
-    resetLocalstorage(){
+    resetLocalstorage() {
         //save state
-        localStorage.removeItem("listSelected");
+        //localStorage.removeItem("listSelected");
     }
 
     render() {
@@ -20,7 +20,6 @@ class ApplicantFirstDisplay extends Component {
 
         let competence = this.props.model.getCompetence();
         let key = 0;
-        console.log(competence);
         let c = competence.map(comp => (
             <div key={key++} className="competencechoice">
                 <p className="extext">Expertise:</p>

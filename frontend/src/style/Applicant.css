@@ -87,7 +87,7 @@
 .compName, .compYear{
     margin: 0;
 }
-/* Second page */
 
-
-/*Third page*/
+.timeDiv{
+    width: fit-content;
+}

@@ -19,20 +19,22 @@ class ApplicantFirstPage extends Component {
     }
 
     componentDidMount() {
+        localStorage.clear();
         this.props.model.addObserver(this);
         this.props.model
             .getAllCompetences()
             .then(competence => {
-                if(localStorage.getItem("listSelected") != null){
-                    this.setState({status: "ADDED"});
-                    this.setState({listSelected: JSON.parse(localStorage.getItem("listSelected"))});
+                if (localStorage.getItem("listSelected") != null) {
+                    this.setState({ status: "ADDED" });
+                    this.setState({ listSelected: JSON.parse(localStorage.getItem("listSelected")) });
                 }
                 console.log(competence);
                 this.setState({
                     status: "LOADED",
-                    competence: competence
+                    competence: competence,
+                    name: competence.competences[0].name,
+                    _id: competence.competences[0]._id
                 });
-                this.setState({ name: competence.competences[0].name}); 
             })
             .catch(() => {
                 this.setState({

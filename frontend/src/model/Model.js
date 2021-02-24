@@ -4,6 +4,7 @@ class Model extends ObservableModel {
     constructor() {
         super();
         this.user = {
+            _id: null,
             firstname: null,
             surname: null,
             email: null,
@@ -14,19 +15,31 @@ class Model extends ObservableModel {
 
         this.competence = {};
 
+        this.timePeriod = {};
+
     }
 
-    saveState(){
+    saveState() {
         localStorage.setItem("user", JSON.stringify(this.user));
         localStorage.setItem("competence", JSON.stringify(this.competence));
+        localStorage.setItem("timePeriod", JSON.stringify(this.timePeriod));
     }
 
-    restoreState(){
+    restoreState() {
         this.user = JSON.parse(localStorage.getItem("user"));
         this.competence = JSON.parse(localStorage.getItem("competence"));
+        this.timePeriod = JSON.parse(localStorage.getItem("timePeriod"));
+    }
+
+    resetState() {
+        localStorage.removeItem("competence");
+        localStorage.removeItem("timePeriod");
+        this.setCompetence({ competence: {} });
+        this.setTimePeriod({ timePeriod: {} });
     }
 
     async signup() {
+        let responseStatus;
         return fetch("http://localhost:5000/signup", {
             method: 'POST',
             headers: {
@@ -40,13 +53,23 @@ class Model extends ObservableModel {
                 username: this.user.username,
                 password: this.user.password
             })
-        }).then(response => {
-            console.log("RESPONS " + response);
-            return response;
-        }).catch(error => {
-            console.log("ERROR " + error);
-            throw error;
         })
+            .then(response => {
+                responseStatus = response;
+                return response.json();
+            }).then(data => {
+                if (responseStatus.status == 200) {
+                    console.log(data.createUser._id);
+                    this.user._id = data.createUser._id;
+                    return responseStatus;
+                }
+                else {
+                    throw { responseStatus, data };
+                }
+            })
+            .catch(error => {
+                throw error;
+            })
     }
 
     setSignup(user) {
@@ -123,10 +146,45 @@ class Model extends ObservableModel {
         })
     }
 
-    notifyObserversModel(){
+    notifyObserversModel() {
         this.notifyObservers();
     }
 
+    setTimePeriod(time) {
+        this.timePeriod = time;
+    }
+
+    getTimePeriod() {
+        return this.timePeriod;
+    }
+
+
+    submitApp() {
+        this.competence.map(comp => {
+            this.submitCompetenceProfile(comp);
+        })
+
+
+    }
+
+    async submitCompetenceProfile(comp) {
+        return fetch("http://localhost:5000/applicant/competence_profile/" + "601402bc1af31539e8052bfc", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                competenceID: comp._id,
+                yearsOfExperience: comp.yearsOfExperience
+            })
+        }).then(response => {
+            console.log(response);
+            return response;
+        }).catch(error => {
+            console.log('error');
+            throw error
+        })
+    }
 }
 
 export default Model;

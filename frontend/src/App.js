@@ -16,7 +16,7 @@ import ApplicantConfirm from "./view/ApplicantConfirm";
 import Model from "./model/Model";
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       model: new Model(),
@@ -24,37 +24,36 @@ class App extends Component {
     };
   }
 
-  render(){
+  render() {
 
     return (
-      <div className = "App">
-        <header className = "App-header">
-          <div className = "header">
-            <p className = "jobs">Jobs</p>
-            <p className = "aboutus">About us</p>
-            <p className = "contact">Contact</p>
+      <div className="App">
+        <header className="App-header">
+          <div className="header">
+            <p className="jobs">Jobs</p>
+            <p className="aboutus">About us</p>
+            <p className="contact">Contact</p>
 
           </div>
         </header>
 
-          <Router>
-            <Route exact path="/"  exact render={(props)=>{return <Home {...props}model = {this.state.model}/>}}/>
+        <Router>
+          <Route exact path="/" exact render={(props) => { return <Home {...props} model={this.state.model} /> }} />
+          <Route path="/signup" render={(props) => { return <Signup {...props} model={this.state.model} /> }} />
+          <Route path="/login" render={(props) => { return <Login {...props} model={this.state.model} /> }} />
+          <Route path="/applicantfirstpage" render={(props) => { return <ApplicantFirstPage {...props} model={this.state.model} /> }} />
+          <Route path="/applicantfirstdisplay" render={(props) => { return <ApplicantFirstDisplay {...props} model={this.state.model} /> }} />
+          <Route path="/applicantsecondpage" render={(props) => { return <ApplicantSecondPage {...props} model={this.state.model} /> }} />
+          <Route path="/applicantseconddisplay" render={(props) => { return <ApplicantSecondDisplay {...props} model={this.state.model} /> }} />
+          <Route path="/applicantdisplayall" render={(props) => { return <ApplicantDisplayAll {...props} model={this.state.model} /> }} />
+          <Route path="/applicantconfirm" render={(props) => { return <ApplicantConfirm {...props} model={this.state.model} /> }} />
 
-            <Route path="/signup" render={(props)=>{return <Signup {...props}model = {this.state.model}/>}}/>
-            <Route path="/login" render={(props)=>{return <Login {...props}model = {this.state.model}/>}}/>
-            <Route path="/applicantfirstpage" render={(props)=>{return <ApplicantFirstPage {...props}model = {this.state.model}/>}}/>
-            <Route path="/applicantfirstdisplay"  render={(props)=>{return <ApplicantFirstDisplay {...props}model = {this.state.model}/>}}/>
-            <Route path="/applicantsecondpage" component={ApplicantSecondPage}/>
-            <Route path="/applicantseconddisplay" component={ApplicantSecondDisplay}/>
-            <Route path="/applicantdisplayall" component={ApplicantDisplayAll}/>
-            <Route path="/applicantconfirm" component={ApplicantConfirm}/>
-
-          </Router>
+        </Router>
 
 
-          <footer className = "footer">
-            <p className = "contactfooter">Contact</p>
-          </footer>
+        <footer className="footer">
+          <p className="contactfooter">Contact</p>
+        </footer>
       </div>
 
     );

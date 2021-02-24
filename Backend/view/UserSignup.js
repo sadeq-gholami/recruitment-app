@@ -43,7 +43,7 @@ class UserSignup extends RequestHandler {
                 return result;
             })
                 .catch(err => {
-                    res.status(500).json({ err: err });
+                    res.status(401).json({ err: err });
                 });
             await this.controller.createReadyTable(createdUser._id)
                 .then(result => {

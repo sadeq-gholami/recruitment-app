@@ -52,11 +52,14 @@ class Signup extends Component {
             password: this.state.password
         });
         await this.props.model.signup().then(result => {
-            if(result.status == 200){
+            //allt gick ok
+            console.log(result);
+            /*if(result.status == 200){
                 this.props.model.saveState();
-                window.location.replace('/applicantfirstpage');
-            }   
+                //window.location.replace('/applicantfirstpage');
+            }   */
         }).catch(err => {
+            //error från sever
             window.alert(err);
             console.log(err);
         });
@@ -116,9 +119,9 @@ class Signup extends Component {
                     <button className="confirmbutton" onClick={this.submitSignup}>Confirm and save</button>
                 </div>
                 <div className="confirmbuttondiv">
-                    <Link to = "/">
+                   
                         <button className="confirmbutton">Back</button>
-                    </Link>
+                    
                 </div>
             </div>
         );
