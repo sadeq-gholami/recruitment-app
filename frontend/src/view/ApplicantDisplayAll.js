@@ -20,13 +20,13 @@ class ApplicantDisplayAll extends Component {
         let competence = this.props.model.getCompetence();
         let key1 = 0;
         let c = competence.map(comp => (
-            <div key={key1++} className="competencechoice">
-                <p className="extext">Expertise:</p>
-                <div className="compNamediv">
+            <div key={key1++} className="displayCompChoiceDiv">
+                <p className="displayCompText">Expertise:</p>
+                <div className="displayNameDiv">
                     <p className="compName">{comp.name}</p>
                 </div>
-                <p className="yearstext">Years of experience:</p>
-                <div className="compYeardiv">
+                <p className="displayYearsText">Years of experience:</p>
+                <div className="displayYearDiv">
                     <p className="compYear">{comp.yearsOfExperience}</p>
                 </div>
             </div>
@@ -39,7 +39,7 @@ class ApplicantDisplayAll extends Component {
         let time = this.props.model.getTimePeriod();
         let key2 = 0;
         let t = time.map(time => (
-            <div key={key2++} className="timechoice">
+            <div key={key2++} className="displayTimeChoiceDiv">
                 <p className="startTimeText">Start time:</p>
                 <div className="timeNamediv">
                     <p className="timeName">{time.startTime}</p>
@@ -64,24 +64,18 @@ class ApplicantDisplayAll extends Component {
                     <p>You have entered the following information:</p>
                 </div>
                 <div className="inputfielddiv">
-                    <div className="exdiv">
-                        <p className="extext">Expertise</p>
-                        <div className="inputdiv1">
-                            <div className="exchoice">
-                                <p className="expertise">expertise</p>
+                    <div className="displayAllComp">
+                        <div className="displayCompDiv">
+                            <div className="displayComp">
                                 {c}
                             </div>
-                            <span className="check1">&#10003;</span>
                         </div>
                     </div>
-                    <div className="timediv">
-                        <p className="timetext">Time period</p>
-                        <div className="inputdiv1">
-                            <div className="timechoice">
-                                <p className="time">time</p>
+                    <div className="displayAllTime">
+                        <div className="displayTimeDiv">
+                            <div className="displayTime">
                                 {t}
                             </div>
-                            <span className="check1">&#10003;</span>
                         </div>
                     </div>
                     <div className="savebuttondiv">

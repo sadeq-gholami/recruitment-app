@@ -56,9 +56,13 @@ class ApplicantSecondPage extends Component {
       case "ADDED":
         let key = 0;
         addedTime = this.state.listSelected.map(selected => (
-          <div key={key++}>
-            <p key={key++}>{selected.startTime}</p>
-            <p key={key++}>{selected.endTime}</p>
+          <div key={key++} className="addedTimeDiv">
+            <div className="startTimeDiv">
+              <p key={key++}> From: {selected.startTime}</p>
+            </div>
+            <div className="endTimeDiv">
+              <p key={key++}> To: {selected.endTime}</p>
+            </div>
           </div>
         ));
         break;
@@ -69,30 +73,31 @@ class ApplicantSecondPage extends Component {
     return (
       <div className="applicantsecondpage-base">
         <div className="credtext">
-          <p>Please choose the period you are availble for work</p>
+          <p>Please choose the period you are available for work</p>
         </div>
         <div className="inputfielddiv">
           <div className="timediv">
-            <p className="timetext">Time period</p>
             <div className="timeDiv">
-              <p>Start time</p>
+              <p>From date:</p>
               <input className="timeInput" type="date" name="trip-start" defaultValue="2021-01-01"
                 min="2021-01-01" max="2021-12-31" onChange={this.submitTimeStart}></input>
-              <p>end time</p>
+              <p>To date:</p>
               <input className="timeInput" type="date" name="trip-end" defaultValue="2021-01-01"
                 min="2021-01-01" max="2021-12-31" onChange={this.submitTimeEnd}></input>
 
               <span className="check1">&#10003;</span>
             </div>
           </div>
-          <div className="selected">
-            {addedTime}
+          <div className="selectedTime">
+            Selected time periods: {addedTime}
           </div>
           <div className="savebuttondiv">
             <button className="savebutton" onClick={this.addTimePeriod}>Add time period</button>
-            <Link to="/applicantseconddisplay">
-              <button className="savebutton" onClick={this.submitTime}>Save</button>
-            </Link>
+            <div className="savebuttondiv">
+              <Link to="/applicantseconddisplay">
+                <button className="savebutton" onClick={this.submitTime}>Save</button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

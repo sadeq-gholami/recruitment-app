@@ -103,9 +103,18 @@ class ApplicantFirstPage extends Component {
                 console.log("CASE ");
                 addedComp = this.state.listSelected.map(selected => (
                     <div key={key++}>
-                        <p key={key++}>{selected.name}</p>
-                        <p key={key++}>{selected.yearsOfExperience}</p>
+                        <div key={key++} className="addedCompDiv">
+                            <div key={key++}>
+                                <p key={key++} className="addedText">Expertise:</p>
+                                <p key={key++} className="addedText">{selected.name}</p>
+                            </div>
+                            <div key={key++}>
+                                <p key={key++} className="addedText">Years of experience: </p>
+                                <p key={key++} className="addedText">{selected.yearsOfExperience} years</p>
+                            </div>
+                        </div>
                     </div>
+
                 ));
                 break;
             default:
@@ -117,7 +126,7 @@ class ApplicantFirstPage extends Component {
                 <div className="credtext">
                     <p>Please choose your expertise and years of experience</p>
                 </div>
-                <div className="inputfielddiv">
+                <div className="contentDiv">
                     <div className="exdiv">
                         <p className="extext">Expertise</p>
                         <div className="inputdiv1">
@@ -148,10 +157,12 @@ class ApplicantFirstPage extends Component {
                         </div>
                     </div>
                     <div className="selected">
-                        {addedComp}
+                    Selected expertise and years: {addedComp}
                     </div>
                     <div className="savebuttondiv">
                         <button className="savebutton" onClick={this.addComp}>Add expertise</button>
+                    </div>
+                    <div className="savebuttondiv">
                         <Link to="/applicantfirstdisplay">
                             <button className="savebutton" onClick={this.submitComp}>Save</button>
                         </Link>

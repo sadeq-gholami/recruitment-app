@@ -13,7 +13,7 @@ class ApplicantSecondDisplay extends Component {
     let time = this.props.model.getTimePeriod();
     let key = 0;
     let t = time.map(time => (
-      <div key={key++} className="timechoice">
+      <div key={key++} className="toFromDiv">
         <p className="startTimeText">Start time:</p>
         <div className="timeNamediv">
           <p className="timeName">{time.startTime}</p>
@@ -32,10 +32,9 @@ class ApplicantSecondDisplay extends Component {
         </div>
         <div className="inputfielddiv">
           <div className="timediv">
-            <p className="timetext">Time period</p>
-            <div className="inputdiv1">
+            <p className="timetext">Selected time periods: </p>
+            <div className="timeChoiceDiv">
               <div className="timechoice">
-                <p className="expertise">time</p>
                 {t}
               </div>
               <span className="check1">&#10003;</span>
