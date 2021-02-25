@@ -1,0 +1,65 @@
+.inputfielddiv{
+    margin: auto;
+    width: auto;
+    display: block;
+}
+
+.credtext{
+    margin: auto;
+    font-size:x-large;
+    margin-bottom: 20px;
+}
+
+.firstnametext, .surnametext, .emailtext, .dottext, .usernametext, .passwordtext{
+    text-align: left;
+    margin: auto;
+}
+.firstnamediv, .surnamediv, .emaildiv, .dotdiv, .usernamediv, .passworddiv{
+    width: 100px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.confirmbuttondiv{
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.confirmbutton{
+    color: #ffffff;
+    background-color: rgb(42, 59, 95);
+    width: 150px;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.confirmbutton:hover{
+    background-color: rgb(76, 76, 119);
+}
+
+.check1, .check2, .check3, .check4, .check5, .check6{
+    content: "\2713";
+    margin-left: 20px;
+    color: green;
+}
+
+.inputdiv1, .inputdiv2, .inputdiv3, .inputdiv4, .inputdiv5, .inputdiv6{
+    display: flex;
+}
+
+.inputdiv1, .input1, .inputdiv2, .input2 , .inputdiv3, .input3, .inputdiv4, .input4, .inputdiv5, .input5, .inputdiv6, .input6{
+    flex: 1;
+}
+.inputdiv1, .check1, .inputdiv2, .check2, .inputdiv3, .check3, .inputdiv4, .check4, .inputdiv5, .check5, .inputdiv6, .check6{
+    flex: 1;
+}
+
+.input1:focus{
+    color: green;
+}
+
+
+
+

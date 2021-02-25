@@ -1,0 +1,70 @@
+.login-base{
+    display: block;
+    height:max-content;
+}
+.inputfielddiv{
+    margin: auto;
+    width: auto;
+    margin-right: 50px;
+}
+
+.credtext{
+    margin: auto;
+    font-size:x-large;
+    margin-bottom: 20px;
+}
+
+.usernametext, .passwordtext{
+    text-align: left;
+    margin: auto;
+}
+.usernamediv, .passworddiv{
+    width: 150px;
+    margin: auto;
+    margin-top: 20px;
+    display: block;
+}
+
+.loginbuttondiv{
+    margin-top: 50px;
+    display: block; 
+}
+
+.loginbutton{
+    color: #ffffff;
+    background-color: rgb(42, 59, 95);
+    width: 150px;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.loginbutton:hover{
+    background-color: rgb(76, 76, 119);
+}
+
+.check1, .check2{
+    content: "\2713";
+    margin-left: 20px;
+    color: green;
+}
+
+.inputdiv1, .inputdiv2{
+    display: flex;
+}
+
+.inputdiv1, .input1, .inputdiv2, .input2{
+    flex: 1;
+}
+.inputdiv1, .check1, .inputdiv2, .check2{
+    flex: 1;
+}
+
+.input1:focus{
+    color: green;
+}
+
+
+
+

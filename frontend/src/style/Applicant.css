@@ -1,0 +1,156 @@
+
+
+.exdiv, .yearsdiv, .timediv{
+    width: 150px;
+    margin: auto;
+    margin-top: 20px;
+    display: block;
+}
+
+.extext, .yearstext, .timetext{
+    text-align: left;
+    margin: auto;
+}
+
+.inputdiv1, .inputdiv2{
+    display: flex;
+}
+
+.inputdiv1, .input1, .inputdiv2, .input2{
+    flex: 1;
+}
+.inputdiv1, .check1, .inputdiv2, .check2{
+    flex: 1;
+}
+
+.input1:focus{
+    color: green;
+}
+
+.select1, .select2{
+    width: 500px;
+    margin: auto;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.savebuttondiv{
+    margin-top: 20px;
+    display: block; 
+}
+
+.savebutton{
+    color: #ffffff;
+    background-color: rgb(42, 59, 95);
+    width: 150px;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.savebutton:hover{
+    background-color: rgb(76, 76, 119);
+}
+
+.yearschoice, .exchoice{
+    border: black;
+    border-style: solid;
+    height: 20px;
+    width: 200px;
+}
+
+.toFromDiv{
+    border: 1px;
+    border-style: solid;
+    border-color: black;
+    margin-top: 2px;
+}
+
+.expertise, .years, .time{
+    font-size: small;
+    margin: 0;
+}
+
+.handletext{
+    margin-top: 100px;
+    font-size: medium;
+}
+
+.competencediv{
+    display: block;
+}
+
+.competencechoice{
+    display: block;
+}
+
+.compNamediv, .compYeardiv{
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    margin: 10px;
+}
+
+.addedCompDiv{
+    margin-top: 5px;
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    display: inline-block;
+}
+.addedTimeDiv{
+    margin-top: 5px;
+    display: flex;
+}
+
+.startTimeDiv{
+    flex: 1;
+}
+
+.endTimeDiv{
+    flex: 1;
+}
+
+.selected{
+    margin-top: 10px;
+}
+
+.selectedTime{
+    display: block;
+}
+.contentDiv{
+    display: block;
+}
+
+.addedText{
+    display: block;
+    margin: 0;
+}
+
+.compName, .compYear{
+    margin: 0;
+}
+
+.timeDiv{
+    width: fit-content;
+}
+
+.displayCompChoiceDiv{
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+}
+
+.displayTimeChoiceDiv{
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    display: inline-block;
+    margin: 5px;
+    padding-right: 38px;
+    padding-left: 38px;
+}
+
