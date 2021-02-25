@@ -17,7 +17,6 @@ class ApplicantFirstDisplay extends Component {
      */
     render() {
         this.props.model.restoreState();
-
         let competence = this.props.model.getCompetence();
         let key = 0;
         let c = competence.map(comp => (

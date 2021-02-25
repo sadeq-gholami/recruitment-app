@@ -10,7 +10,6 @@ let addedComp = null;
  * it in local storage
  */
 class ApplicantFirstPage extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -31,7 +30,6 @@ class ApplicantFirstPage extends Component {
      * competence, name and id
      */
     componentDidMount() {
-        localStorage.clear();
         this.props.model
             .getAllCompetences()
             .then(competence => {
@@ -59,7 +57,7 @@ class ApplicantFirstPage extends Component {
      * and updates the belonging name and id
      * @param { the event from onChange } e 
      */
-    submitCompetence = async e => {
+    handleCompetence = async e => {
         this.setState({ _id: e.target.value });
         let name;
         for (let index in this.state.competence.competences) {
@@ -74,7 +72,7 @@ class ApplicantFirstPage extends Component {
      * Sets the state of years of experience 
      * @param { the event from onChange } e 
      */
-    submitYears = async e => {
+    handleYears = async e => {
         this.setState({ yearsOfExperience: e.target.value });
     }
 
@@ -83,6 +81,7 @@ class ApplicantFirstPage extends Component {
      * @param { the event from onClick } e 
      */
     submitComp = async e => {
+        localStorage.setItem("listSelected", JSON.stringify(this.state.listSelected));
         this.props.model.setCompetence(this.state.listSelected);
         this.props.model.saveState();
     }
@@ -94,16 +93,12 @@ class ApplicantFirstPage extends Component {
      * @param { the event from onClick } e 
      */
     addComp = async e => {
-        e.preventDefault();
-        console.log("ADD ");
         this.state.listSelected.push({
             _id: this.state._id,
             name: this.state.name,
             yearsOfExperience: this.state.yearsOfExperience,
         });
-
         localStorage.setItem("listSelected", JSON.stringify(this.state.listSelected));
-
         await this.setState({
             status: "ADDED"
         });
@@ -115,7 +110,6 @@ class ApplicantFirstPage extends Component {
      */
     render() {
         this.props.model.restoreState();
-
         switch (this.state.status) {
             case "LOADING":
                 c = "loading...";
@@ -155,7 +149,7 @@ class ApplicantFirstPage extends Component {
                     <div className="exdiv">
                         <p className="extext">Expertise</p>
                         <div className="inputdiv1">
-                            <select onChange={this.submitCompetence} className="select1">
+                            <select onChange={this.handleCompetence} className="select1">
                                 {c}
                             </select>
                             <span className="check1">&#10003;</span>
@@ -164,7 +158,7 @@ class ApplicantFirstPage extends Component {
                     <div className="yearsdiv">
                         <p className="yearstext">Years of experience</p>
                         <div className="inputdiv2">
-                            <select onChange={this.submitYears} className="select2">
+                            <select onChange={this.handleYears} className="select2">
                                 <option value="0">0</option>
                                 <option value="0.5">0.5</option>
                                 <option value="1">1</option>

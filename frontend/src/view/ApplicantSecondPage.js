@@ -33,7 +33,7 @@ class ApplicantSecondPage extends Component {
   * Sets the start time and sets the state
   * @param { the event from onChange } e 
   */
-  submitTimeStart = async e => {
+  handleTimeStart = async e => {
     this.setState({ startTime: e.target.value });
   }
 
@@ -41,7 +41,7 @@ class ApplicantSecondPage extends Component {
   * Sets the end time and sets the state
   * @param { the event from onChange } e 
   */
-  submitTimeEnd = async e => {
+  handleTimeEnd = async e => {
     this.setState({ endTime: e.target.value });
   }
 
@@ -65,9 +65,7 @@ class ApplicantSecondPage extends Component {
       startTime: this.state.startTime,
       endTime: this.state.endTime,
     });
-
     localStorage.setItem("listSelectedTime", JSON.stringify(this.state.listSelected));
-
     this.setState({
       status: "ADDED"
     });
@@ -79,7 +77,6 @@ class ApplicantSecondPage extends Component {
    */
   render() {
     let addedTime = null;
-
     switch (this.state.status) {
       case "ADDED":
         let key = 0;
@@ -108,10 +105,10 @@ class ApplicantSecondPage extends Component {
             <div className="timeDiv">
               <p>From date:</p>
               <input className="timeInput" type="date" name="trip-start" defaultValue="2021-01-01"
-                min="2021-01-01" max="2021-12-31" onChange={this.submitTimeStart}></input>
+                min="2021-01-01" max="2021-12-31" onChange={this.handleTimeStart}></input>
               <p>To date:</p>
               <input className="timeInput" type="date" name="trip-end" defaultValue="2021-01-01"
-                min="2021-01-01" max="2021-12-31" onChange={this.submitTimeEnd}></input>
+                min="2021-01-01" max="2021-12-31" onChange={this.handleTimeEnd}></input>
             </div>
           </div>
           <div className="selectedTime">

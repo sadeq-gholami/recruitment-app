@@ -164,7 +164,6 @@ class Model extends ObservableModel {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            console.log("RESPONSE " + response);
             return response.json();
         }).catch(error => {
             console.log("ERROR " + error);

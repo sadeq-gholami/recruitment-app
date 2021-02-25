@@ -20,6 +20,8 @@ class ApplicantDisplayAll extends Component {
      */
     resetChoices = async e => {
         this.props.model.resetState();
+        localStorage.removeItem("listSelected");
+        localStorage.removeItem("listSelectedTime");
     }
 
     /**
