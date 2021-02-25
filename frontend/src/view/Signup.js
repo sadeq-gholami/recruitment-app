@@ -3,71 +3,132 @@ import { Link, Route } from "react-router-dom";
 import "../style/Signup.css";
 
 /**
- * This class is not done yet
+ * This class handles applicant signup
  */
 class Signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
-            firstname: "",
-            surname: "",
-            email: "",
-            ssn: "",
-            username: "", //log in 
-            password: "", //log in
-
+            _id: null,
+            firstname: null,
+            surname: null,
+            email: null,
+            ssn: null,
+            username: null,
+            password: null,
         }
-
     }
 
+    /**
+     * Sets the state of firstname
+     * @param { the event from onChange } e 
+     */
     handleFirstname = e => {
         this.setState({ firstname: e.target.value });
     }
 
+    /**
+     * Sets the state of surname
+     * @param { the event from onChange } e 
+     */
     handleSurname = e => {
         this.setState({ surname: e.target.value });
     }
 
+    /**
+     * Sets the state of email 
+     * @param { the event from onChange } e 
+     */
     handleEmail = e => {
         this.setState({ email: e.target.value });
     }
 
+    /**
+     * Sets the state of social security number 
+     * @param { the event from onChange } e 
+     */
     handleSsn = e => {
         this.setState({ ssn: e.target.value });
     }
+
+    /**
+     * Sets the state of username
+     * @param { the event from onChange } e 
+     */
     handleUsername = e => {
         this.setState({ username: e.target.value });
     }
 
+    /**
+     * Sets the state of password
+     * @param { the event from onChange } e 
+     */
     handlePassword = e => {
         this.setState({ password: e.target.value });
     }
 
+    /**
+    * Checks all values inputted by the user and is validated
+    * If everything is correct, set values for user in model
+    * then call backend to save user
+    * @param { the event from onChange } e 
+    */
     submitSignup = async e => {
-        e.preventDefault();
-        this.props.model.setSignup({
-            firstname: this.state.firstname,
-            surname: this.state.surname,
-            email: this.state.email,
-            ssn: this.state.ssn,
-            username: this.state.username,
-            password: this.state.password
-        });
-        await this.props.model.signup().then(result => {
-            //allt gick ok
-            console.log(result);
-            /*if(result.status == 200){
-                this.props.model.saveState();
-                //window.location.replace('/applicantfirstpage');
-            }   */
-        }).catch(err => {
-            //error från sever
-            window.alert(err);
-            console.log(err);
-        });
+        const firstnameRegex = new RegExp("(?=.{1,})");
+        const surnameRegex = new RegExp("(?=.{1,})");
+        const emailRegex = new RegExp("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+        const ssnRegex = /^(\d{6}|\d{8})[-|(\s)]{0,1}\d{4}$/;
+        const usernameRegex = new RegExp("(?=.{4,})");
+        const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+
+        if (!firstnameRegex.test(this.state.firstname)) {
+            window.alert("First name must be at least one character");
+        }
+        else if (!surnameRegex.test(this.state.surname)) {
+            window.alert("Surname must be at least one character");
+        }
+        else if (!emailRegex.test(this.state.email)) {
+            window.alert("Email must be in the format: characters@characters.domain");
+        }
+        else if (!ssnRegex.test(this.state.ssn)) {
+            window.alert("SSN must be format YYMMDD-XXXX");
+        }
+        else if (!usernameRegex.test(this.state.username)) {
+            window.alert("Username must be at least 4 characters");
+        }
+        else if (!passwordRegex.test(this.state.password)) {
+            window.alert("Password must be at least 8 characters, one uppercase letter and contain at least one number");
+        }
+        else {
+            this.props.model.setSignup({
+                firstname: this.state.firstname,
+                surname: this.state.surname,
+                email: this.state.email,
+                ssn: this.state.ssn,
+                username: this.state.username,
+                password: this.state.password
+            });
+            await this.props.model.signup().then(result => {
+                if (result.status == 200) {
+                    this.props.model.saveState();
+                    window.location.replace('/applicantfirstpage');
+                }
+            }).catch(err => {
+                if (err.responseStatus.status == 401) {
+                    const error = Object.keys(err.data.err.keyValue)[0];
+                    window.alert("Sign up failed, " + error + " already taken.")
+                }
+                else {
+                    window.alert("Server error")
+                    console.log(err);
+                }
+            });
+        }
     }
 
+    /**
+     * Renders the HTML code
+     */
     render() {
         return (
             <div className="signup-base">
@@ -97,7 +158,7 @@ class Signup extends Component {
                         </div>
                     </div>
                     <div className="dotdiv">
-                        <p className="dottext">Date of birth (YYMMDD-XXXX)</p>
+                        <p className="dottext">Social Security Number (YYMMDD-XXXX)</p>
                         <div className="inputdiv4">
                             <input className="input4" onChange={this.handleSsn}></input>
                             <span className="check4">&#10003;</span>
@@ -122,9 +183,7 @@ class Signup extends Component {
                     <button className="confirmbutton" onClick={this.submitSignup}>Confirm and save</button>
                 </div>
                 <div className="confirmbuttondiv">
-                   
-                        <button className="confirmbutton">Back</button>
-                    
+                    <button className="confirmbutton">Back</button>
                 </div>
             </div>
         );
