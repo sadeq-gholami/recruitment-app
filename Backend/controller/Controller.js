@@ -55,6 +55,11 @@ class Controller {
       throw err;
     });
   }
+  async getUserByUsername(username) {
+    return await this.userDAO.getUserByUsername(username).catch((err) => {
+      throw err;
+    });
+  }
 
   /**
    * validate the user 

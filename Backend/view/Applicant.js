@@ -1,5 +1,6 @@
 "use strict";
 const RequestHandler = require('./RequestHandler');
+const Authentication = require('./authentication/Authentication');
 /**
  * Handles applicant, gets and updates information about an applicant
  * Inherits the requestHandler class
@@ -26,12 +27,15 @@ class Applicant extends RequestHandler {
          * On error send 500 and error as json object
          */
         this.router.get('/competence', async (req, res, next) => {
+           if(!(await Authentication.isLoggedIn(req,res,this.controller))){
+               return;
+           }
             const competences = await this.controller.getCompetence().then(result => {
                 return result;
             })
-                .catch(err => {
-                    res.status(500).json({ err: err });
-                });
+            .catch(err => {
+                res.status(500).json({ err: err });
+            });
             res.status(200).json({ competences: competences });
         });
 
@@ -42,6 +46,9 @@ class Applicant extends RequestHandler {
          * On error send 500 and error as json object
          */
         this.router.post('/competence_profile/:userId', async (req, res, next) => {
+            if(!(await Authentication.isLoggedIn(req,res,this.controller))){
+                return;
+            }
             const userId = req.params.userId;
             const compProfile = {
                 personID: userId,
@@ -62,6 +69,9 @@ class Applicant extends RequestHandler {
          * On error send 500 and error as json object
          */
         this.router.post('/application_status/:userId', async (req, res, next) => {
+            if(!(await Authentication.isLoggedIn(req,res,this.controller))){
+                return;
+            }
             const userId = req.params.userId;
             await this.controller.postApplicationStatus(userId).then(result => {
                 res.status(200).json({ result: result })
@@ -76,6 +86,9 @@ class Applicant extends RequestHandler {
          * On error send 500 and error as json object
          */
         this.router.post('/availability/:userId', async (req, res, next) => {
+            if(!(await Authentication.isLoggedIn(req,res,this.controller))){
+                return;
+            }
             const userId = req.params.userId;
             const availability = {
                 personId: userId,
@@ -96,6 +109,9 @@ class Applicant extends RequestHandler {
          * On error send 500 and error as json object
          */
         this.router.put('/update_ready/:userId', async (req, res, next) => {
+            if(!(await Authentication.isLoggedIn(req,res,this.controller))){
+                return;
+            }
             await this.controller.updateReady(req.params.userId).then(result => {
                 res.status(200).json({ result: result });
             }).catch(err => {

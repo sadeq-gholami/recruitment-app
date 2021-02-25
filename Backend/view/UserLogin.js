@@ -1,5 +1,6 @@
 "use strict";
 const RequestHandler = require('./RequestHandler');
+const Authentication = require('./authentication/Authentication');
 /**
  * Handles user login. User sends username and password 
  * and it is checked against the database
@@ -37,6 +38,7 @@ class UserLogin extends RequestHandler {
             if (user == null) {
                 res.status(401).json({ error: 'Login failed' });
             } else {
+                Authentication.setAuthCookie(user,res);
                 res.status(200).json({ user: user });
             }
         })
