@@ -15,6 +15,10 @@ import ApplicantDisplayAll from "./view/ApplicantDisplayAll";
 import ApplicantConfirm from "./view/ApplicantConfirm";
 import Model from "./model/Model";
 
+/**
+ * This class handles the routing between 
+ * views, footer and header
+ */
 class App extends Component {
   constructor(props) {
     super(props);
@@ -24,8 +28,10 @@ class App extends Component {
     };
   }
 
+  /**
+   * Renders the HTML code
+   */
   render() {
-
     return (
       <div className="App">
         <header className="App-header">
@@ -33,7 +39,6 @@ class App extends Component {
             <p className="jobs">Jobs</p>
             <p className="aboutus">About us</p>
             <p className="contact">Contact</p>
-
           </div>
         </header>
 
@@ -47,18 +52,14 @@ class App extends Component {
           <Route path="/applicantseconddisplay" render={(props) => { return <ApplicantSecondDisplay {...props} model={this.state.model} /> }} />
           <Route path="/applicantdisplayall" render={(props) => { return <ApplicantDisplayAll {...props} model={this.state.model} /> }} />
           <Route path="/applicantconfirm" render={(props) => { return <ApplicantConfirm {...props} model={this.state.model} /> }} />
-
         </Router>
-
 
         <footer className="footer">
           <p className="contactfooter">Contact</p>
         </footer>
       </div>
-
     );
   }
-
 }
 
 export default App;

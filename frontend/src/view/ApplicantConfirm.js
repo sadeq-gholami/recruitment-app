@@ -2,13 +2,20 @@ import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
 import "../style/Applicant.css";
 
+/**
+ * This class displays the selected
+ * competence and time period of the Applicant
+ */
 class ApplicantConfirm extends Component {
     constructor(props) {
         super(props);
     }
 
+    /**
+     * Renders the competence data
+     * To fix: duplicate code
+     */
     renderComp() {
-        //Comp
         let competence = this.props.model.getCompetence();
         let key1 = 0;
         let c = competence.map(comp => (
@@ -26,8 +33,11 @@ class ApplicantConfirm extends Component {
         return c;
     }
 
+    /**
+     * Renders the time period data
+     * To fix: duplicate code
+     */
     renderTime() {
-        //Time
         let time = this.props.model.getTimePeriod();
         let key2 = 0;
         let t = time.map(time => (
@@ -45,6 +55,10 @@ class ApplicantConfirm extends Component {
         return t;
     }
 
+    /**
+    * Renders the HTML code
+    * Uses the data from the model and displays it
+    */
     render() {
         this.props.model.restoreState();
         let c = this.renderComp();

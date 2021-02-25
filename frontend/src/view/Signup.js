@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
 import "../style/Signup.css";
 
+/**
+ * This class is not done yet
+ */
 class Signup extends Component {
     constructor(props) {
         super(props);

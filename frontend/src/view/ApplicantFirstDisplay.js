@@ -2,19 +2,19 @@ import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
 import "../style/Applicant.css";
 
+/**
+ * This class displays the selected
+ * competence of the Applicant
+ */
 class ApplicantFirstDisplay extends Component {
     constructor(props) {
         super(props);
     }
-
-    componentDidMount() {
-    }
-
-    resetLocalstorage() {
-        //save state
-        //localStorage.removeItem("listSelected");
-    }
-
+    
+    /**
+     * Renders the HTML code
+     * Uses the data from the model and displays it
+     */
     render() {
         this.props.model.restoreState();
 
@@ -46,7 +46,7 @@ class ApplicantFirstDisplay extends Component {
                     </div>
                     <div className="savebuttondiv">
                         <Link to="/applicantsecondpage">
-                            <button className="savebutton" onClick={this.resetLocalstorage}>Save & continue</button>
+                            <button className="savebutton">Save & continue</button>
                         </Link>
                     </div>
                     <div className="savebuttondiv">

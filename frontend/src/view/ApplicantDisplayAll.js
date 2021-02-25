@@ -2,21 +2,38 @@ import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
 import "../style/Applicant.css";
 
+/**
+ * This class displays the selected
+ * competence and time period of the applicant
+ * and gives the applicant the choice
+ * to submit or cancel the application
+ */
 class ApplicantDisplayAll extends Component {
     constructor(props) {
         super(props);
     }
 
+    /**
+     * Resets the saved competence and time period
+     * from local storage
+     * @param { the event from onClick } e 
+     */
     resetChoices = async e => {
         this.props.model.resetState();
     }
 
+    /**
+     * Saves selected data in database
+     * @param { the event from onClick } e 
+     */
     submitApp = async e => {
         this.props.model.submitApp();
     }
 
+    /**
+     * Renders the competence data
+     */
     renderComp() {
-        //Comp
         let competence = this.props.model.getCompetence();
         let key1 = 0;
         let c = competence.map(comp => (
@@ -34,8 +51,10 @@ class ApplicantDisplayAll extends Component {
         return c;
     }
 
+    /**
+     * Renders the time period data
+     */
     renderTime() {
-        //Time
         let time = this.props.model.getTimePeriod();
         let key2 = 0;
         let t = time.map(time => (
@@ -53,6 +72,10 @@ class ApplicantDisplayAll extends Component {
         return t;
     }
 
+    /**
+    * Renders the HTML code
+    * Uses the data from the model and displays it
+    */
     render() {
         this.props.model.restoreState();
         let c = this.renderComp();

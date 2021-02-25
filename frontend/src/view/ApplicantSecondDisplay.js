@@ -2,11 +2,19 @@ import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
 import "../style/Applicant.css";
 
+/**
+ * This class displays the selected
+ * time period of the Applicant
+ */
 class ApplicantSecondDisplay extends Component {
   constructor(props) {
     super(props);
   }
 
+  /**
+   * Renders the HTML code
+   * Uses the data from the model and displays it
+   */
   render() {
     this.props.model.restoreState();
 

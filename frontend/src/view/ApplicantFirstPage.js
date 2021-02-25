@@ -4,6 +4,11 @@ import "../style/Applicant.css";
 let c = null;
 let addedComp = null;
 
+/**
+ * This class handles the Applicants
+ * choice of competence and stores 
+ * it in local storage
+ */
 class ApplicantFirstPage extends Component {
 
     constructor(props) {
@@ -18,9 +23,15 @@ class ApplicantFirstPage extends Component {
         }
     }
 
+    /**
+     * On start up it gets all the
+     * competences from the database,
+     * clears the local storage and
+     * sets state for status,
+     * competence, name and id
+     */
     componentDidMount() {
         localStorage.clear();
-        this.props.model.addObserver(this);
         this.props.model
             .getAllCompetences()
             .then(competence => {
@@ -28,7 +39,6 @@ class ApplicantFirstPage extends Component {
                     this.setState({ status: "ADDED" });
                     this.setState({ listSelected: JSON.parse(localStorage.getItem("listSelected")) });
                 }
-                console.log(competence);
                 this.setState({
                     status: "LOADED",
                     competence: competence,
@@ -43,6 +53,12 @@ class ApplicantFirstPage extends Component {
             });
     }
 
+    /**
+     * Gets the event with the competence
+     * and sets the state of the competence
+     * and updates the belonging name and id
+     * @param { the event from onChange } e 
+     */
     submitCompetence = async e => {
         this.setState({ _id: e.target.value });
         let name;
@@ -54,17 +70,29 @@ class ApplicantFirstPage extends Component {
         this.setState({ name: name });
     }
 
+    /**
+     * Sets the state of years of experience 
+     * @param { the event from onChange } e 
+     */
     submitYears = async e => {
         this.setState({ yearsOfExperience: e.target.value });
     }
 
+    /**
+     * Sets the competence, sets and saves the state
+     * @param { the event from onClick } e 
+     */
     submitComp = async e => {
-        e.preventDefault();
         this.props.model.setCompetence(this.state.listSelected);
         this.props.model.saveState();
-        window.location.href = '/applicantfirstdisplay';
     }
 
+    /**
+     * Adds the selected competence to an array 
+     * and saves the array in local storage
+     * Sets the state for status to update render
+     * @param { the event from onClick } e 
+     */
     addComp = async e => {
         e.preventDefault();
         console.log("ADD ");
@@ -81,13 +109,12 @@ class ApplicantFirstPage extends Component {
         });
     }
 
-    update() {
-    }
-
+    /**
+     * Renders the HTML code
+     * Uses the data from the model and displays it
+     */
     render() {
         this.props.model.restoreState();
-
-        console.log("RENDER ");
 
         switch (this.state.status) {
             case "LOADING":
@@ -100,7 +127,6 @@ class ApplicantFirstPage extends Component {
                 break;
             case "ADDED":
                 let key = 0;
-                console.log("CASE ");
                 addedComp = this.state.listSelected.map(selected => (
                     <div key={key++}>
                         <div key={key++} className="addedCompDiv">
@@ -114,7 +140,6 @@ class ApplicantFirstPage extends Component {
                             </div>
                         </div>
                     </div>
-
                 ));
                 break;
             default:
@@ -157,7 +182,7 @@ class ApplicantFirstPage extends Component {
                         </div>
                     </div>
                     <div className="selected">
-                    Selected expertise and years: {addedComp}
+                        Selected expertise and years: {addedComp}
                     </div>
                     <div className="savebuttondiv">
                         <button className="savebutton" onClick={this.addComp}>Add expertise</button>
@@ -167,7 +192,6 @@ class ApplicantFirstPage extends Component {
                             <button className="savebutton" onClick={this.submitComp}>Save</button>
                         </Link>
                     </div>
-
                 </div>
             </div>
         );

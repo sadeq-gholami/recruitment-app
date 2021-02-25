@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
 import "../style/Home.css";
-import Signup from "./Signup";
 
+/**
+ * This class displays the home page
+ * and route user to sign up or log in page
+ */
 class Home extends Component {
     constructor(props) {
         super(props);
     }
 
+    /**
+     * Renders the HTML code
+     */
     render() {
         return (
             <div className="welcome">

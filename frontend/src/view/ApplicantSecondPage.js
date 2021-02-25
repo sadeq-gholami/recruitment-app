@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
 import "../style/Applicant.css";
 
-//let addedTime = null;
-
+/**
+ * This class handles the Applicants
+ * choice of time period and stores 
+ * it in local storage
+ */
 class ApplicantSecondPage extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +18,10 @@ class ApplicantSecondPage extends Component {
     }
   }
 
+  /**
+   * Checks if local storage exists, if it
+   * does - displays the content, else do nothing
+   */
   componentDidMount() {
     if (localStorage.getItem("listSelectedTime") != null) {
       this.setState({ status: "ADDED" });
@@ -22,14 +29,37 @@ class ApplicantSecondPage extends Component {
     }
   }
 
+  /**
+  * Sets the start time and sets the state
+  * @param { the event from onChange } e 
+  */
   submitTimeStart = async e => {
     this.setState({ startTime: e.target.value });
   }
 
+  /**
+  * Sets the end time and sets the state
+  * @param { the event from onChange } e 
+  */
   submitTimeEnd = async e => {
     this.setState({ endTime: e.target.value });
   }
 
+  /**
+   * Sets the time period, sets and saves the state
+   * @param { the event from onClick } e 
+   */
+  submitTime = async e => {
+    this.props.model.setTimePeriod(this.state.listSelected);
+    this.props.model.saveState();
+  }
+
+  /**
+  * Adds the selected time period to an array 
+  * and saves the array in local storage
+  * Sets the state for status to update render
+  * @param { the event from onClick } e 
+  */
   addTimePeriod = async e => {
     this.state.listSelected.push({
       startTime: this.state.startTime,
@@ -41,14 +71,12 @@ class ApplicantSecondPage extends Component {
     this.setState({
       status: "ADDED"
     });
-
   }
 
-  submitTime = async e => {
-    this.props.model.setTimePeriod(this.state.listSelected);
-    this.props.model.saveState();
-  }
-
+  /**
+   * Renders the HTML code
+   * Uses the data from the model and displays it
+   */
   render() {
     let addedTime = null;
 
