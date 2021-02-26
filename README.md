@@ -17,7 +17,8 @@ The website is hosted on Firebase and can be reached through (https://recruitmen
 ##### Tests
 ##### Validation
 ##### Authorization
-##### transaction management
+##### Transaction management
+##### Error handling
 
 ## Backend 
 The backend is developed using NodeJs and Express and follows the MVC pattern.
