@@ -23,7 +23,7 @@ The backend is developed using NodeJs and Express and follows the MVC pattern.
 The Frontend is developed using React.js and thus the model Model View ViewModel (MVVM) is automatically implemented in order to separate View from the business logic.
 
 ## Credits
-##### Project developers:
+ Project developers:
 ##### Amanda Heynes
 ##### Ina Rickman
 ##### Sadeq Gholami
