@@ -10,6 +10,7 @@ The website is hosted on Firebase and can be reached through (https://recruitmen
 ##### Succeeded with simple Rest Requests posting userLogin, posting expertise or getting all applicants.
 ##### No spaghetti-like code.
 ##### Authentication.
+##### Authorization
 
 ### Unchecked
 ##### Database migration
