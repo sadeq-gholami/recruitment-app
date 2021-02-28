@@ -70,25 +70,18 @@ class ApplicantConfirm extends Component {
                     <p>Thank you for your interest! Your application has been successfully submitted!</p>
                 </div>
                 <div className="inputfielddiv">
-                    <div className="exdiv">
-                        <p className="extext">Expertise</p>
-                        <div className="inputdiv1">
-                            <div className="exchoice">
-                                <p className="expertise">expertise</p>
+                <div className="displayAllComp">
+                        <div className="displayCompDiv">
+                            <div className="displayComp">
                                 {c}
                             </div>
-                            <span className="check1">&#10003;</span>
                         </div>
                     </div>
-
-                    <div className="timediv">
-                        <p className="timetext">Time period</p>
-                        <div className="inputdiv1">
-                            <div className="timechoice">
-                                <p className="time">time</p>
+                    <div className="displayAllTime">
+                        <div className="displayTimeDiv">
+                            <div className="displayTime">
                                 {t}
                             </div>
-                            <span className="check1">&#10003;</span>
                         </div>
                     </div>
                 </div>

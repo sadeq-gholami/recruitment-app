@@ -27,9 +27,9 @@ class Applicant extends RequestHandler {
          * On error send 500 and error as json object
          */
         this.router.get('/competence', async (req, res, next) => {
-           if(!(await Authentication.isLoggedIn(req,res,this.controller))){
-               return;
-           }
+           //if(!(await Authentication.isLoggedIn(req,res,this.controller))){
+            //   return;
+           //}
             const competences = await this.controller.getCompetence().then(result => {
                 return result;
             })
