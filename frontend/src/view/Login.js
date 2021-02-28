@@ -9,8 +9,8 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "", //log in 
-            password: "", //log in
+            username: "",
+            password: "",
         }
     }
 
@@ -22,17 +22,26 @@ class Login extends Component {
         this.setState({ password: e.target.value });
     }
 
-    submitLogin = async e =>{
-        console.log("hej  " + this.props.model);
-        e.preventDefault();     
-        await this.props.model.login(this.state.username, this.state.password).then(result =>{
-            console.log("res  ");
-            console.log(result);
-            //auth - window replace
-        }).catch(err =>{
-            console.log(err)
+    submitLogin = async e => {
+        e.preventDefault();
+        await this.props.model.login(this.state.username, this.state.password).then(result => {
+            if (result.responseStatus.status == 200) {
+                this.props.model.saveState();
+                if (result.data.user.role === "recruiter") {
+                    window.location.replace('/recruiterfirstpage');
+                } else {
+                    window.location.replace('/applicantfirstpage');
+                }
+            }
+        }).catch(err => {
+            if (err.status == 401) {
+                window.alert("Sign up failed, username or password incorrect")
+            }
+            else {
+                window.alert("Server error");
+                console.log(err);
+            }
         });
-        
     }
 
     render() {
@@ -52,12 +61,12 @@ class Login extends Component {
                     <div className="passworddiv">
                         <p className="passwordtext">Password</p>
                         <div className="inputdiv2">
-                            <input className="input2" onChange={this.handlePassword}></input >
+                            <input className="input2" type="password" onChange={this.handlePassword}></input >
                             <span className="check2">&#10003;</span>
                         </div>
                     </div>
                     <div className="loginbuttondiv">
-                        <Link to = "/applicantfirstpage">
+                        <Link to="/applicantfirstpage">
                             <button className="loginbutton" onClick={this.submitLogin}>Login</button>
                         </Link>
                     </div>

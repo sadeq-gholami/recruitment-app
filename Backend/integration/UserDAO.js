@@ -30,11 +30,9 @@ class UserDAO {
     const savedUser = await user.save()
       .then(result => {
         return result;
-
       })
       .catch(err => {
         throw err;
-
       });
     return savedUser;
   }
@@ -183,18 +181,18 @@ class UserDAO {
     } else
       return appReady[0];
   }
-  async getUserByUsername(username){
+  async getUserByUsername(username) {
     const user = await User.find({ username: username })
       .select('_id firstname surname ssn email role username password')
       .exec()
       .then(docs => {
         return docs;
       });
-      if(user.length < 1) {
-        return null;
-      }else {
-        return user[0];
-      }
+    if (user.length < 1) {
+      return null;
+    } else {
+      return user[0];
+    }
 
   }
 }

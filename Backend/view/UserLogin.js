@@ -32,14 +32,13 @@ class UserLogin extends RequestHandler {
         this.router.post('/', async (req, res, next) => {
             const user = await this.controller.login(req.body.username, req.body.password).then(result => {
                 return result;
-            })
-                .catch(err => {
-                    res.status(500).json({ err: err });
-                });
+            }).catch(err => {
+                res.status(500).json({ err: err });
+            });
             if (user == null) {
                 res.status(401).json({ error: 'Login failed' });
             } else {
-                Authentication.setAuthCookie(user,res);
+                Authentication.setAuthCookie(user, res);
                 res.status(200).json({ user: user });
             }
         })

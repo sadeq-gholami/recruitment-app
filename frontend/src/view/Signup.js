@@ -97,7 +97,7 @@ class Signup extends Component {
             window.alert("Username must be at least 4 characters");
         }
         else if (!passwordRegex.test(this.state.password)) {
-            window.alert("Password must be at least 8 characters, one uppercase letter and contain at least one number");
+            window.alert("Password must be at least 8 characters, one lowercase letter, one uppercase letter and contain at least one number");
         }
         else {
             this.props.model.setSignup({
@@ -119,7 +119,7 @@ class Signup extends Component {
                     window.alert("Sign up failed, " + error + " already taken.")
                 }
                 else {
-                    window.alert("Server error")
+                    window.alert("Server error");
                     console.log(err);
                 }
             });

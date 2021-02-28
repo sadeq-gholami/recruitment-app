@@ -27,15 +27,15 @@ class Applicant extends RequestHandler {
          * On error send 500 and error as json object
          */
         this.router.get('/competence', async (req, res, next) => {
-           //if(!(await Authentication.isLoggedIn(req,res,this.controller))){
-            //   return;
-           //}
+            if (!(await Authentication.isLoggedIn(req, res, this.controller))) {
+                return;
+            }
             const competences = await this.controller.getCompetence().then(result => {
                 return result;
             })
-            .catch(err => {
-                res.status(500).json({ err: err });
-            });
+                .catch(err => {
+                    res.status(500).json({ err: err });
+                });
             res.status(200).json({ competences: competences });
         });
 
@@ -46,7 +46,7 @@ class Applicant extends RequestHandler {
          * On error send 500 and error as json object
          */
         this.router.post('/competence_profile/:userId', async (req, res, next) => {
-            if(!(await Authentication.isLoggedIn(req,res,this.controller))){
+            if (!(await Authentication.isLoggedIn(req, res, this.controller))) {
                 return;
             }
             const userId = req.params.userId;
@@ -69,7 +69,7 @@ class Applicant extends RequestHandler {
          * On error send 500 and error as json object
          */
         this.router.post('/application_status/:userId', async (req, res, next) => {
-            if(!(await Authentication.isLoggedIn(req,res,this.controller))){
+            if (!(await Authentication.isLoggedIn(req, res, this.controller))) {
                 return;
             }
             const userId = req.params.userId;
@@ -86,7 +86,7 @@ class Applicant extends RequestHandler {
          * On error send 500 and error as json object
          */
         this.router.post('/availability/:userId', async (req, res, next) => {
-            if(!(await Authentication.isLoggedIn(req,res,this.controller))){
+            if (!(await Authentication.isLoggedIn(req, res, this.controller))) {
                 return;
             }
             const userId = req.params.userId;
@@ -109,7 +109,7 @@ class Applicant extends RequestHandler {
          * On error send 500 and error as json object
          */
         this.router.put('/update_ready/:userId', async (req, res, next) => {
-            if(!(await Authentication.isLoggedIn(req,res,this.controller))){
+            if (!(await Authentication.isLoggedIn(req, res, this.controller))) {
                 return;
             }
             await this.controller.updateReady(req.params.userId).then(result => {

@@ -130,7 +130,7 @@ class ApplicationDAO {
     if (avail.length < 1) {
       return null;
     } else {
-      return avail[0];
+      return avail;
     }
   }
 }

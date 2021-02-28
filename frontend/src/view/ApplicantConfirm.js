@@ -10,6 +10,9 @@ class ApplicantConfirm extends Component {
     constructor(props) {
         super(props);
     }
+    componentDidMount(){
+        this.props.model.resetState();
+    }
 
     /**
      * Renders the competence data

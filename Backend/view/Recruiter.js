@@ -33,10 +33,11 @@ class Recruiter extends RequestHandler {
     this.router.get("/get_applicants", async (req, res, next) => {
       var fullApplication = [];
       var fullCompetenceProfile = [];
+      var fullAvailProfile = [];
       const allApplicants = await this.getAllApplicants(req, res);
 
       for (const user of allApplicants) {
-        const avail = await this.getAllAvailability(user._id, res);
+        const avail = await this.getAllAvailability(user._id, res, fullAvailProfile);
         await this.getAllCompetenceProfiles(user._id, res, fullCompetenceProfile);
         const status = await this.getAllStatus(user._id, res);
         const ready = await this.getAllReady(user._id, res);
@@ -49,16 +50,13 @@ class Recruiter extends RequestHandler {
           ssn: user.ssn,
           email: user.email,
           username: user.username,
-          availability: {
-            fromDate: avail.fromDate,
-            toDate: avail.toDate,
-          },
+          availability: fullAvailProfile,
           competence: fullCompetenceProfile,
           status: status.status,
           ready: ready.date
         });
         fullCompetenceProfile = [];
-
+        fullAvailProfile = [];
       };
       res.status(200).json({ result: fullApplication });
     });
@@ -101,7 +99,7 @@ class Recruiter extends RequestHandler {
    * @param {used to send response} res 
    * @return availability for specific user
    */
-  async getAllAvailability(userID, res) {
+  async getAllAvailability(userID, res, fullAvailProfile) {
     var avail = await this.controller
       .getAvailability(userID).then(result => {
         return result;
@@ -113,8 +111,11 @@ class Recruiter extends RequestHandler {
         fromDate: null,
         toDate: null,
       };
+    } else {
+      fullAvailProfile.push({
+        avail
+      });
     }
-    return avail;
   }
 
   /**

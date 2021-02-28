@@ -53,6 +53,8 @@ class Model extends ObservableModel {
         localStorage.removeItem("timePeriod");
         this.setCompetence({ competence: {} });
         this.setTimePeriod({ timePeriod: {} });
+        localStorage.removeItem("listSelected");
+        localStorage.removeItem("listSelectedTime");
     }
 
     /**
@@ -80,7 +82,6 @@ class Model extends ObservableModel {
                 return response.json();
             }).then(data => {
                 if (responseStatus.status == 200) {
-                    console.log(data.createUser._id);
                     this.user._id = data.createUser._id;
                     return responseStatus;
                 }
@@ -120,7 +121,7 @@ class Model extends ObservableModel {
      * @return the json object from the backend
      */
     async login(name, pass) {
-        console.log(name + "   " + pass);
+        let responseStatus;
         return fetch("http://localhost:5000/login", {
             method: 'POST',
             headers: {
@@ -130,10 +131,18 @@ class Model extends ObservableModel {
                 username: name,
                 password: pass
             })
-        }).then(response => {
-            return response;
+        }) .then(response => {
+            responseStatus = response;
+            return response.json();
+        }).then(data => {
+            if (responseStatus.status == 200) {
+                this.user._id = data.user._id;
+                return {responseStatus, data};
+            }
+            else {
+                throw responseStatus;
+            }
         }).catch(error => {
-            console.log('error');
             throw error
         })
     }
@@ -193,17 +202,21 @@ class Model extends ObservableModel {
     submitApp() {
         this.competence.map(comp => {
             this.submitCompetenceProfile(comp);
-        })
+        });
+        this.timePeriod.map(time => {
+            this.submitTimePeriod(time);
+        });
+        this.updateReady();
+        this.addApplicationStatus();
     }
 
     /**
      * Adds the competence profile for the specific 
      * user to the backend
-     * Not done yet
      * @param { the competence object } comp 
      */
     async submitCompetenceProfile(comp) {
-        return fetch("http://localhost:5000/applicant/competence_profile/" + "601402bc1af31539e8052bfc", {
+        return fetch("http://localhost:5000/applicant/competence_profile/" + this.user._id, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -213,10 +226,64 @@ class Model extends ObservableModel {
                 yearsOfExperience: comp.yearsOfExperience
             })
         }).then(response => {
-            console.log(response);
             return response;
         }).catch(error => {
-            console.log('error');
+            throw error
+        })
+    }
+
+    /**
+     * Adds availability for the specific 
+     * user to the backend 
+     * @param { the time period object } time 
+     */
+    async submitTimePeriod(time) {
+        return fetch("http://localhost:5000/applicant/availability/" + this.user._id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                fromDate: time.startTime,
+                toDate: time.endTime
+            })
+        }).then(response => {
+            return response;
+        }).catch(error => {
+            throw error
+        })
+    }
+
+    /**
+     * Update ready status for the specific 
+     * user to the backend 
+     */
+    async updateReady() {
+        return fetch("http://localhost:5000/applicant/update_ready/" + this.user._id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            return response;
+        }).catch(error => {
+            throw error
+        })
+    }
+
+    /**
+     * Add application status for the specific 
+     * user to the backend 
+     */
+    async addApplicationStatus() {
+        return fetch("http://localhost:5000/applicant/application_status/" + this.user._id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            return response;
+        }).catch(error => {
             throw error
         })
     }

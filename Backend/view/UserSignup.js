@@ -40,18 +40,30 @@ class UserSignup extends RequestHandler {
                 username: req.body.username
             }
             const createdUser = await this.controller.createUser(user).then(result => {
+                console.log("result");
+                console.log(result);
                 return result;
             })
                 .catch(err => {
-                    res.status(401).json({ err: err });
+                    console.log("error");
+                    console.log(err);
+                    if(err._message === "User validation failed") {
+                        res.status(401).json({ err: err });
+                    } else if(err.name === "MongoError"){
+                        res.status(401).json({ err: err });
+                    }else {
+                        res.status(500).json({ err: err });
+                    }
                 });
-            await this.controller.createReadyTable(createdUser._id)
+            if(createdUser != null){
+                await this.controller.createReadyTable(createdUser._id)
                 .then(result => {
                     res.status(200).json({ createUser: createdUser })
                 })
                 .catch(err => {
                     res.status(500).json({ error: err });
                 });
+            }
         })
 
         /**
