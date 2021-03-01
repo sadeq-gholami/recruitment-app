@@ -1,11 +1,9 @@
 "use strict";
 const { Client } = require('pg');
-const bcrypt = require('bcrypt');
+const User = require('./User');
 const mongoose = require('mongoose');
 
 async function main() {
-    let personAry = [];
-
     const client = new Client({
         user: 'postgres',
         host: 'localhost',
@@ -13,9 +11,19 @@ async function main() {
         password: 'root',
         port: 5432,
     });
-
     client.connect();
 
+    await mongoose.set('useFindAndModify', false);
+    await mongoose.connect("add string from .env", { useNewUrlParser: true, useUnifiedTopology: true }
+    ).then(() => console.log("connected")).catch(err => (console.log(err)));
+    addUser(client);
+}
+
+/**
+ * Add all old user into the new database
+ */
+async function addUser(client) {
+    //query
     let user = await client.query('SELECT * FROM person;')
         .then(res => {
             return res;
@@ -25,47 +33,49 @@ async function main() {
         }).finally(() => {
             client.end();
         });
-
-    user.rows.map(async row => {
+    
+        let personAry = [];
+    //map on rows
+    await user.rows.map(async row => {
         let role;
         if (row.role_id === "1") {
             role = "recruiter";
         } else {
             role = "applicant";
         }
-        if(row.name == null) {
-            row.name = "no data";
-        }
-        if(row.surname == null) {
-            row.surname = "no data";
-        }
-        if(row.ssn == null) {
-            row.ssn = "no data";
-        }
-        if(row.email == null) {
-            row.email = "no data";
-        }
-        if(row.role_id == null) {
-            role = "applicant";
-        }
-        if(row.username == null && row.password == null && row.email != null){
+        if (row.username == null && row.password == null && row.email != null) {
             let username = generateRandomString();
             let password = generateRandomString();
-            sendEmail(row.email, {username: username, password: password});
+            sendEmail(row.email, { username: username, password: password });
             row.username = username;
             row.password = password;
         }
-        if(row.username == null) {
+        if (row.username == null) {
             row.username = generateRandomString();
-            if(row.email != null) {
-                sendEmail(row.email, {username: row.username});
+            if (row.email != null) {
+                sendEmail(row.email, { username: row.username });
             }
         }
-        if(row.password == null){
+        if (row.password == null) {
             row.password = generateRandomString();
-            if(row.email != null) {
-                sendEmail(row.email, {password: row.password});
+            if (row.email != null) {
+                sendEmail(row.email, { password: row.password });
             }
+        }
+        if (row.name == null) {
+            row.name = "no data";
+        }
+        if (row.surname == null) {
+            row.surname = "no data";
+        }
+        if (row.ssn == null) {
+            row.ssn = "no data for username: " + row.username;
+        }
+        if (row.email == null) {
+            row.email = "no data for username: " + row.username;
+        }
+        if (row.role_id == null) {
+            role = "applicant";
         }
         personAry.push({
             _id: new mongoose.Types.ObjectId(),
@@ -77,9 +87,35 @@ async function main() {
             role: role,
             username: row.username
         });
-        console.log(personAry);
     })
+
+    for(let user in personAry){
+       let res = await createUser(personAry[user]);
+       console.log(res);
+    }
 }
+
+async function createUser(newUser) {
+    const user = new User({
+      _id: newUser._id,
+      firstname: newUser.firstname,
+      surname: newUser.surname,
+      ssn: newUser.ssn,
+      email: newUser.email,
+      password: newUser.password,
+      role: newUser.role,
+      username: newUser.username
+    });
+
+    const savedUser = await user.save()
+      .then(result => {
+        return result;
+      })
+      .catch(err => {
+        throw err;
+      });
+    return savedUser;
+  }
 
 
 
@@ -87,15 +123,15 @@ async function main() {
  * Create a random string that consists of lowercase, uppercase letters and numbers
  * It is six characters long
  */
-function generateRandomString() { 
-    var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
-    let randString = ''; 
-    var len = string.length; 
-    for (let i = 0; i < 6; i++ ) { 
-        randString += string[Math.floor(Math.random() * len)]; 
-    } 
-    return randString; 
-} 
+function generateRandomString() {
+    var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let randString = '';
+    var len = string.length;
+    for (let i = 0; i < 6; i++) {
+        randString += string[Math.floor(Math.random() * len)];
+    }
+    return randString;
+}
 
 /**
  * Placeholder for sending email to user
@@ -107,7 +143,7 @@ function sendEmail(email, data) {
     console.log(data);
     //send email to user with data
 }
- 
+
 
 
 

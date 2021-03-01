@@ -10,6 +10,7 @@
     "mongodb": "^3.0.2",
     "mongoose": "^5.11.18",
     "mssql": "^4.1.0",
+    "nodemon": "^2.0.7",
     "pg": "^8.5.1"
   },
   "devDependencies": {},
