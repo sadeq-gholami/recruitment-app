@@ -144,7 +144,8 @@ class Recruiter extends RequestHandler {
       });
     } else {
       for (const competence of comp) {
-        await this.controller.getCompetenceById(competence.competenceID).then(allApplicants => {
+        await this.controller.getCompetenceById(competence.competenceID)
+        .then(allApplicants => {
           fullCompetenceProfile.push({
             name: allApplicants.name,
             yearsOfExperience: competence.yearsOfExperience
