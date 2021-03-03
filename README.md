@@ -5,8 +5,10 @@ The recruitment-App is created and developed for the cource Design of Global App
 The website is hosted on Firebase and can be reached through (https://recruitment-app-ebb93.web.app/).
 
 ## Installation
-Assuming that node.js is already installed, clone the git repository and run the following command line in the project root:
+Assuming that node.js is already installed, clone the git repository and run the following command line in the project root, `iv1201` directory:
+
 `npm install --prefix frontend backend `
+
 which installs the required npm packages in both frontend and backend.
 
 ## Check-List tasks:
