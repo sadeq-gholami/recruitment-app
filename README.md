@@ -6,7 +6,8 @@ The website is hosted on Firebase and can be reached through (https://recruitmen
 
 ## Installation
 Assuming that node.js is already installed, clone the git repository and run the following command line in the project root:
-`npm install --prefix frontend backend # installs the required npm packages in both frontend and backend`
+`npm install --prefix frontend backend `
+which installs the required npm packages in both frontend and backend.
 
 ## Check-List tasks:
 
