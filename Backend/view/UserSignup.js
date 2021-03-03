@@ -40,12 +40,10 @@ class UserSignup extends RequestHandler {
                 username: req.body.username
             }
             const createdUser = await this.controller.createUser(user).then(result => {
-                console.log("result");
                 console.log(result);
                 return result;
             })
                 .catch(err => {
-                    console.log("error");
                     console.log(err);
                     if(err._message === "User validation failed") {
                         res.status(401).json({ err: err });

@@ -17,7 +17,8 @@ class UserDAO {
    * @returns the saved user
    */
   async createUser(newUser) {
-    const user = new User({
+    const session = await mongoose.startSession();
+    const user = await User.create({
       _id: newUser.id,
       firstname: newUser.firstname,
       surname: newUser.surname,
@@ -27,13 +28,11 @@ class UserDAO {
       role: newUser.role,
       username: newUser.username
     });
-    const savedUser = await user.save()
-      .then(result => {
-        return result;
-      })
-      .catch(err => {
-        throw err;
-      });
+    let savedUser;
+    await session.withTransaction(async () => {
+      savedUser = await user.save({ session });
+    });
+    session.endSession();
     return savedUser;
   }
 
