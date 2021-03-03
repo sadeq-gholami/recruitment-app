@@ -44,10 +44,14 @@ class ApplicantFirstPage extends Component {
                     _id: competence.competences[0]._id
                 });
             })
-            .catch(() => {
-                this.setState({
-                    status: "ERROR"
-                });
+            .catch(err => {
+                if(err.status == 401){
+                    window.alert("Not logged routing to home");
+                } else {
+                    window.alert("Server error routing to home");
+                }
+                console.log(err);
+                window.location.replace("/");
             });
     }
 

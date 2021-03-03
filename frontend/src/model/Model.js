@@ -173,9 +173,14 @@ class Model extends ObservableModel {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
+            if(response.status == 401){
+                throw response;
+            }
+            if(response.status == 500){
+                throw response;
+            }
             return response.json();
         }).catch(error => {
-            console.log("ERROR " + error);
             throw error;
         })
     }
