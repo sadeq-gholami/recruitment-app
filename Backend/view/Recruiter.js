@@ -35,12 +35,31 @@ class Recruiter extends RequestHandler {
       var fullCompetenceProfile = [];
       var fullAvailProfile = [];
       const allApplicants = await this.getAllApplicants(req, res);
-
+      if (allApplicants == false) {
+        res.status(500).json({ error: "server error" });
+        return;
+      }
       for (const user of allApplicants) {
         const avail = await this.getAllAvailability(user._id, res, fullAvailProfile);
-        await this.getAllCompetenceProfiles(user._id, res, fullCompetenceProfile);
+        if(avail == false) {
+          res.status(500).json({ error: "server error" });
+          return;
+        }
+        const comp = await this.getAllCompetenceProfiles(user._id, res, fullCompetenceProfile);
+        if (comp == false){
+          res.status(500).json({ error: "server error" });
+          return;
+        }
         const status = await this.getAllStatus(user._id, res);
+        if (status == false){
+          res.status(500).json({ error: "server error" });
+          return;
+        }
         const ready = await this.getAllReady(user._id, res);
+        if (ready == false){
+          res.status(500).json({ error: "server error" });
+          return;
+        }
 
         //push all information to array
         fullApplication.push({
@@ -88,7 +107,7 @@ class Recruiter extends RequestHandler {
         return result;
       })
       .catch((err) => {
-        res.status(500).json({ error: err });
+        return false;
       });
     return results;
   }
@@ -104,7 +123,7 @@ class Recruiter extends RequestHandler {
       .getAvailability(userID).then(result => {
         return result;
       }).catch((err) => {
-        res.status(500).json({ error: err });
+        return false;
       });
     if (avail == null) {
       avail = {
@@ -143,17 +162,20 @@ class Recruiter extends RequestHandler {
         yearsOfExperience: null
       });
     } else {
-      for (const competence of comp) {
-        await this.controller.getCompetenceById(competence.competenceID)
-        .then(allApplicants => {
-          fullCompetenceProfile.push({
-            name: allApplicants.name,
-            yearsOfExperience: competence.yearsOfExperience
+      let res;
+        for (const competence of comp) {
+          res = await this.controller.getCompetenceById(competence.competenceID)
+          .then(allApplicants => {
+            fullCompetenceProfile.push({
+              name: allApplicants.name,
+              yearsOfExperience: competence.yearsOfExperience
+            });
+            return true;
+          }).catch((err) => {
+            console.log(err);
+            return false;
           });
-        }).catch((err) => {
-          res.status(500).json({ error: err });
-        });
-      }
+        } return res;
     }
   }
 
@@ -169,7 +191,7 @@ class Recruiter extends RequestHandler {
       .getStatus(userID).then(result => {
         return result;
       }).catch((err) => {
-        res.status(500).json({ error: err });
+        return false;
       });
     if (status == null) {
       status = {
@@ -188,7 +210,7 @@ class Recruiter extends RequestHandler {
     var ready = await this.controller.getReady(userID).then(result => {
       return result;
     }).catch(err => {
-      res.status(500).json({ error: err })
+      return false;
     });
     if (ready == null) {
       ready = { date: null };

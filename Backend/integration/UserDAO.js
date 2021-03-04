@@ -12,12 +12,13 @@ class UserDAO {
   }
 
   /**
-   * Creates a new user and saves it in database  
+   * Creates a new user and ready table, and saves it in database  
    * @param {all properties of a the user to be created} newUser 
    * @returns the saved user
    */
   async createUser(newUser) {
-    const user = new User({
+    const session = await mongoose.startSession();
+    const user = await User.create({
       _id: newUser.id,
       firstname: newUser.firstname,
       surname: newUser.surname,
@@ -27,13 +28,18 @@ class UserDAO {
       role: newUser.role,
       username: newUser.username
     });
-    const savedUser = await user.save()
-      .then(result => {
-        return result;
-      })
-      .catch(err => {
-        throw err;
-      });
+    const userReady = await ApplicationReady.create({
+      _id: new mongoose.Types.ObjectId(),
+      personID: newUser.id,
+      ready: false,
+      date: null,
+    });
+    let savedUser;
+    await session.withTransaction(async () => {
+      savedUser = await user.save({ session });
+      await userReady.save({ session });
+    });
+    session.endSession();
     return savedUser;
   }
 
@@ -43,24 +49,20 @@ class UserDAO {
    * @returns the updated user
    */
   async updateUser(user) {
-    console.log(user);
-    console.log(user.id);
-    const updatedUser = await User
-      .findOneAndUpdate({ _id: user.id },
-        {
-          firstname: user.firstname,
-          surname: user.surname,
-          ssn: user.ssn,
-          email: user.email,
-          password: user.hashedPassword,
-          username: user.username
-        }, { new: true, upsert: true })
-      .then(res => {
-        return res;
-      }).catch(err => {
-        throw err;
-      });
-    return updatedUser;
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    let update = await User.findOneAndUpdate({ _id: user.id }, {
+      firstname: user.firstname,
+      surname: user.surname,
+      ssn: user.ssn,
+      email: user.email,
+      password: user.password,
+      username: user.username,
+      role: user.role,
+    }, { new: true, upsert: true }).session(session);
+    await session.commitTransaction();
+    session.endSession();
+    return update;
   }
 
   /**
@@ -69,15 +71,11 @@ class UserDAO {
    * @returns the deleted user  
    */
   async deleteUser(personID) {
-    console.log(personID);
-    const deletedUser = await User.findOneAndRemove({ _id: personID })
-      .exec()
-      .then(res => {
-        return res;
-      }).catch(err => {
-        console.log("error " + err);
-        throw err;
-      });
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    const deletedUser = await User.findOneAndRemove({ _id: personID }).session(session);
+    await session.commitTransaction();
+    session.endSession();
     return deletedUser;
   }
 
@@ -89,13 +87,11 @@ class UserDAO {
    * @return the validated user if the validation pass, else returns null 
    */
   async login(username, password) {
-    const user = await User.find({ username: username })
-      .select('_id firstname surname ssn email role username password')
-      .exec()
-      .then(docs => {
-        console.log(docs[0])
-        return docs;
-      });
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    const user = await User.find({ username: username }).session(session);
+    await session.commitTransaction();
+    session.endSession();
     if (user.length < 1) {
       return null;
     }
@@ -115,17 +111,80 @@ class UserDAO {
    * @return a list with all applicants 
    */
   async getAllApplicants() {
-    const users = User.find({ role: "applicant" })
-      .then(res => {
-        return res;
-      })
-      .catch(err => {
-        throw err;
-      });
-    return users;
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    const users = await User.find({ role: "applicant" }).session(session);
+    await session.commitTransaction();
+    session.endSession();
+    if (users.length < 1) {
+      throw {error : "Database error"};
+    } else {
+      return users;
+    }
   }
 
   /**
+   * Update ready status for user
+   * @param {the id of the user to be updated} personID 
+   * @return the updated ready table
+   */
+  async updateReady(personID) {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    const updatedReady = await ApplicationReady
+      .findOneAndUpdate({ personID: personID }, { ready: true, date: Date.now() },
+        { new: true, upsert: true }).session(session);
+    await session.commitTransaction();
+    session.endSession();
+    return updatedReady;
+  }
+
+  /**
+   * Get ready status for user
+   * @param {The id of the user to have the ready table} personID 
+   */
+  async getReady(personID) {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    const appReady = await ApplicationReady.find({ personID: personID }).session(session);
+    await session.commitTransaction();
+    session.endSession();
+    if (appReady.length < 1) {
+      return null;
+    } else
+      return appReady[0];
+  }
+
+  /**
+   * Get a user with specific username
+   * @param { username for specific user } username 
+   */
+  async getUserByUsername(username) {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    const user = await User.find({ username: username }).session(session);
+    await session.commitTransaction();
+    session.endSession();
+    /*.select('_id firstname surname ssn email role username password')
+    .exec()
+    .then(docs => {
+      return docs;
+    });*/
+    if (user.length < 1) {
+      return null;
+    } else {
+      return user[0];
+    }
+
+  }
+
+
+
+
+
+
+  /**
+   * Not used!!!!
    * Create ready table for user, ready signifies if the application is done or not
    * @param {The id of the user to have the ready table} personID 
    * @return the created ready table
@@ -145,55 +204,6 @@ class UserDAO {
         throw err;
       });
     return ready;
-  }
-
-  /**
-   * Update ready status for user
-   * @param {the id of the user to be updated} personID 
-   * @return the updated ready table
-   */
-  async updateReady(personID) {
-    const updatedReady = await ApplicationReady
-      .findOneAndUpdate({ personID: personID }, { ready: true, date: Date.now() }, { new: true, upsert: true })
-      .then(res => {
-        return res;
-      }).catch(err => {
-        throw err;
-      });
-    return updatedReady;
-  }
-
-  /**
-   * Get ready status for user
-   * @param {The id of the user to have the ready table} personID 
-   */
-  async getReady(personID) {
-    const appReady = await ApplicationReady.find({ personID: personID })
-      .exec()
-      .then((docs) => {
-        return docs;
-      })
-      .catch((err) => {
-        throw err;
-      });
-    if (appReady.length < 1) {
-      return null;
-    } else
-      return appReady[0];
-  }
-  async getUserByUsername(username) {
-    const user = await User.find({ username: username })
-      .select('_id firstname surname ssn email role username password')
-      .exec()
-      .then(docs => {
-        return docs;
-      });
-    if (user.length < 1) {
-      return null;
-    } else {
-      return user[0];
-    }
-
   }
 }
 
