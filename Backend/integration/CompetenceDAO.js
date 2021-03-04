@@ -1,6 +1,7 @@
 "use strict";
 const Competence = require("../model/Competence");
 const CompetenceProfile = require("../model/CompetenceProfile");
+const mongoose = require("mongoose");
 /**
  * Handles database-integrations that are connected to competence schema    
  */
@@ -30,14 +31,12 @@ class CompetenceDAO {
    * @return the specified competence
    */
   async getCompetenceById(competenceID) {
-    const competences = await Competence.find({ _id: competenceID })
-      .exec()
-      .then((docs) => {
-        return docs;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    const competences = await Competence
+    .find({ _id: competenceID }).session(session);
+    await session.commitTransaction();
+    session.endSession();
 
     return competences[0];
   }
@@ -48,14 +47,13 @@ class CompetenceDAO {
    * @return the competence profile of the specified user 
    */
   async getCompetenceProfile(userId) {
-    const competenceProf = await CompetenceProfile.find({ personID: userId })
-      .exec()
-      .then((docs) => {
-        return docs;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    const competenceProf = await CompetenceProfile
+    .find({ personID: userId }).session(session);
+    await session.commitTransaction();
+    session.endSession();
+    
     if (competenceProf < 1) {
       return null;
     } else {

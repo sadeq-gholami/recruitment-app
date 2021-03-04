@@ -38,7 +38,12 @@ class Recruiter extends RequestHandler {
 
       for (const user of allApplicants) {
         const avail = await this.getAllAvailability(user._id, res, fullAvailProfile);
-        await this.getAllCompetenceProfiles(user._id, res, fullCompetenceProfile);
+        const comp = await this.getAllCompetenceProfiles(user._id, res, fullCompetenceProfile);
+        
+        if (comp == false){
+          res.status(500).json({ error: "server error" });
+          return;
+        }
         const status = await this.getAllStatus(user._id, res);
         const ready = await this.getAllReady(user._id, res);
 
@@ -143,17 +148,20 @@ class Recruiter extends RequestHandler {
         yearsOfExperience: null
       });
     } else {
-      for (const competence of comp) {
-        await this.controller.getCompetenceById(competence.competenceID)
-        .then(allApplicants => {
-          fullCompetenceProfile.push({
-            name: allApplicants.name,
-            yearsOfExperience: competence.yearsOfExperience
+      let res;
+        for (const competence of comp) {
+          res = await this.controller.getCompetenceById(competence.competenceID)
+          .then(allApplicants => {
+            fullCompetenceProfile.push({
+              name: allApplicants.name,
+              yearsOfExperience: competence.yearsOfExperience
+            });
+            return true;
+          }).catch((err) => {
+            console.log(err);
+            return false;
           });
-        }).catch((err) => {
-          res.status(500).json({ error: err });
-        });
-      }
+        } return res;
     }
   }
 
