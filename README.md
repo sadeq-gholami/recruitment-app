@@ -72,7 +72,7 @@ In addition, The information entered by the user needs to be valid. The validati
 * *Social Security Number*: six or eight digits with or without dash between the first and the last four digits.
 * *Username*: At least four characters that can be anything.
 * *Password*: At least eight characters including one lower case, one upper case and one digit.\
-***The following code segment from the submitSignup method in the Signup.js class is where the input is validated***\
+***The following code segment from the submitSignup method in the Signup.js class is where the input is validated***
 
 
         if (!firstnameRegex.test(this.state.firstname)) {
