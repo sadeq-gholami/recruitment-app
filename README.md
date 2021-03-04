@@ -2,40 +2,103 @@
 ## Project Description
 
 The recruitment-App is created and developed for the cource Design of Global Application. The main goal of this app is for the applicants to send in their applications to an amusentpark company and await to either be accepted or rejected. The applicants can both signup or login if they already have an account andthe apply for a job/jobs. The same applies for the recruiters as they too can login and review the applications and handle them appropriately by changing the status from "Unhandled" to either "Accepted" or "rejected".
-The website is hosted on Firebase and can be reached through (https://recruitment-app-ebb93.web.app/).
+
 
 ## Installation
 Assuming that node.js is already installed, clone the git repository and run the following command line in the project root:
 
 `npm install --prefix frontend backend `
 
-which installs the required npm packages in both frontend and backend.
+which installs the required npm packages in both frontend and backend since this repository contains both the REST api and the client.
+
+## Tools
+
+* Version control (Git)
+* Project management (npm)
+* Automatic restart (nodemon)
+* Cloud runtime (Heroku)
+
+## Frameworks
+
+* Express
+* MongoDB - mongoose
+* Jsonwebtoken
+* Mysql
+* React
+* body-parser
+* cookie-parser 
 
 ## Check-List tasks:
 
-### Checked
-##### Succeeded with simple Rest Requests posting userLogin, posting expertise or getting all applicants.
-##### No spaghetti-like code.
-##### Authentication.
-
-
-### Unchecked
-##### Database migration
-##### Tests
-##### Validation
-##### Authorization
-##### Transaction management
-##### Error handling
+- [ ] Authorization (mandatory)
+- [ ] Transaction management
+- [ ] Error handling
+- [ ] Tests
+- [ ] Deployment
+- [x] JavaDoc comments
+- [x] Database migration (Optional/ Mandatory)
+- [x] Validation (optional)
+- [x] Authentication (mandatory)
+- [x] Succeeded with simple Rest Requests posting userLogin, posting expertise or getting all applicants.
 
 ## Backend 
-The backend is developed using NodeJs and Express and follows the MVC pattern. The application follows REST name conventions and best practices. 
+The backend code is developed using NodeJs and Express and follows the MVC pattern. The application follows REST name conventions and best practices (we don't actually do that, but may be we should?). 
+
+The following are some of the accessible endpoints:
+* //api.example.com/recruiter/get_applicants (GET)
+* //api.example.com/applicant/competence (GET)
+* //api.example.com/signup/signup/update_user/{id} (PUT)
+* //api.example.com/signup (POST)
+
+There are many more endpoints that could be tried using for example ***Insomnia*** or ***Postman*** 
+
 
 ## Frontend 
-The Frontend is developed using React.js and thus the model Model View ViewModel (MVVM) is automatically implemented in order to separate View from the business logic.
+The Frontend code is written in JavaScipt using the React framework and thus the model Model View ViewModel (MVVM) is automatically implemented in order to separate View from the business logic.
+
+### Usage
+
+The Application's webpage is available in english only. It is hosted on Firebase (temporarily)and can be reached through <https://recruitment-app-ebb93.web.app/>. The application is effortlessly simple and easy to understand.\
+
+#### Signup functionality
+
+Although the application is uncomplicated, there are still some requirements that need to be fulfilled and this applies especially for the signup functionality.\
+When visiting the webpage click the signup button to get to the signup page or just simply visit the above mentioned url/signup. In order to register, the user needs to enter all the necessary credentials. If all the credentials have not been filled, or a unique credential that is already in use has been entered, then the user will be blocked from proceeding.  (Paste pic of signup page).
+
+In addition, The information entered by the user needs to be valid. The validation of each credential is as follows:
+* *Firstname*: Letters only.
+* *Surname*: Letters only.
+* *Email*: Characters@characters.domain where characters are allowed to be letters, numbers and symbols.
+* *Social Security Number*: six or eight digits with or without dash between the first and the last four digits.
+* *Username*: At least four characters that can be anything.
+* *Password*: At least eight characters including one lower case, one upper case and one digit.\
+***The following code segment from the submitSignup method in the Signup.js class is where the input is validated***\
+
+
+        if (!firstnameRegex.test(this.state.firstname)) {
+            window.alert("First name must be at least one character");
+        }
+        else if (!surnameRegex.test(this.state.surname)) {
+            window.alert("Surname must be at least one character");
+        }
+        else if (!emailRegex.test(this.state.email)) {
+            window.alert("Email must be in the format: characters@characters.domain");
+        }
+        else if (!ssnRegex.test(this.state.ssn)) {
+            window.alert("SSN must be format YYMMDD-XXXX");
+        }
+        else if (!usernameRegex.test(this.state.username)) {
+            window.alert("Username must be at least 4 characters");
+        }
+        else if (!passwordRegex.test(this.state.password)) {
+            window.alert("Password must be at least 8 characters, one lowercase letter, one uppercase letter and contain at least one number");
+        }
+        else {....}
+
 
 ## Credits
 ##### Project developers:
- Amanda Heynes
- Ina Rickman
- Sadeq Gholami
+ Amanda Heynes\
+ Ina Rickman\
+ Sadeq Gholami\
  Zeineb Amri
