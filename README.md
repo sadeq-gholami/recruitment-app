@@ -50,8 +50,14 @@ The following are some of the accessible endpoints:
 * //api.example.com/signup/signup/update_user/{id} (PUT)
 * //api.example.com/signup (POST)
 
-There are many more endpoints that could be tried using for example ***Insomnia*** or ***Postman***.
-(describe the layers).
+There are many more endpoints that could be tried using for example ***Insomnia*** or ***Postman***.\
+The backend code consists of 4 layers, namely the controller, model, view and integration layer. 
+* The model layer includes all the database schemas such as User, Competence and Availability. 
+* The integration layer is responsible for calling the actual database. 
+* The view layer consists of different classes, one for each functional requirement e.g. UserLogin and UserSignup. It even contains a class called RequestHandler.js which is responsible for initiating the controller and the router. 
+* The controller handles all the method calls from the view to the integration layer.\
+The view calls the controller to access the database which in turn calls the integration layer.\
+View(Route) -> Controller -> Integration. 
 
 
 ## Frontend 
@@ -64,7 +70,8 @@ The Application's webpage is available in english only. It is hosted on Firebase
 #### Signup functionality
 
 Although the application is uncomplicated, there are still some requirements that need to be fulfilled and this applies especially for the signup functionality.\
-When visiting the webpage click the signup button to get to the signup page or just simply visit the above mentioned url/signup. In order to register, the user needs to enter all the necessary credentials. If all the credentials have not been filled, or a unique credential that is already in use has been entered, then the user will be blocked from proceeding.  (Paste pic of signup page).
+When visiting the webpage click the signup button to get to the signup page or just simply visit the above mentioned url/signup. In order to register, the user needs to enter all the necessary credentials. If all the credentials have not been filled, or a unique credential that is already in use has been entered, then the user will be blocked from proceeding.  
+![signup page](https://gits-15.sys.kth.se/inaric/IV1201-Project/blob/master/Readmematerial/signup.png)
 
 In addition, The information entered by the user needs to be valid. The validation of each credential is as follows:
 * *Firstname*: Letters only.
@@ -73,10 +80,12 @@ In addition, The information entered by the user needs to be valid. The validati
 * *Social Security Number*: six or eight digits with or without dash between the first and the last four digits.
 * *Username*: At least four characters that can be anything.
 * *Password*: At least eight characters including one lower case, one upper case and one digit.\
+
 ***The following code segment from the submitSignup method in the Signup.js class is where the input is validated***
+ 
+![signup page](https://gits-15.sys.kth.se/inaric/IV1201-Project/blob/master/Readmematerial/signupfunc.png/)
 
-
-        if (!firstnameRegex.test(this.state.firstname)) {
+        `if (!firstnameRegex.test(this.state.firstname)) {
             window.alert("First name must be at least one character");
         }
         else if (!surnameRegex.test(this.state.surname)) {
@@ -94,7 +103,7 @@ In addition, The information entered by the user needs to be valid. The validati
         else if (!passwordRegex.test(this.state.password)) {
             window.alert("Password must be at least 8 characters, one lowercase letter, one uppercase letter and contain at least one number");
         }
-        else {....}
+        else {....}`
 
 
 ## Credits
