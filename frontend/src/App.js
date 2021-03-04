@@ -52,6 +52,10 @@ class App extends Component {
           <Route path="/applicantseconddisplay" render={(props) => { return <ApplicantSecondDisplay {...props} model={this.state.model} /> }} />
           <Route path="/applicantdisplayall" render={(props) => { return <ApplicantDisplayAll {...props} model={this.state.model} /> }} />
           <Route path="/applicantconfirm" render={(props) => { return <ApplicantConfirm {...props} model={this.state.model} /> }} />
+          <Route path="/recruiterfirstpage" render={(props) => { return <RecruiterFirstPage {...props} model={this.state.model} /> }} />
+          <Route path="/recruitersecondpage" render={(props) => { return <RecruiterSecondPage {...props} model={this.state.model} /> }} />
+          <Route path="/recruiterThirdpage" render={(props) => { return <RecruiterThirdPage {...props} model={this.state.model} /> }} />
+
         </Router>
 
         <footer className="footer">

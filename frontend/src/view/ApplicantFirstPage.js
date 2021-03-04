@@ -18,7 +18,7 @@ class ApplicantFirstPage extends Component {
             _id: null,
             yearsOfExperience: 0,
             name: null,
-            listSelected: []
+            listSelected: [],
         }
     }
 

@@ -15,18 +15,21 @@ class RecruiterSecondPage extends Component {
                 <p>Overview application</p>
             </div>
             <div className="applicant">
-                <table className="information">
+            <table className="information">
                     <tr>
-                        <th>First name</th>
-                        <th>Last name</th>
+                        <th>Name</th>
+                        <th>Time period</th>
+                        <th>Competence</th>
                         <th>Date of application</th>
                     </tr>
                     <tr>
                         <td>lol</td>
                         <td>lol</td>
                         <td>lol</td>
+                        <td>lol</td>
                     </tr>
                 </table>
+                
             </div>
             <button className="btn">View application</button>
 

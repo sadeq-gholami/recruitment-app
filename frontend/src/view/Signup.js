@@ -183,7 +183,9 @@ class Signup extends Component {
                     <button className="confirmbutton" onClick={this.submitSignup}>Confirm and save</button>
                 </div>
                 <div className="confirmbuttondiv">
-                    <button className="confirmbutton">Back</button>
+                        <Link to="/">
+                        <button className="confirmbutton">Back</button>
+                        </Link>
                 </div>
             </div>
         );

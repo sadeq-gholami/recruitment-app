@@ -5,6 +5,7 @@
 .container {
     display: flex;
     margin: auto;
+   
   }
 
   .name {
@@ -13,24 +14,31 @@
     width:20%; 
     margin-right: 30px;
     margin-left: 100px;
+    max-height: 50px;
+    margin-top: 70px;
   }
   
   .timePeriod {
     float:left;  
     width:20%; 
     margin-right: 30px;
+    max-height: 50px;
 
   }
   .competence{
     float:right; 
     width:20%; 
+    max-height: 50px;
+    margin-top: 70px;
 
   }
   .date{
     float:right; 
     width:20%; 
-    margin-right: 30px;
+
     margin-left: 30px;
+    max-height: 50px;
+    margin-top: 70px;
   }
   .btn{
     position:absolute;
@@ -47,6 +55,45 @@
     line-height: 20px;
 
   }
+  .timeDiv{
+    float:left;  
+    width:15%; 
+    margin-right: 30px;
+}
+.timediv{
+  width: 150px;
+  margin: auto;
+  display: block;
+  
+}
+.timeInput{
+  align-items: center;
+    font-family: monospace;
+    padding-inline-start: 1px;
+    cursor: default;
+    overflow: hidden;
+    padding: 0px;
+
+}
+.saveParameters{
+    float:left;  
+    width:15%; 
+
+
+}
+.Btn{
+  position:absolute;
+  bottom: 72%;
+
+
+  color: #ffffff;
+  background-color: rgb(42, 59, 95);
+  height: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+
+}
 
 /*Second page*/
 .information{
