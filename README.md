@@ -42,7 +42,7 @@ which installs the required npm packages in both frontend and backend since this
 - [x] Succeeded with simple Rest Requests posting userLogin, posting expertise or getting all applicants.
 
 ## Backend 
-The backend code is developed using NodeJs and Express and follows the MVC pattern. The application follows REST name conventions and best practices (we don't actually do that, but may be we should?). 
+The backend code is developed using NodeJs and Express and follows the MVC pattern.
 
 The following are some of the accessible endpoints:
 * //api.example.com/recruiter/get_applicants (GET)
@@ -50,7 +50,8 @@ The following are some of the accessible endpoints:
 * //api.example.com/signup/signup/update_user/{id} (PUT)
 * //api.example.com/signup (POST)
 
-There are many more endpoints that could be tried using for example ***Insomnia*** or ***Postman*** 
+There are many more endpoints that could be tried using for example ***Insomnia*** or ***Postman***.
+(describe the layers).
 
 
 ## Frontend 
