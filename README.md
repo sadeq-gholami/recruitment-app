@@ -65,7 +65,7 @@ The Frontend code is written in JavaScipt using the React framework and thus the
 
 ### Usage
 
-The Application's webpage is available in english only. It is hosted on Firebase (temporarily)and can be reached through <https://recruitment-app-ebb93.web.app/>. The application is effortlessly simple and easy to understand.\
+The Application's webpage is available in english only. It is hosted on Firebase (temporarily)and can be reached through <https://recruitment-app-ebb93.web.app/>. The application is effortlessly simple and easy to understand.
 
 #### Signup functionality
 
@@ -79,7 +79,7 @@ In addition, The information entered by the user needs to be valid. The validati
 * *Email*: Characters@characters.domain where characters are allowed to be letters, numbers and symbols.
 * *Social Security Number*: six or eight digits with or without dash between the first and the last four digits.
 * *Username*: At least four characters that can be anything.
-* *Password*: At least eight characters including one lower case, one upper case and one digit.\
+* *Password*: At least eight characters including one lower case, one upper case and one digit.
 
 ***The following code segment from the submitSignup method in the Signup.js class is where the input is validated***
  
