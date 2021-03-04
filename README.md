@@ -33,7 +33,6 @@ which installs the required npm packages in both frontend and backend since this
 - [ ] Authorization (mandatory)
 - [ ] Transaction management
 - [ ] Error handling
-- [ ] Tests
 - [ ] Deployment
 - [x] JavaDoc comments
 - [x] Database migration (Optional/ Mandatory)
