@@ -10,6 +10,7 @@ class Authentication{
             res.status(401).json({
                 error: "missing authentication token"
             });
+            return false;
         }
         try {
             const userJWTPayload = jwt.verify(authenticationCookie, process.env.JWT_SECRET);
