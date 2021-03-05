@@ -45,6 +45,17 @@ class Controller {
     });
   }
 
+  /**
+   * Update user by email with the given parameters
+   * @param {all parameters for user} user
+   * @return the updated user or error message
+   */
+  async updateUserByEmail(user) {
+    return await this.userDAO.updateUserByEmail(user).catch((err) => {
+      throw err;
+    });
+  }
+
    /**
    * Delete the specific user
    * @param {the id of the specified user} personID 

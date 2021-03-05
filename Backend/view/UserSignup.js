@@ -125,6 +125,33 @@ class UserSignup extends RequestHandler {
         });
 
         /**
+         * Update one user with specified user email from url,
+         * with all parameters as json object
+         * Sends 200 when successful and returns user
+         * On error send 500 and error as json object
+         */
+        this.router.put('/update_userByEmail/:userEmail', async (req, res, next) => {
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+            const user = {
+                firstname: req.body.firstname,
+                surname: req.body.surname,
+                ssn: req.body.ssn,
+                email: req.body.email,
+                password: hashedPassword,
+                username: req.body.username,
+                role: "applicant",
+            }
+            await this.controller.updateUserByEmail(user)
+                .then(result => {
+                    res.status(200).json({ result: result });
+                }).catch(err => {
+                    console.log(err);
+                    res.status(500).json({ err: err });
+                });
+        });
+
+
+        /**
          * Delete one user with specified user id from url,
          * Sends 200 when successful and returns user
          * On error send 500 and error as json object

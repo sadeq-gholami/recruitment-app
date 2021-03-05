@@ -329,7 +329,34 @@ class Model extends ObservableModel {
     //     return this.recruiterParameters;
     // }
 
-
+    /**
+     * Update user for the specific email
+     * user to the backend 
+     */
+    async updateUserByEmail() {
+        let email = this.user.email.replace("@", "_");
+        email = email.replaceAll(".", "_");
+        console.log(email);
+        return fetch("http://localhost:5000/signup/update_userByEmail/" + this.user.email, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                firstname: this.user.firstname,
+                surname: this.user.surname,
+                email: this.user.email,
+                ssn: this.user.ssn,
+                username: this.user.username,
+                password: this.user.password
+            })
+        }).then(response => {
+            return response;
+        }).catch(error => {
+            throw error
+        })
+    }
 
 
     /**

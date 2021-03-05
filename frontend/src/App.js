@@ -14,6 +14,7 @@ import ApplicantSecondDisplay from "./view/ApplicantSecondDisplay";
 import ApplicantDisplayAll from "./view/ApplicantDisplayAll";
 import ApplicantConfirm from "./view/ApplicantConfirm";
 import Model from "./model/Model";
+import UpdateUser from "./view/UpdateUser";
 
 /**
  * This class handles the routing between 
@@ -55,6 +56,7 @@ class App extends Component {
           <Route path="/recruiterfirstpage" render={(props) => { return <RecruiterFirstPage {...props} model={this.state.model} /> }} />
           <Route path="/recruitersecondpage" render={(props) => { return <RecruiterSecondPage {...props} model={this.state.model} /> }} />
           <Route path="/recruiterThirdpage" render={(props) => { return <RecruiterThirdPage {...props} model={this.state.model} /> }} />
+          <Route path="/updateUser" render={(props) => { return <UpdateUser {...props} model={this.state.model} /> }} />
 
         </Router>
 

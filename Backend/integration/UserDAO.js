@@ -65,6 +65,28 @@ class UserDAO {
     return update;
   }
 
+   /**
+   * Update the existing user with the new information, find by email
+   * @param {all parameters for user} user 
+   * @returns the updated user
+   */
+  async updateUserByEmail(user) {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    let update = await User.findOneAndUpdate({ email: user.email }, {
+      firstname: user.firstname,
+      surname: user.surname,
+      ssn: user.ssn,
+      email: user.email,
+      password: user.password,
+      username: user.username,
+      role: user.role,
+    }, { new: true, upsert: true }).session(session);
+    await session.commitTransaction();
+    session.endSession();
+    return update;
+  }
+
   /**
    * Delete user by id
    * @param {Id for the user to be deleted} personID 
