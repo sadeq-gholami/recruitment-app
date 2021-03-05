@@ -15,21 +15,19 @@ class ApplicationDAO {
    * @return the saved competence profile
    */
   async postCompetenceProfile(compProf) {
-    const competence_profile = new CompetenceProfile({
+    const session = await mongoose.startSession();
+    const competence_profile = await CompetenceProfile.create({
       _id: new mongoose.Types.ObjectId(),
       personID: compProf.personID,
       competenceID: compProf.competenceID,
       yearsOfExperience: compProf.yearsOfExperience,
     });
-    const savedcomProf = await competence_profile
-      .save()
-      .then((result) => {
-        return result;
-      })
-      .catch((err) => {
-        throw err;
-      });
-    return savedcomProf;
+    let savedComp;
+    await session.withTransaction(async () => {
+      savedComp = await competence_profile.save({ session });
+    });
+    session.endSession();
+    return savedComp;
   }
 
   /**
@@ -38,20 +36,18 @@ class ApplicationDAO {
    *  @return the created availability object
    */
   async postAvailability(avail) {
-    const availability = new Availability({
+    const session = await mongoose.startSession();
+    const availability = await Availability.create({
       _id: new mongoose.Types.ObjectId(),
       personID: avail.personId,
       fromDate: avail.fromDate,
       toDate: avail.toDate,
     });
-    const savedAvailability = availability
-      .save()
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    let savedAvailability;
+    await session.withTransaction(async () => {
+      savedAvailability = await availability.save({ session });
+    });
+    session.endSession();
     return savedAvailability;
   }
 
@@ -62,19 +58,17 @@ class ApplicationDAO {
    * @return created application status
    */
   async postApplicationStatus(personID) {
-    const appStatus = new ApplicationStatus({
+    const session = await mongoose.startSession();
+    const appStatus = await ApplicationStatus.create({
       _id: new mongoose.Types.ObjectId(),
       personID: personID,
       status: "Unhandled"
     });
-    const savedAppStatus = appStatus
-      .save()
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    let savedAppStatus;
+    await session.withTransaction(async () => {
+      savedAppStatus = await appStatus.save({ session });
+    });
+    session.endSession();
     return savedAppStatus;
   }
 
@@ -85,12 +79,15 @@ class ApplicationDAO {
    * @return updated application status schema 
    */
   async updateStatus(personID, status) {
-    const updatedStatus = await ApplicationStatus.findOneAndUpdate({ personID: personID }, { status: status }, { new: true, upsert: true })
-      .then(res => {
-        return res;
-      }).catch(err => {
-        throw err;
-      });
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    const updatedStatus = await ApplicationStatus
+      .findOneAndUpdate(
+        { personID: personID },
+        { status: status },
+        { new: true, upsert: true }).session(session);
+    await session.commitTransaction();
+    session.endSession();
     return updatedStatus;
   }
 
@@ -100,13 +97,13 @@ class ApplicationDAO {
    * @return the application status schema
    */
   async getStatus(userId) {
-    const currentStatus = await ApplicationStatus.find({ personID: userId })
-      .then(res => {
-        return res;
-      }).catch(err => {
-        throw err;
-      });
-
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    const currentStatus = await ApplicationStatus.
+    find({ personID: userId }).session(session);
+    await session.commitTransaction();
+    session.endSession();
+    
     if (currentStatus.length < 1) {
       return null;
     } else {
@@ -120,12 +117,12 @@ class ApplicationDAO {
    * @return the availability schema
    */
   async getAvailability(userId) {
-    const avail = await Availability.find({ personID: userId })
-      .then(res => {
-        return res;
-      }).catch(err => {
-        throw err;
-      });
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    const avail = await Availability
+    .find({ personID: userId }).session(session);
+    await session.commitTransaction();
+    session.endSession();
 
     if (avail.length < 1) {
       return null;

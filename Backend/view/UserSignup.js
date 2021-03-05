@@ -82,31 +82,19 @@ class UserSignup extends RequestHandler {
                 role: "applicant",
                 username: req.body.username
             }
-            const createdUser = await this.controller.createUser(user).then(result => {
-                console.log("result");
-                console.log(result);
-                return result;
-            })
+            await this.controller.createUser(user)
+                .then(result => {
+                    res.status(200).json({ result: result })
+                })
                 .catch(err => {
-                    console.log("error");
-                    console.log(err);
-                    if(err._message === "User validation failed") {
+                    if (err._message === "User validation failed") {
                         res.status(401).json({ err: err });
-                    } else if(err.name === "MongoError"){
+                    } else if (err.name === "MongoError") {
                         res.status(401).json({ err: err });
-                    }else {
+                    } else {
                         res.status(500).json({ err: err });
                     }
                 });
-            if(createdUser != null){
-                await this.controller.createReadyTable(createdUser._id)
-                .then(result => {
-                    res.status(200).json({ createUser: createdUser })
-                })
-                .catch(err => {
-                    res.status(500).json({ error: err });
-                });
-            }
         })
 
         /**
@@ -124,12 +112,14 @@ class UserSignup extends RequestHandler {
                 ssn: req.body.ssn,
                 email: req.body.email,
                 password: hashedPassword,
-                username: req.body.username
+                username: req.body.username,
+                role: req.body.role,
             }
             await this.controller.updateUser(user)
                 .then(result => {
                     res.status(200).json({ result: result });
                 }).catch(err => {
+                    console.log(err);
                     res.status(500).json({ err: err });
                 });
         });

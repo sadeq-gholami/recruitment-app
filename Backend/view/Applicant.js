@@ -30,13 +30,15 @@ class Applicant extends RequestHandler {
             if (!(await Authentication.isLoggedIn(req, res, this.controller))) {
                 return;
             }
-            const competences = await this.controller.getCompetence().then(result => {
-                return result;
+            await this.controller.getCompetence()
+            .then(result => {
+                res.status(200).json({ result: result });
             })
                 .catch(err => {
+                    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     res.status(500).json({ err: err });
                 });
-            res.status(200).json({ competences: competences });
+            
         });
 
         /**

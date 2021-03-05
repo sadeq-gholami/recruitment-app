@@ -69,6 +69,9 @@ class Login extends Component {
                         <Link to="/applicantfirstpage">
                             <button className="loginbutton" onClick={this.submitLogin}>Login</button>
                         </Link>
+                        <Link to="/">
+                        <button className="confirmbutton">Back</button>
+                        </Link>
                     </div>
                 </div>
             </div>
