@@ -2,9 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const app = express();
-const port = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const reqHandlerLoader = require('./view/RequestHandlerLoader');
 app.use(express.json());
 
 const uri = process.env.MONGO_ATLAS_URI;
@@ -32,8 +32,5 @@ app.use(cors({
 //     }
 //     next();
 //   });
-const reqHandlerLoader = require('./view');
 reqHandlerLoader.loadRequestHandlers(app);
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
-});
+module.exports= app;

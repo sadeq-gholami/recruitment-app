@@ -34,7 +34,7 @@ class Model extends ObservableModel {
         localStorage.setItem("user", JSON.stringify(this.user));
         localStorage.setItem("competence", JSON.stringify(this.competence));
         localStorage.setItem("timePeriod", JSON.stringify(this.timePeriod));
-        localStorage.setItem("recruiterParameters", JSON.stringify(this.recruiterParameters));
+        //localStorage.setItem("recruiterParameters", JSON.stringify(this.recruiterParameters));
     }
 
     /**
@@ -44,7 +44,7 @@ class Model extends ObservableModel {
         this.user = JSON.parse(localStorage.getItem("user"));
         this.competence = JSON.parse(localStorage.getItem("competence"));
         this.timePeriod = JSON.parse(localStorage.getItem("timePeriod"));
-        this.recruiterParameters = JSON.parse(localStorage.getItem("recruiterParameters"));
+        //this.recruiterParameters = JSON.parse(localStorage.getItem("recruiterParameters"));
     }
 
     /**
@@ -53,8 +53,8 @@ class Model extends ObservableModel {
     resetState() {
         localStorage.removeItem("competence");
         localStorage.removeItem("timePeriod");
-        localStorage.removeItem("recruiterParameters");
-        this.setRecruiterParameters({ recruiterParameters : {}});
+        //localStorage.removeItem("recruiterParameters");
+        //this.setRecruiterParameters({ recruiterParameters : {}});
         this.setCompetence({ competence: {} });
         this.setTimePeriod({ timePeriod: {} });
         localStorage.removeItem("listSelected");
@@ -321,13 +321,13 @@ class Model extends ObservableModel {
             throw error
         })
     }
-    setRecruiterParameters(param) {
-        this.recruiterParameters = param;
-    }
+    // setRecruiterParameters(param) {
+    //     this.recruiterParameters = param;
+    // }
 
-    getRecruiterParameters() {
-        return this.recruiterParameters;
-    }
+    // getRecruiterParameters() {
+    //     return this.recruiterParameters;
+    // }
 
 
 
