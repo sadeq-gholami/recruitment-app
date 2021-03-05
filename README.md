@@ -30,9 +30,9 @@ which installs the required npm packages in both frontend and backend since this
 
 ## Check-List tasks:
 
-- [ ] Authorization (mandatory)
-- [ ] Transaction management
-- [ ] Error handling
+- [x] Authorization (mandatory)
+- [x] Transaction management
+- [x] Error handling
 - [ ] Deployment
 - [x] JavaDoc comments
 - [x] Database migration (Optional/ Mandatory)
