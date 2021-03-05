@@ -35,7 +35,7 @@ class UserLogin extends RequestHandler {
             }).catch(err => {
                 res.status(500).json({ err: err });
             });
-            if (user == null) {
+            if (user === null) {
                 res.status(401).json({ error: 'Login failed' });
             } else {
                 Authentication.setAuthCookie(user, res);

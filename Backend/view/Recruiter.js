@@ -1,5 +1,7 @@
 "use strict";
 const RequestHandler = require("./RequestHandler");
+const Authentication = require('./authentication/Authentication');
+const Authorization = require('./Authorization');
 /**
  * Get list of all applicant and change status for specified applicant
  * Inherits the requestHandler class
@@ -31,6 +33,9 @@ class Recruiter extends RequestHandler {
      * Sends 200 on success with json object of all information
      */
     this.router.get("/get_applicants", async (req, res, next) => {
+      if (!(await Authorization.isRecruiter(req,res,this.controller))) {
+        return;
+    }
       var fullApplication = [];
       var fullCompetenceProfile = [];
       var fullAvailProfile = [];

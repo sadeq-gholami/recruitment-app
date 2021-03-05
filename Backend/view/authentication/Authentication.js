@@ -10,6 +10,7 @@ class Authentication{
             res.status(401).json({
                 error: "missing authentication token"
             });
+            return;
         }
         try {
             const userJWTPayload = jwt.verify(authenticationCookie, process.env.JWT_SECRET);
@@ -32,7 +33,7 @@ class Authentication{
         }
     }
     static setAuthCookie(user, res) {
-        const notAccessibleFromJs = {httpOnly: true};
+        const notAccessibleFromJs = {httpOnly: true, SameSite: "None", Secure:true};
         const isSessionCookie = {expires: 0};
     
         const jwtToken = jwt.sign(

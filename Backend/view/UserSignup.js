@@ -2,6 +2,7 @@
 const RequestHandler = require('./RequestHandler');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+const {check, validationResult} = require('express-validator');
 /**
  * Handles user signup. Can create a new user, update and delete it.
  * Inherits the requestHandler class
@@ -27,7 +28,49 @@ class UserSignup extends RequestHandler {
          * Sends 200 when successful and returns user
          * On error send 500 and error as json object
          */
-        this.router.post('/', async (req, res, next) => {
+        this.router.post('/', [
+            check('firstname', 'first name should be string, minimum 1 and max 20 characters')
+                .isString()
+                .notEmpty()
+                .isLength({min:1, max:20})
+                .stripLow(true)
+                .escape(),
+            check('surname', 'surname should be string, minimum 1 and max 20 characters')
+                .isString()
+                .notEmpty()
+                .isLength({min:1,max:20})
+                .stripLow(true)
+                .escape(),
+            check('ssn', 'social security number should be number min 10 max 10')
+                .isNumeric()
+                .notEmpty()
+                .isLength({min:10,max:10})
+                .stripLow(true)
+                .escape(),
+            check('email', 'email should include something@domain.com and min 5 max 20')
+                .isEmail()
+                .notEmpty()
+                .isLength({min:5,max:20})
+                .stripLow(true)
+                .escape(),
+            check('password', 'Password should be combination of one uppercase , one lower case, one special char, one digit and min 8 , max 20 char long')
+                .isStrongPassword()
+                .notEmpty()
+                .isLength({min:10,max:10})
+                .stripLow(true)
+                .escape(),
+            check('username', 'user name should be string, minimum 5 and max 20 characters')
+                .isString()
+                .notEmpty()
+                .isLength({min:5,max:20})
+                .stripLow(true)
+                .escape(),    
+        ],async (req, res, next) => {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+              res.status(400).json({error:errors.array()})
+              return;
+            }
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
             const user = {
                 id: new mongoose.Types.ObjectId(),
