@@ -124,6 +124,7 @@ class Model extends ObservableModel {
         let responseStatus;
         return fetch("http://localhost:5000/login", {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -168,6 +169,7 @@ class Model extends ObservableModel {
      */
     getAllCompetences() {
         return fetch("http://localhost:5000/applicant/competence", {
+            credentials: 'include',
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -223,6 +225,7 @@ class Model extends ObservableModel {
     async submitCompetenceProfile(comp) {
         return fetch("http://localhost:5000/applicant/competence_profile/" + this.user._id, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -245,6 +248,7 @@ class Model extends ObservableModel {
     async submitTimePeriod(time) {
         return fetch("http://localhost:5000/applicant/availability/" + this.user._id, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -266,6 +270,7 @@ class Model extends ObservableModel {
     async updateReady() {
         return fetch("http://localhost:5000/applicant/update_ready/" + this.user._id, {
             method: 'PUT',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -283,6 +288,7 @@ class Model extends ObservableModel {
     async addApplicationStatus() {
         return fetch("http://localhost:5000/applicant/application_status/" + this.user._id, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -303,6 +309,7 @@ class Model extends ObservableModel {
     async postCompetence() {
         return fetch("http://localhost:5000/", {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
