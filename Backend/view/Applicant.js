@@ -31,14 +31,14 @@ class Applicant extends RequestHandler {
                 return;
             }
             await this.controller.getCompetence()
-            .then(result => {
-                res.status(200).json({ result: result });
-            })
+                .then(result => {
+                    res.status(200).json({ result: result });
+                })
                 .catch(err => {
                     console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     res.status(500).json({ err: err });
                 });
-            
+
         });
 
         /**
@@ -116,6 +116,24 @@ class Applicant extends RequestHandler {
             }
             await this.controller.updateReady(req.params.userId).then(result => {
                 res.status(200).json({ result: result });
+            }).catch(err => {
+                res.status(500).json({ err: err });
+            });
+        });
+
+        /**
+         * Submit whole application adding:
+         * Competence to competence profile
+         * Time period to availability
+         * Update ready status with new status and date
+         * Add new application status
+         */
+        this.router.post('/submit_application', async (req, res, next) => {
+            if (!(await Authentication.isLoggedIn(req, res, this.controller))) {
+                return;
+            }
+            await this.controller.submitApplication(req.body).then(result => {
+                res.status(200).json({ result: result })
             }).catch(err => {
                 res.status(500).json({ err: err });
             });

@@ -3,12 +3,78 @@ const CompetenceProfile = require("../model/CompetenceProfile");
 const Availability = require("../model/Availability");
 const mongoose = require("mongoose");
 const ApplicationStatus = require("../model/ApplicationStatus");
+const ApplicationReady = require('../model/ApplicationReady');
+
 /**
  *  Handles database-integrations that are connected to the full application
  */
 class ApplicationDAO {
   constructor() { }
 
+  /**
+  * Submit whole application adding:
+  * Competence to competence profile
+  * Time period to availability
+  * Update ready status with new status and date
+  * Add new application status
+  * @param {the application to submit} application
+  * @return the created application object
+  */
+   async submitApplication(application) {
+    const session = await mongoose.startSession();
+    //comp profile
+    const competence_profile = await Promise.all(application.competence.map(async compProf => {
+      return await CompetenceProfile.create({
+        _id: new mongoose.Types.ObjectId(),
+        personID: application._id,
+        competenceID: compProf._id,
+        yearsOfExperience: compProf.yearsOfExperience,
+      });
+    }));
+    console.log("returned comp profile");
+    console.log(competence_profile);
+
+    //time period
+    const availability = await Promise.all(application.timePeriod.map(async avail => {
+      return await Availability.create({
+        _id: new mongoose.Types.ObjectId(),
+        personID: application._id,
+        fromDate: avail.startTime,
+        toDate: avail.endTime,
+      });
+    }));
+
+    //add application status
+    const appStatus = await ApplicationStatus.create({
+      _id: new mongoose.Types.ObjectId(),
+      personID: application._id,
+      status: "Unhandled"
+    });
+
+    let savedComp;
+    let savedAvailability;
+    let savedStatus;
+    let savedReady;
+    await session.withTransaction(async () => {
+      savedComp = await Promise.all(competence_profile.map(comp => {
+        return comp.save({ session });
+      }));
+      savedAvailability = await Promise.all(availability.map(avail => {
+        return avail.save({ session });
+      }));
+      savedStatus = await appStatus.save({ session });
+      savedReady = await ApplicationReady.findOneAndUpdate({ personID: application._id }, { ready: true, date: Date.now() },
+        { new: true, upsert: true }).session(session);
+    });
+    session.endSession();
+    return {
+      competence: savedComp,
+      availability: savedAvailability,
+      status: savedStatus,
+      ready: savedReady
+    };
+  }
+  
   /**
    * create a new competence profile for the referenced user
    * @param {all the parameters for the competence profile} compProf 
@@ -100,10 +166,10 @@ class ApplicationDAO {
     const session = await mongoose.startSession();
     session.startTransaction();
     const currentStatus = await ApplicationStatus.
-    find({ personID: userId }).session(session);
+      find({ personID: userId }).session(session);
     await session.commitTransaction();
     session.endSession();
-    
+
     if (currentStatus.length < 1) {
       return null;
     } else {
@@ -120,7 +186,7 @@ class ApplicationDAO {
     const session = await mongoose.startSession();
     session.startTransaction();
     const avail = await Availability
-    .find({ personID: userId }).session(session);
+      .find({ personID: userId }).session(session);
     await session.commitTransaction();
     session.endSession();
 

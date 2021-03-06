@@ -136,13 +136,13 @@ class Model extends ObservableModel {
                 username: name,
                 password: pass
             })
-        }) .then(response => {
+        }).then(response => {
             responseStatus = response;
             return response.json();
         }).then(data => {
             if (responseStatus.status == 200) {
                 this.user._id = data.user._id;
-                return {responseStatus, data};
+                return { responseStatus, data };
             }
             else {
                 throw responseStatus;
@@ -179,10 +179,10 @@ class Model extends ObservableModel {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            if(response.status == 401){
+            if (response.status == 401) {
                 throw response;
             }
-            if(response.status == 500){
+            if (response.status == 500) {
                 throw response;
             }
             return response.json();
@@ -194,8 +194,8 @@ class Model extends ObservableModel {
      * Gets all information about the applicants from the backend
      * @return the json object from the backend
      */
-   getAllApplicants() {
-         return fetch("http://localhost:5000/recruiter/get_applicants", {
+    getAllApplicants() {
+        return fetch("http://localhost:5000/recruiter/get_applicants", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -203,7 +203,7 @@ class Model extends ObservableModel {
         }).then(response => {
             console.log("RESPONSE " + response);
             return response.json();
-            
+
         }).catch(error => {
             console.log("ERROR " + error);
             throw error;
@@ -226,35 +226,23 @@ class Model extends ObservableModel {
     }
 
     /**
-     * Adds the whole application to the database
-     * Not done yet
+     * Adds the whole application to the database. Adds:
+     * Competence to competence profile
+     * Time period to availability
+     * Update ready status
+     * Add application status
      */
     submitApp() {
-        this.competence.map(comp => {
-            this.submitCompetenceProfile(comp);
-        });
-        this.timePeriod.map(time => {
-            this.submitTimePeriod(time);
-        });
-        this.updateReady();
-        this.addApplicationStatus();
-    }
-
-    /**
-     * Adds the competence profile for the specific 
-     * user to the backend
-     * @param { the competence object } comp 
-     */
-    async submitCompetenceProfile(comp) {
-        return fetch("http://localhost:5000/applicant/competence_profile/" + this.user._id, {
+        return fetch("http://localhost:5000/applicant/submit_application", {
             method: 'POST',
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                competenceID: comp._id,
-                yearsOfExperience: comp.yearsOfExperience
+                _id: this.user._id,
+                competence: this.competence,
+                timePeriod: this.timePeriod,
             })
         }).then(response => {
             return response;
@@ -264,75 +252,10 @@ class Model extends ObservableModel {
     }
 
     /**
-     * Adds availability for the specific 
-     * user to the backend 
-     * @param { the time period object } time 
-     */
-    async submitTimePeriod(time) {
-        return fetch("http://localhost:5000/applicant/availability/" + this.user._id, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                fromDate: time.startTime,
-                toDate: time.endTime
-            })
-        }).then(response => {
-            return response;
-        }).catch(error => {
-            throw error
-        })
-    }
-
-    /**
-     * Update ready status for the specific 
-     * user to the backend 
-     */
-    async updateReady() {
-        return fetch("http://localhost:5000/applicant/update_ready/" + this.user._id, {
-            method: 'PUT',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
-            return response;
-        }).catch(error => {
-            throw error
-        })
-    }
-
-    /**
-     * Add application status for the specific 
-     * user to the backend 
-     */
-    async addApplicationStatus() {
-        return fetch("http://localhost:5000/applicant/application_status/" + this.user._id, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
-            return response;
-        }).catch(error => {
-            throw error
-        })
-    }
-    // setRecruiterParameters(param) {
-    //     this.recruiterParameters = param;
-    // }
-
-    // getRecruiterParameters() {
-    //     return this.recruiterParameters;
-    // }
-
-    /**
-     * Update user for the specific email
-     * user to the backend 
-     */
+         * Update user for the specific email
+         * user to the backend 
+         * Used with database migration
+         */
     async updateUserByEmail() {
         let email = this.user.email.replace("@", "_");
         email = email.replaceAll(".", "_");
@@ -358,6 +281,95 @@ class Model extends ObservableModel {
         })
     }
 
+
+
+
+
+    /**
+     * Not used
+     * Adds the competence profile for the specific 
+     * user to the backend
+     * @param { the competence object } comp 
+     */
+    async submitCompetenceProfile(comp) {
+        return fetch("http://localhost:5000/applicant/competence_profile/" + this.user._id, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                competenceID: comp._id,
+                yearsOfExperience: comp.yearsOfExperience
+            })
+        }).then(response => {
+            return response;
+        }).catch(error => {
+            throw error
+        })
+    }
+
+    /**
+     * Not used
+     * Adds availability for the specific 
+     * user to the backend 
+     * @param { the time period object } time 
+     */
+    async submitTimePeriod(time) {
+        return fetch("http://localhost:5000/applicant/availability/" + this.user._id, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                fromDate: time.startTime,
+                toDate: time.endTime
+            })
+        }).then(response => {
+            return response;
+        }).catch(error => {
+            throw error
+        })
+    }
+
+    /**
+     * Not used
+     * Update ready status for the specific 
+     * user to the backend 
+     */
+    async updateReady() {
+        return fetch("http://localhost:5000/applicant/update_ready/" + this.user._id, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            return response;
+        }).catch(error => {
+            throw error
+        })
+    }
+
+    /**
+     * Not used
+     * Add application status for the specific 
+     * user to the backend 
+     */
+    async addApplicationStatus() {
+        return fetch("http://localhost:5000/applicant/application_status/" + this.user._id, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            return response;
+        }).catch(error => {
+            throw error
+        })
+    }
 
     /**
      * Not done, remove?
