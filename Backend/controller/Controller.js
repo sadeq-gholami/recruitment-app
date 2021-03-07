@@ -7,7 +7,7 @@ const ApplicationDAO = require('../integration/ApplicationDAO');
  * from view to model and integration layer   
  */
 class Controller {
-  
+
   constructor() {
     this.userDAO = new UserDAO();
     this.CompetenceDAO = new CompetenceDAO();
@@ -45,11 +45,22 @@ class Controller {
     });
   }
 
-   /**
-   * Delete the specific user
-   * @param {the id of the specified user} personID 
-   * @return the deleted user or error message
+  /**
+   * Update user by email with the given parameters
+   * @param {all parameters for user} user
+   * @return the updated user or error message
    */
+  async updateUserByEmail(user) {
+    return await this.userDAO.updateUserByEmail(user).catch((err) => {
+      throw err;
+    });
+  }
+
+  /**
+  * Delete the specific user
+  * @param {the id of the specified user} personID 
+  * @return the deleted user or error message
+  */
   async deleteUser(personID) {
     return await this.userDAO.deleteUser(personID).catch((err) => {
       throw err;
@@ -222,6 +233,19 @@ class Controller {
    */
   async getReady(personID) {
     return await this.userDAO.getReady(personID)
+      .catch(err => {
+        console.log(err);
+        throw err;
+      });
+  }
+
+  /**
+   * Submit full application including competence, availability, ready and status
+   * @param {the application to submit} application
+   * @return the created application object
+   */
+  async submitApplication(application) {
+    return await this.ApplicationDAO.submitApplication(application)
       .catch(err => {
         console.log(err);
         throw err;

@@ -56,24 +56,19 @@ async function addUser(client) {
         } else {
             role = "applicant";
         }
-        if (row.username == null && row.password == null && row.email != null) {
-            let username = generateRandomString();
-            let password = generateRandomString();
-            sendEmail(row.email, { username: username, password: password });
-            row.username = username;
-            row.password = password;
+
+        if(row.email != null){
+           if(row.username == null || row.password == null || row.name == null || row.surname == null
+            || row.ssn) {
+                sendEmail(row.email, _id);
+            }
         }
+
         if (row.username == null) {
             row.username = generateRandomString();
-            if (row.email != null) {
-                sendEmail(row.email, { username: row.username });
-            }
         }
         if (row.password == null) {
             row.password = generateRandomString();
-            if (row.email != null) {
-                sendEmail(row.email, { password: row.password });
-            }
         }
         if (row.name == null) {
             row.name = "no data for username: " + row.username;
@@ -330,9 +325,9 @@ function generateRandomString() {
  * @param { the email address to send to} email 
  * @param { the data to include in the email} data 
  */
-function sendEmail(email, data) {
-    console.log("send email to: " + email + " with data: ");
-    console.log(data);
+function sendEmail(email, _id) {
+    console.log("send email to: " + email + " message: Missing user data go to link" + 
+    " https://localhost/updateUser/ and input email");
     //send email to user with data
 }
 
