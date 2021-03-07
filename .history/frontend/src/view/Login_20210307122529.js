@@ -27,7 +27,7 @@ class Login extends Component {
         await this.props.model.login(this.state.username, this.state.password).then(result => {
             if (result.responseStatus.status === 200) {
                 this.props.model.saveState();
-              
+               // console.log(result);
                 if (result.data.user.role === "recruiter") {
                     window.location.replace('/recruiterfirstpage');
                 } else {

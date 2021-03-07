@@ -140,11 +140,9 @@ class Model extends ObservableModel {
             if (responseStatus.status == 200) {
                 this.user._id = data.user._id;
                 return {responseStatus, data};
-            }else{
-                throw responseStatus;
             }
         }).catch(error => {
-            throw error;
+            throw error
         })
     }
 

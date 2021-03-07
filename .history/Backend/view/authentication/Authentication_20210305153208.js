@@ -33,7 +33,7 @@ class Authentication{
         }
     }
     static setAuthCookie(user, res) {
-        const notAccessibleFromJs = {httpOnly: true};
+        const notAccessibleFromJs = {httpOnly: true, SameSite: "None", Secure:true};
         const isSessionCookie = {expires: 0};
     
         const jwtToken = jwt.sign(
@@ -45,8 +45,6 @@ class Authentication{
         );
     
         const cookieOptions = {
-            sameSite: 'None', 
-            secure: true,
           ...notAccessibleFromJs,
           ...isSessionCookie,
         };

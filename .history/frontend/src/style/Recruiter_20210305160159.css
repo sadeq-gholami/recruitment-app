@@ -55,20 +55,6 @@
     line-height: 20px;
 
   }
-  .btn-recruiter{
-    bottom: 15%;
-    /*left: 50%;
-    right: 50%;*/
-    margin: auto;
-    color: #ffffff;
-    background-color: rgb(42, 59, 95);
-    width: 150px;
-    height: 30px;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 20px;
-
-  }
   .timeDiv{
     float:left;  
     width:15%; 

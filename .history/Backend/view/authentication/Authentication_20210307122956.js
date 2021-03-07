@@ -45,8 +45,7 @@ class Authentication{
         );
     
         const cookieOptions = {
-            sameSite: 'None', 
-            secure: true,
+           
           ...notAccessibleFromJs,
           ...isSessionCookie,
         };

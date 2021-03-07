@@ -24,7 +24,7 @@ class ApplicantFirstPage extends Component {
 
     /**
      * On start up it gets all the
-     * result from the database,
+     * competences from the database,
      * clears the local storage and
      * sets state for status,
      * competence, name and id
@@ -40,8 +40,8 @@ class ApplicantFirstPage extends Component {
                 this.setState({
                     status: "LOADED",
                     competence: competence,
-                    name: competence.result[0].name,
-                    _id: competence.result[0]._id
+                    name: competence.competences[0].name,
+                    _id: competence.competences[0]._id
                 });
             })
             .catch(err => {
@@ -64,9 +64,9 @@ class ApplicantFirstPage extends Component {
     handleCompetence = async e => {
         this.setState({ _id: e.target.value });
         let name;
-        for (let index in this.state.competence.result) {
-            if (this.state.competence.result[index]._id == e.target.value) {
-                name = this.state.competence.result[index].name;
+        for (let index in this.state.competence.competences) {
+            if (this.state.competence.competences[index]._id == e.target.value) {
+                name = this.state.competence.competences[index].name;
             }
         }
         this.setState({ name: name });
@@ -119,7 +119,7 @@ class ApplicantFirstPage extends Component {
                 c = "loading...";
                 break;
             case "LOADED":
-                c = this.state.competence.result.map(comp => (
+                c = this.state.competence.competences.map(comp => (
                     <option key={comp._id} value={comp._id}>{comp.name}</option>
                 ));
                 break;

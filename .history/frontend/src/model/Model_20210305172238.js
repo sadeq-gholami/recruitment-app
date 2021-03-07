@@ -67,7 +67,7 @@ class Model extends ObservableModel {
      */
     async signup() {
         let responseStatus;
-        return fetch("https://recruitment-app-api.herokuapp.com/signup", {
+        return fetch("http://localhost:5000/signup", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -123,7 +123,7 @@ class Model extends ObservableModel {
      */
     async login(name, pass) {
         let responseStatus;
-        return fetch("https://recruitment-app-api.herokuapp.com/login", {
+        return fetch("http://localhost:5000/login", {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -140,11 +140,9 @@ class Model extends ObservableModel {
             if (responseStatus.status == 200) {
                 this.user._id = data.user._id;
                 return {responseStatus, data};
-            }else{
-                throw responseStatus;
             }
         }).catch(error => {
-            throw error;
+            throw error
         })
     }
 
@@ -168,7 +166,7 @@ class Model extends ObservableModel {
      * @return the json object from the backend
      */
     getAllCompetences() {
-        return fetch("https://recruitment-app-api.herokuapp.com/applicant/competence", {
+        return fetch("http://localhost:5000/applicant/competence", {
             credentials: 'include',
             method: 'GET',
             headers: {
@@ -191,9 +189,8 @@ class Model extends ObservableModel {
      * @return the json object from the backend
      */
    getAllApplicants() {
-         return fetch("https://recruitment-app-api.herokuapp.com/recruiter/get_applicants", {
+         return fetch("http://localhost:5000/recruiter/get_applicants", {
             method: 'GET',
-            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -243,7 +240,7 @@ class Model extends ObservableModel {
      * @param { the competence object } comp 
      */
     async submitCompetenceProfile(comp) {
-        return fetch("https://recruitment-app-api.herokuapp.com/applicant/competence_profile/" + this.user._id, {
+        return fetch("http://localhost:5000/applicant/competence_profile/" + this.user._id, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -266,7 +263,7 @@ class Model extends ObservableModel {
      * @param { the time period object } time 
      */
     async submitTimePeriod(time) {
-        return fetch("https://recruitment-app-api.herokuapp.com/applicant/availability/" + this.user._id, {
+        return fetch("http://localhost:5000/applicant/availability/" + this.user._id, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -288,7 +285,7 @@ class Model extends ObservableModel {
      * user to the backend 
      */
     async updateReady() {
-        return fetch("https://recruitment-app-api.herokuapp.com/applicant/update_ready/" + this.user._id, {
+        return fetch("http://localhost:5000/applicant/update_ready/" + this.user._id, {
             method: 'PUT',
             credentials: 'include',
             headers: {
@@ -306,7 +303,7 @@ class Model extends ObservableModel {
      * user to the backend 
      */
     async addApplicationStatus() {
-        return fetch("https://recruitment-app-api.herokuapp.com/applicant/application_status/" + this.user._id, {
+        return fetch("http://localhost:5000/applicant/application_status/" + this.user._id, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -333,7 +330,7 @@ class Model extends ObservableModel {
      * Not done, remove?
      */
     async postCompetence() {
-        return fetch("https://recruitment-app-api.herokuapp.com/", {
+        return fetch("http://localhost:5000/", {
             method: 'POST',
             credentials: 'include',
             headers: {

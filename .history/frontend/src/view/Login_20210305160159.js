@@ -25,9 +25,8 @@ class Login extends Component {
     submitLogin = async e => {
         e.preventDefault();
         await this.props.model.login(this.state.username, this.state.password).then(result => {
-            if (result.responseStatus.status === 200) {
+            if (result.responseStatus.status == 200) {
                 this.props.model.saveState();
-              
                 if (result.data.user.role === "recruiter") {
                     window.location.replace('/recruiterfirstpage');
                 } else {
@@ -35,7 +34,7 @@ class Login extends Component {
                 }
             }
         }).catch(err => {
-            if (err.status === 401) {
+            if (err.status == 401) {
                 window.alert("Sign up failed, username or password incorrect")
             }
             else {

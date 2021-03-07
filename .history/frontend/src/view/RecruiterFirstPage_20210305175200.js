@@ -98,7 +98,7 @@ class RecruiterFirstPage extends Component {
             <table className="information">
             <tbody><tr><th>Firstname</th><th>Surname</th><th>Date</th></tr>{applicantsList}</tbody>
                 </table>
-            <button className="btn-recruiter">View application</button>      
+            <button className="btn">View application</button>      
       </div>
     );
   }

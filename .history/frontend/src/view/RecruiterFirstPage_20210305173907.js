@@ -47,17 +47,17 @@ class RecruiterFirstPage extends Component {
               applicantList = "LOADING";
               break;
           case "LOADED":
-              applicantList= this.state.applicants.map(comp => (
-                <option key={comp.userId}>{comp.username}</option>
-              )); 
+              applicantList= this.state.applicants.map(comp =>{console.log(comp.userId); return (
+                <option key={comp.userId} value={comp._id}>{comp.username}</option>
+              )}); 
                comp =this.state.applicants.map(comp => {
                 competenceList = comp.competence.map((cmp) =>( <option key={cmp._id} value={cmp._id}>{cmp.name}</option>))
                 })
                 applicantsList = this.state.applicants.map(list => (
-                    <tr >
-                    <td >{list.firstname}</td>
-                    <td >{list.surname}</td>
-                    <td >{list.ready}</td>
+                    <tr key ={list.userId}>
+                    <td>{list.firstname}</td>
+                    <td>{list.surname}</td>
+                    <td>{list.ready}</td>
                     </tr>
                 ));
            break;
@@ -96,9 +96,13 @@ class RecruiterFirstPage extends Component {
             </div>
             <br></br>
             <table className="information">
-            <tbody><tr><th>Firstname</th><th>Surname</th><th>Date</th></tr>{applicantsList}</tbody>
+            <tbody><tr><th> Firstname</th><th> Surname</th><th> Date</th> </tr> {applicantsList} </tbody>
                 </table>
-            <button className="btn-recruiter">View application</button>      
+                <table> </table>
+            <button className="btn">View application</button>
+
+
+          
       </div>
     );
   }

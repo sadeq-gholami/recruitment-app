@@ -27,7 +27,7 @@ class Login extends Component {
         await this.props.model.login(this.state.username, this.state.password).then(result => {
             if (result.responseStatus.status === 200) {
                 this.props.model.saveState();
-              
+               console.log(result);
                 if (result.data.user.role === "recruiter") {
                     window.location.replace('/recruiterfirstpage');
                 } else {
@@ -35,13 +35,14 @@ class Login extends Component {
                 }
             }
         }).catch(err => {
+            console.log("errorrrrr: "+err);
             if (err.status === 401) {
                 window.alert("Sign up failed, username or password incorrect")
             }
-            else {
-                window.alert("Server error");
-                console.log(err);
-            }
+            // else {
+            //     window.alert("Server error");
+            //     console.log(err);
+            // }
         });
     }
 
