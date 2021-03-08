@@ -21,7 +21,7 @@ which installs the required npm packages in both frontend and backend since this
 ## Frameworks
 
 * Express
-* MongoDB - mongoose
+* MongoDB
 * Jsonwebtoken
 * Mysql
 * React
