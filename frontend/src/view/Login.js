@@ -3,7 +3,7 @@ import { Link, Route } from "react-router-dom";
 import "../style/Login.css";
 
 /**
- * This class is not done yet
+ * This class handles user login
  */
 class Login extends Component {
     constructor(props) {
@@ -14,20 +14,32 @@ class Login extends Component {
         }
     }
 
+    /**
+     * Sets username state as the event target
+     * @param {the event object} e 
+     */
     handleUsername = e => {
         this.setState({ username: e.target.value });
     }
 
+    /**
+     * Sets password state as the event target
+     * @param {the event object} e 
+     */
     handlePassword = e => {
         this.setState({ password: e.target.value });
     }
 
+    /**
+     * Submit login
+     * @param {the event object} e 
+     */
     submitLogin = async e => {
         e.preventDefault();
         await this.props.model.login(this.state.username, this.state.password).then(result => {
             if (result.responseStatus.status === 200) {
                 this.props.model.saveState();
-              
+
                 if (result.data.user.role === "recruiter") {
                     window.location.replace('/recruiterfirstpage');
                 } else {
@@ -45,6 +57,10 @@ class Login extends Component {
         });
     }
 
+    /**
+     * Renders the HTML code
+     * Uses the data from the model and displays it
+     */
     render() {
         return (
             <div className="login-base">
@@ -71,7 +87,7 @@ class Login extends Component {
                             <button className="loginbutton" onClick={this.submitLogin}>Login</button>
                         </Link>
                         <Link to="/">
-                        <button className="confirmbutton">Back</button>
+                            <button className="confirmbutton">Back</button>
                         </Link>
                     </div>
                 </div>

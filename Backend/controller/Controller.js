@@ -66,6 +66,12 @@ class Controller {
       throw err;
     });
   }
+
+  /**
+   * Gets a user in the database with the specified username
+   * @param {the username to find a user by} username 
+   * @returns the user object
+   */
   async getUserByUsername(username) {
     return await this.userDAO.getUserByUsername(username).catch((err) => {
       throw err;
@@ -177,9 +183,9 @@ class Controller {
   }
 
   /**
-   * 
+   * Get status of current application for specific user
    * @param {the specified user's ID} personID 
-   * @return the availability object or error message
+   * @return the status object or error message
    */
   async getStatus(personID) {
     return await this.ApplicationDAO.getStatus(personID)

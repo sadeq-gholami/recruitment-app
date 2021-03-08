@@ -79,27 +79,21 @@ class Signup extends Component {
         const emailRegex = new RegExp("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
         const ssnRegex = /^(\d{6}|\d{8})[-|(\s)]{0,1}\d{4}$/;
         const usernameRegex = new RegExp("(?=.{4,})");
-        const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+        const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})(?=.*[!@#$%^&*])");
 
         if (!firstnameRegex.test(this.state.firstname)) {
             window.alert("First name must be at least one character");
-        }
-        else if (!surnameRegex.test(this.state.surname)) {
+        } else if (!surnameRegex.test(this.state.surname)) {
             window.alert("Surname must be at least one character");
-        }
-        else if (!emailRegex.test(this.state.email)) {
+        } else if (!emailRegex.test(this.state.email)) {
             window.alert("Email must be in the format: characters@characters.domain");
-        }
-        else if (!ssnRegex.test(this.state.ssn)) {
+        } else if (!ssnRegex.test(this.state.ssn)) {
             window.alert("SSN must be format YYMMDD-XXXX");
-        }
-        else if (!usernameRegex.test(this.state.username)) {
+        } else if (!usernameRegex.test(this.state.username)) {
             window.alert("Username must be at least 4 characters");
-        }
-        else if (!passwordRegex.test(this.state.password)) {
-            window.alert("Password must be at least 8 characters, one lowercase letter, one uppercase letter and contain at least one number");
-        }
-        else {
+        } else if (!passwordRegex.test(this.state.password)) {
+            window.alert("Password must be at least 8 characters, one lowercase letter, one uppercase letter, one symbol and contain at least one number");
+        } else {
             this.props.model.setSignup({
                 firstname: this.state.firstname,
                 surname: this.state.surname,

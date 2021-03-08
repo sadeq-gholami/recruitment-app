@@ -21,20 +21,12 @@ class Model extends ObservableModel {
     }
 
     /**
-     * Notify all observers
-     */
-    notifyObserversModel() {
-        this.notifyObservers();
-    }
-
-    /**
      * Saves the current state in local storage
      */
     saveState() {
         localStorage.setItem("user", JSON.stringify(this.user));
         localStorage.setItem("competence", JSON.stringify(this.competence));
         localStorage.setItem("timePeriod", JSON.stringify(this.timePeriod));
-        //localStorage.setItem("recruiterParameters", JSON.stringify(this.recruiterParameters));
     }
 
     /**
@@ -44,7 +36,6 @@ class Model extends ObservableModel {
         this.user = JSON.parse(localStorage.getItem("user"));
         this.competence = JSON.parse(localStorage.getItem("competence"));
         this.timePeriod = JSON.parse(localStorage.getItem("timePeriod"));
-        //this.recruiterParameters = JSON.parse(localStorage.getItem("recruiterParameters"));
     }
 
     /**
@@ -53,8 +44,6 @@ class Model extends ObservableModel {
     resetState() {
         localStorage.removeItem("competence");
         localStorage.removeItem("timePeriod");
-        //localStorage.removeItem("recruiterParameters");
-        //this.setRecruiterParameters({ recruiterParameters : {}});
         this.setCompetence({ competence: {} });
         this.setTimePeriod({ timePeriod: {} });
         localStorage.removeItem("listSelected");
@@ -139,8 +128,8 @@ class Model extends ObservableModel {
         }).then(data => {
             if (responseStatus.status == 200) {
                 this.user._id = data.user._id;
-                return {responseStatus, data};
-            }else{
+                return { responseStatus, data };
+            } else {
                 throw responseStatus;
             }
         }).catch(error => {
@@ -190,8 +179,8 @@ class Model extends ObservableModel {
      * Gets all information about the applicants from the backend
      * @return the json object from the backend
      */
-   getAllApplicants() {
-         return fetch("https://recruitment-app-api.herokuapp.com/recruiter/get_applicants", {
+    getAllApplicants() {
+        return fetch("https://recruitment-app-api.herokuapp.com/recruiter/get_applicants", {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -230,7 +219,7 @@ class Model extends ObservableModel {
      * Add application status
      */
     submitApp() {
-        return fetch("http://localhost:5000/applicant/submit_application", {
+        return fetch("https://recruitment-app-api.herokuapp.com/applicant/submit_application", {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -249,15 +238,15 @@ class Model extends ObservableModel {
     }
 
     /**
-         * Update user for the specific email
-         * user to the backend 
-         * Used with database migration
-         */
+     * Update user for the specific email
+     * user to the backend 
+     * Used with database migration
+     */
     async updateUserByEmail() {
         let email = this.user.email.replace("@", "_");
         email = email.replaceAll(".", "_");
         console.log(email);
-        return fetch("http://localhost:5000/signup/update_userByEmail/" + this.user.email, {
+        return fetch("https://recruitment-app-api.herokuapp.com/signup/update_userByEmail/" + this.user.email, {
             method: 'PUT',
             credentials: 'include',
             headers: {

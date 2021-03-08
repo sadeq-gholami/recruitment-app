@@ -1,6 +1,8 @@
 "use strict";
 const RequestHandler = require('./RequestHandler');
 const Authentication = require('./authentication/Authentication');
+const {check, validationResult} = require('express-validator');
+
 /**
  * Handles user login. User sends username and password 
  * and it is checked against the database
@@ -29,7 +31,25 @@ class UserLogin extends RequestHandler {
          * Sends 401 if validation failed
          * Sends 200 with user object on success
          */
-        this.router.post('/', async (req, res, next) => {
+        this.router.post('/', [
+            check('password', 'Password should be combination of one uppercase , one lower case, one special char, one digit and min 8 , max 20 char long')
+                .isStrongPassword()
+                .notEmpty()
+                .isLength({min:10,max:10})
+                .stripLow(true)
+                .escape(),
+            check('username', 'user name should be string, minimum 5 and max 20 characters')
+                .isString()
+                .notEmpty()
+                .isLength({min:5,max:20})
+                .stripLow(true)
+                .escape(),    
+        ], async (req, res, next) => {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                res.status(400).json({error:errors.array()})
+                return;
+              }
             const user = await this.controller.login(req.body.username, req.body.password).then(result => {
                 return result;
             }).catch(err => {

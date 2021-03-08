@@ -3,6 +3,7 @@ const User = require('../model/User');
 const bcrypt = require('bcrypt');
 const ApplicationReady = require('../model/ApplicationReady');
 const mongoose = require('mongoose');
+
 /**
  * Handles database-integrations that are connected to user schema   
  */
@@ -17,6 +18,28 @@ class UserDAO {
    * @returns the saved user
    */
   async createUser(newUser) {
+    //validation
+    const firstnameRegex = new RegExp("(?=.{1,})");
+    const surnameRegex = new RegExp("(?=.{1,})");
+    const emailRegex = new RegExp("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+    const ssnRegex = /^(\d{6}|\d{8})[-|(\s)]{0,1}\d{4}$/;
+    const usernameRegex = new RegExp("(?=.{4,})");
+    const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})(?=.*[!@#$%^&*])");
+    if (!firstnameRegex.test(newUser.firstname)) {
+      throw { error: "invalid input firstname" }
+    } else if (!passwordRegex.test(newUser.password)) {
+      throw { error: "invalid input password" }
+    } else if (!surnameRegex.test(newUser.surname)) {
+      throw { error: "invalid input surname" }
+    } else if (!emailRegex.test(newUser.email)) {
+      throw { error: "invalid input email" }
+    } else if (!ssnRegex.test(newUser.ssn)) {
+      throw { error: "invalid input ssn" }
+    } else if (!usernameRegex.test(newUser.username)) {
+      throw { error: "invalid input username" }
+    }
+    const hashedPassword = await bcrypt.hash(newUser.password, 10);
+    //start transaction
     const session = await mongoose.startSession();
     const user = await User.create({
       _id: newUser.id,
@@ -24,7 +47,7 @@ class UserDAO {
       surname: newUser.surname,
       ssn: newUser.ssn,
       email: newUser.email,
-      password: newUser.password,
+      password: hashedPassword,
       role: newUser.role,
       username: newUser.username
     });
@@ -65,11 +88,11 @@ class UserDAO {
     return update;
   }
 
-   /**
-   * Update the existing user with the new information, find by email
-   * @param {all parameters for user} user 
-   * @returns the updated user
-   */
+  /**
+  * Update the existing user with the new information, find by email
+  * @param {all parameters for user} user 
+  * @returns the updated user
+  */
   async updateUserByEmail(user) {
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -139,7 +162,7 @@ class UserDAO {
     await session.commitTransaction();
     session.endSession();
     if (users.length < 1) {
-      throw {error : "Database error"};
+      throw { error: "Database error" };
     } else {
       return users;
     }
@@ -187,17 +210,11 @@ class UserDAO {
     const user = await User.find({ username: username }).session(session);
     await session.commitTransaction();
     session.endSession();
-    /*.select('_id firstname surname ssn email role username password')
-    .exec()
-    .then(docs => {
-      return docs;
-    });*/
     if (user.length < 1) {
       return null;
     } else {
       return user[0];
     }
-
   }
 
 

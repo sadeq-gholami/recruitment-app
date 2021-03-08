@@ -16,7 +16,6 @@ class ApplicantConfirm extends Component {
 
     /**
      * Renders the competence data
-     * To fix: duplicate code
      */
     renderComp() {
         let competence = this.props.model.getCompetence();
@@ -38,7 +37,6 @@ class ApplicantConfirm extends Component {
 
     /**
      * Renders the time period data
-     * To fix: duplicate code
      */
     renderTime() {
         let time = this.props.model.getTimePeriod();

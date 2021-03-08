@@ -3,7 +3,7 @@ import { Link, Route } from "react-router-dom";
 import "../style/Signup.css";
 
 /**
- * This class handles applicant signup
+ * This class handles updating user information
  */
 class UpdateUser extends Component {
     constructor(props) {
@@ -83,23 +83,17 @@ class UpdateUser extends Component {
 
         if (!firstnameRegex.test(this.state.firstname)) {
             window.alert("First name must be at least one character");
-        }
-        else if (!surnameRegex.test(this.state.surname)) {
+        } else if (!surnameRegex.test(this.state.surname)) {
             window.alert("Surname must be at least one character");
-        }
-        else if (!emailRegex.test(this.state.email)) {
+        } else if (!emailRegex.test(this.state.email)) {
             window.alert("Email must be in the format: characters@characters.domain");
-        }
-        else if (!ssnRegex.test(this.state.ssn)) {
+        } else if (!ssnRegex.test(this.state.ssn)) {
             window.alert("SSN must be format YYMMDD-XXXX");
-        }
-        else if (!usernameRegex.test(this.state.username)) {
+        } else if (!usernameRegex.test(this.state.username)) {
             window.alert("Username must be at least 4 characters");
-        }
-        else if (!passwordRegex.test(this.state.password)) {
+        } else if (!passwordRegex.test(this.state.password)) {
             window.alert("Password must be at least 8 characters, one lowercase letter, one uppercase letter and contain at least one number");
-        }
-        else {
+        } else {
             this.props.model.setSignup({
                 firstname: this.state.firstname,
                 surname: this.state.surname,
@@ -183,9 +177,9 @@ class UpdateUser extends Component {
                     <button className="confirmbutton" onClick={this.submitUpdate}>Confirm and save</button>
                 </div>
                 <div className="confirmbuttondiv">
-                        <Link to="/">
+                    <Link to="/">
                         <button className="confirmbutton">Back</button>
-                        </Link>
+                    </Link>
                 </div>
             </div>
         );

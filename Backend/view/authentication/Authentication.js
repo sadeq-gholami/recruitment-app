@@ -3,7 +3,13 @@ const jwt = require('jsonwebtoken');
 
 class Authentication{
 
-
+    /**
+     * Check if a user has a cookie, and is thus logged in
+     * @param {the request object} req 
+     * @param {the response object} res 
+     * @param {the controller object} controller 
+     * @returns returns true if user is logged in otherwise false
+     */
     static async isLoggedIn(req, res, controller){
         const authenticationCookie = req.cookies.userAuth;
         if(!authenticationCookie){
@@ -32,6 +38,12 @@ class Authentication{
             return false;
         }
     }
+
+    /**
+     * Gives a user a cookie
+     * @param {the user object} user 
+     * @param {the response object} res 
+     */
     static setAuthCookie(user, res) {
         const notAccessibleFromJs = {httpOnly: true};
         const isSessionCookie = {expires: 0};

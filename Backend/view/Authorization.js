@@ -1,6 +1,14 @@
 const jwt = require('jsonwebtoken');
 
 class Authorization{
+
+    /**
+     * Checks if a user is a recruiter
+     * @param {the request object} req 
+     * @param {the response object} res 
+     * @param {the controller object} controller 
+     * @returns true if the user is a recruiter otherwise returns false
+     */
     static async isRecruiter(req, res, controller){
         const authenticationCookie = req.cookies.userAuth;
         if(!authenticationCookie){
