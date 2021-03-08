@@ -33,7 +33,7 @@ which installs the required npm packages in both frontend and backend since this
 - [x] Authorization (mandatory)
 - [x] Transaction management
 - [x] Error handling
-- [ ] Deployment
+- [x] Deployment
 - [x] JavaDoc comments
 - [x] Database migration (Optional/ Mandatory)
 - [x] Validation (optional)
@@ -84,7 +84,7 @@ In addition, The information entered by the user needs to be valid. The validati
  
 ![signup page](https://gits-15.sys.kth.se/inaric/IV1201-Project/blob/master/Readmematerial/signupfunc.png/)
 
-        `if (!firstnameRegex.test(this.state.firstname)) {
+        if (!firstnameRegex.test(this.state.firstname)) {
             window.alert("First name must be at least one character");
         }
         else if (!surnameRegex.test(this.state.surname)) {
@@ -102,7 +102,7 @@ In addition, The information entered by the user needs to be valid. The validati
         else if (!passwordRegex.test(this.state.password)) {
             window.alert("Password must be at least 8 characters, one lowercase letter, one uppercase letter and contain at least one number");
         }
-        else {....}`
+        else {....}
 
 
 ## Credits
