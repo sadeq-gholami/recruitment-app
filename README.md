@@ -27,6 +27,7 @@ which installs the required npm packages in both frontend and backend since this
 * React
 * body-parser
 * cookie-parser 
+* express-validor
 
 ## Check-List tasks:
 
