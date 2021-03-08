@@ -64,7 +64,7 @@ The Frontend code is written in JavaScipt using the React framework and thus the
 
 ### Usage
 
-The Application's webpage is available in english only. It is hosted on Firebase (temporarily)and can be reached through <https://recruitment-app-ebb93.web.app/>. The application is effortlessly simple and easy to understand.
+The Application's webpage is available in english only. It is hosted on heroku and can be reached through <https://recruitmentjob.herokuapp.com/>. The application is effortlessly simple and easy to understand.
 
 #### Signup functionality
 
