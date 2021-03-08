@@ -18,26 +18,9 @@ class UserDAO {
    * @returns the saved user
    */
   async createUser(newUser) {
-    //validation
-    const firstnameRegex = new RegExp("(?=.{1,})");
-    const surnameRegex = new RegExp("(?=.{1,})");
-    const emailRegex = new RegExp("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
-    const ssnRegex = /^(\d{6}|\d{8})[-|(\s)]{0,1}\d{4}$/;
-    const usernameRegex = new RegExp("(?=.{4,})");
-    const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})(?=.*[!@#$%^&*])");
-    if (!firstnameRegex.test(newUser.firstname)) {
-      throw { error: "invalid input firstname" }
-    } else if (!passwordRegex.test(newUser.password)) {
-      throw { error: "invalid input password" }
-    } else if (!surnameRegex.test(newUser.surname)) {
-      throw { error: "invalid input surname" }
-    } else if (!emailRegex.test(newUser.email)) {
-      throw { error: "invalid input email" }
-    } else if (!ssnRegex.test(newUser.ssn)) {
-      throw { error: "invalid input ssn" }
-    } else if (!usernameRegex.test(newUser.username)) {
-      throw { error: "invalid input username" }
-    }
+    await this.validation(newUser).catch(err =>{
+      throw err;
+    });
     const hashedPassword = await bcrypt.hash(newUser.password, 10);
     //start transaction
     const session = await mongoose.startSession();
@@ -71,17 +54,21 @@ class UserDAO {
    * @param {all parameters for user} user 
    * @returns the updated user
    */
-  async updateUser(user) {
+  async updateUser(newUser) {
+    await this.validation(newUser).catch(err =>{
+      throw err;
+    });
+    const hashedPassword = await bcrypt.hash(newUser.password, 10);
     const session = await mongoose.startSession();
     session.startTransaction();
-    let update = await User.findOneAndUpdate({ _id: user.id }, {
-      firstname: user.firstname,
-      surname: user.surname,
-      ssn: user.ssn,
-      email: user.email,
-      password: user.password,
-      username: user.username,
-      role: user.role,
+    let update = await User.findOneAndUpdate({ _id: newUser.id }, {
+      firstname: newUser.firstname,
+      surname: newUser.surname,
+      ssn: newUser.ssn,
+      email: newUser.email,
+      password: hashedPassword,
+      username: newUser.username,
+      role: newUser.role,
     }, { new: true, upsert: true }).session(session);
     await session.commitTransaction();
     session.endSession();
@@ -94,6 +81,10 @@ class UserDAO {
   * @returns the updated user
   */
   async updateUserByEmail(user) {
+    await this.validation(user).catch(err =>{
+      throw err;
+    });
+    const hashedPassword = await bcrypt.hash(user.password, 10);
     const session = await mongoose.startSession();
     session.startTransaction();
     let update = await User.findOneAndUpdate({ email: user.email }, {
@@ -101,7 +92,7 @@ class UserDAO {
       surname: user.surname,
       ssn: user.ssn,
       email: user.email,
-      password: user.password,
+      password: hashedPassword,
       username: user.username,
       role: user.role,
     }, { new: true, upsert: true }).session(session);
@@ -214,6 +205,28 @@ class UserDAO {
       return null;
     } else {
       return user[0];
+    }
+  }
+
+  async validation(newUser) {
+    const firstnameRegex = new RegExp("(?=.{1,})");
+    const surnameRegex = new RegExp("(?=.{1,})");
+    const emailRegex = new RegExp("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+    const ssnRegex = /^(\d{6}|\d{8})[-|(\s)]{0,1}\d{4}$/;
+    const usernameRegex = new RegExp("(?=.{4,})");
+    const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})(?=.*[!@#$%^&*])");
+    if (!firstnameRegex.test(newUser.firstname)) {
+      throw { error: "invalid input firstname" }
+    } else if (!passwordRegex.test(newUser.password)) {
+      throw { error: "invalid input password" }
+    } else if (!surnameRegex.test(newUser.surname)) {
+      throw { error: "invalid input surname" }
+    } else if (!emailRegex.test(newUser.email)) {
+      throw { error: "invalid input email" }
+    } else if (!ssnRegex.test(newUser.ssn)) {
+      throw { error: "invalid input ssn" }
+    } else if (!usernameRegex.test(newUser.username)) {
+      throw { error: "invalid input username" }
     }
   }
 

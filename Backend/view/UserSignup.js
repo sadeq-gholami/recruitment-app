@@ -146,14 +146,13 @@ class UserSignup extends RequestHandler {
                 res.status(400).json({ error: errors.array() })
                 return;
             }
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
             const user = {
                 id: req.params.userId,
                 firstname: req.body.firstname,
                 surname: req.body.surname,
                 ssn: req.body.ssn,
                 email: req.body.email,
-                password: hashedPassword,
+                password: req.body.password,
                 username: req.body.username,
                 role: req.body.role,
             }
@@ -215,13 +214,12 @@ class UserSignup extends RequestHandler {
                 res.status(400).json({ error: errors.array() })
                 return;
             }
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
             const user = {
                 firstname: req.body.firstname,
                 surname: req.body.surname,
                 ssn: req.body.ssn,
                 email: req.body.email,
-                password: hashedPassword,
+                password: req.body.password,
                 username: req.body.username,
                 role: "applicant",
             }
