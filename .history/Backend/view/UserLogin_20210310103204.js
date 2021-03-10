@@ -34,7 +34,7 @@ class UserLogin extends RequestHandler {
         this.router.post('/', [
             check('password', 'Password should be combination of one uppercase , one lower case, one special char, one digit and min 8 , max 20 char long')
                 .notEmpty()
-                .isLength({min:1,max:10})
+                .isLength({min:10,max:10})
                 .stripLow(true)
                 .escape(),
             check('username', 'user name should be string, minimum 5 and max 20 characters')

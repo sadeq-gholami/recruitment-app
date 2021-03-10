@@ -53,9 +53,8 @@ class Model {
      */
     async signup() {
         let responseStatus;
-        return fetch("https://recruitment-app-api.herokuapp.com/signup", {
+        return fetch("http://localhost:5000/signup", {
             method: 'POST',
-            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -72,13 +71,12 @@ class Model {
                 responseStatus = response;
                 return response.json();
             }).then(data => {
-                console.log(data);
                 if (responseStatus.status == 200) {
-                    this.user._id = data.result._id;
+                    this.user._id = data.createUser._id;
                     return responseStatus;
                 }
                 else {
-                    throw {responseStatus,data};
+                    throw responseStatus;
                 }
             })
             .catch(error => {

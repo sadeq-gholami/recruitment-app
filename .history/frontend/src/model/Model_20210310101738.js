@@ -53,7 +53,7 @@ class Model {
      */
     async signup() {
         let responseStatus;
-        return fetch("https://recruitment-app-api.herokuapp.com/signup", {
+        return fetch("http://localhost:5000/signup", {
             method: 'POST',
             credentials: 'include',
             headers: {

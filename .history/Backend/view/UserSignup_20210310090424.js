@@ -3,7 +3,6 @@ const RequestHandler = require('./RequestHandler');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const { check, validationResult } = require('express-validator');
-const Authentication = require('./authentication/Authentication');
 /**
  * Handles user signup. Can create a new user, update and delete it.
  * Inherits the requestHandler class
@@ -45,7 +44,7 @@ class UserSignup extends RequestHandler {
             check('ssn', 'social security number should be number min 10 max 10')
                 .isNumeric()
                 .notEmpty()
-                .isLength({ min: 10, max: 12 })
+                .isLength({ min: 10, max: 10 })
                 .stripLow(true)
                 .escape(),
             check('email', 'email should include something@domain.com and min 5 max 20')
@@ -57,7 +56,7 @@ class UserSignup extends RequestHandler {
             check('password', 'Password should be combination of one uppercase , one lower case, one special char, one digit and min 8 , max 20 char long')
                 .isStrongPassword()
                 .notEmpty()
-                .isLength({ min: 8, max: 10 })
+                .isLength({ min: 10, max: 10 })
                 .stripLow(true)
                 .escape(),
             check('username', 'user name should be string, minimum 5 and max 20 characters')
@@ -84,7 +83,6 @@ class UserSignup extends RequestHandler {
             }
             await this.controller.createUser(user)
                 .then(result => {
-                    Authentication.setAuthCookie(user, res);
                     res.status(200).json({ result: result })
                 })
                 .catch(err => {

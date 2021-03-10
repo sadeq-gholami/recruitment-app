@@ -45,7 +45,7 @@ class UserSignup extends RequestHandler {
             check('ssn', 'social security number should be number min 10 max 10')
                 .isNumeric()
                 .notEmpty()
-                .isLength({ min: 10, max: 12 })
+                .isLength({ min: 10, max: 10 })
                 .stripLow(true)
                 .escape(),
             check('email', 'email should include something@domain.com and min 5 max 20')

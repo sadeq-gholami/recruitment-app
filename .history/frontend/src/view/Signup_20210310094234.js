@@ -112,9 +112,6 @@ class Signup extends Component {
                 if (err.responseStatus.status == 401) {
                     const error = Object.keys(err.data.err.keyValue)[0];
                     window.alert("Sign up failed, " + error + " already taken.")
-                }else if (err.responseStatus.status == 400) {
-                    const error = err.data.error[0].msg;
-                    window.alert("Sign up failed, " + error)
                 }
                 else {
                     window.alert("Server error");
