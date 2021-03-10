@@ -4,9 +4,7 @@ import Home from "./view/Home";
 import './App.css';
 import Signup from "./view/Signup";
 import Login from "./view/Login";
-import RecruiterThirdPage from "./view/RecruiterThirdPage";
 import RecruiterFirstPage from "./view/RecruiterFirstPage";
-import RecruiterSecondPage from "./view/RecruiterSecondPage";
 import ApplicantFirstPage from "./view/ApplicantFirstPage";
 import ApplicantFirstDisplay from "./view/ApplicantFirstDisplay";
 import ApplicantSecondPage from "./view/ApplicantSecondPage";
@@ -54,8 +52,6 @@ class App extends Component {
           <Route path="/applicantdisplayall" render={(props) => { return <ApplicantDisplayAll {...props} model={this.state.model} /> }} />
           <Route path="/applicantconfirm" render={(props) => { return <ApplicantConfirm {...props} model={this.state.model} /> }} />
           <Route path="/recruiterfirstpage" render={(props) => { return <RecruiterFirstPage {...props} model={this.state.model} /> }} />
-          <Route path="/recruitersecondpage" render={(props) => { return <RecruiterSecondPage {...props} model={this.state.model} /> }} />
-          <Route path="/recruiterThirdpage" render={(props) => { return <RecruiterThirdPage {...props} model={this.state.model} /> }} />
           <Route path="/updateUser" render={(props) => { return <UpdateUser {...props} model={this.state.model} /> }} />
 
         </Router>

@@ -108,6 +108,7 @@ class Signup extends Component {
                     window.location.replace('/applicantfirstpage');
                 }
             }).catch(err => {
+                console.log(err);
                 if (err.responseStatus.status == 401) {
                     const error = Object.keys(err.data.err.keyValue)[0];
                     window.alert("Sign up failed, " + error + " already taken.")

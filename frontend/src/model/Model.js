@@ -1,12 +1,9 @@
-import ObservableModel from "./ObservableModel";
-
 /**
  * This class handles all the logic and
  * the backend integration
  */
-class Model extends ObservableModel {
+class Model {
     constructor() {
-        super();
         this.user = {
             _id: null,
             firstname: null,
