@@ -19,12 +19,14 @@ async function main() {
     client.connect();
 
     await mongoose.set('useFindAndModify', false);
-    await mongoose.connect("add string from .env", { useNewUrlParser: true, useUnifiedTopology: true }
+    await mongoose.connect("mongodb+srv://IV1201:IV1201@cluster0.ctnb8.mongodb.net/Cluster0?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }
     ).then(() => console.log("connected")).catch(err => (console.log(err)));
-    addUser(client);
-    addAvailability(client);
-    addCompetence(client);
-    addCompetenceProfile(client);
+    let users = await addUser(client);
+    let avails = await addAvailability(client);
+    let competences = await addCompetence(client);
+    let compProfiles = await addCompetenceProfile(client);
+    let result = await addToDatabase(users, avails, competences, compProfiles);
+    console.log(result);
 }
 
 /**
@@ -40,52 +42,41 @@ async function addUser(client) {
             console.error(err);
         })
 
-    let personAry = [];
     //map on rows
-    await user.rows.map(async row => {
+    return await Promise.all(user.rows.map(async row => {
         let role;
         let _id = new mongoose.Types.ObjectId();
-
         userId.push({
             old: row.person_id,
             new: _id
         });
-
         if (row.role_id === "1") {
             role = "recruiter";
         } else {
             role = "applicant";
         }
-
-        if(row.email != null){
-           if(row.username == null || row.password == null || row.name == null || row.surname == null
-            || row.ssn) {
+        if (row.email != null) {
+            if (row.username == null || row.password == null || row.name == null || row.surname == null
+                || row.ssn) {
                 sendEmail(row.email, _id);
             }
         }
-
         if (row.username == null) {
             row.username = generateRandomString();
-        }
-        if (row.password == null) {
+        } if (row.password == null) {
             row.password = generateRandomString();
-        }
-        if (row.name == null) {
+        } if (row.name == null) {
             row.name = "no data for username: " + row.username;
-        }
-        if (row.surname == null) {
+        } if (row.surname == null) {
             row.surname = "no data for username: " + row.username;
-        }
-        if (row.ssn == null) {
+        } if (row.ssn == null) {
             row.ssn = "no data for username: " + row.username;
-        }
-        if (row.email == null) {
+        } if (row.email == null) {
             row.email = "no data for username: " + row.username;
-        }
-        if (row.role_id == null) {
+        } if (row.role_id == null) {
             role = "applicant";
         }
-        personAry.push({
+        return await User.create({
             _id: _id,
             firstname: row.name,
             surname: row.surname,
@@ -95,12 +86,7 @@ async function addUser(client) {
             role: role,
             username: row.username
         });
-    })
-
-    for (let user in personAry) {
-        let res = await createUser(personAry[user]);
-        console.log(res);
-    }
+    }));
 }
 
 /**
@@ -115,29 +101,21 @@ async function addAvailability(client) {
         .catch(err => {
             console.error(err);
         });
-
-    let availAry = [];
     let _id;
     //map on rows
-    await avail.rows.map(async row => {
+    return await Promise.all(avail.rows.map(async row => {
         userId.map(user => {
             if (user.old == row.person_id) {
                 _id = user.new;
             }
         });
-
-        availAry.push({
+        return await Availability.create({
             _id: new mongoose.Types.ObjectId(),
             personID: _id,
             fromDate: row.from_date,
             toDate: row.to_date
         });
-    })
-
-    for (let avail in availAry) {
-        let res = await createAvail(availAry[avail]);
-        console.log(res);
-    }
+    }));
 }
 
 /**
@@ -152,25 +130,18 @@ async function addCompetence(client) {
         .catch(err => {
             console.error(err);
         });
-    let compAry = [];
     //map on rows
-    await comp.rows.map(async row => {
+    return await Promise.all(comp.rows.map(async row => {
         let _id = new mongoose.Types.ObjectId();
         compId.push({
             old: row.competence_id,
             new: _id
         });
-
-        compAry.push({
+        return await Competence.create({
             _id: _id,
             name: row.name
         });
-    })
-
-    for (let comp in compAry) {
-        let res = await createComp(compAry[comp]);
-        console.log(res);
-    }
+    }))
 }
 
 /**
@@ -185,12 +156,10 @@ async function addCompetenceProfile(client) {
         .catch(err => {
             console.error(err);
         });
-
-    let compAry = [];
     let _id;
     let _compId;
     //map on rows
-    await comp.rows.map(async row => {
+    return await Promise.all(comp.rows.map(async row => {
         userId.map(user => {
             if (user.old == row.person_id) {
                 _id = user.new;
@@ -201,22 +170,95 @@ async function addCompetenceProfile(client) {
                 _compId = comp.new;
             }
         });
-
-        compAry.push({
+        return await CompetenceProfile.create({
             _id: new mongoose.Types.ObjectId(),
             personID: _id,
             competenceID: _compId,
             yearsOfExperience: row.years_of_experience,
         });
-    })
+    }))
+}
 
-    for (let comp in compAry) {
-        let res = await createCompProfile(compAry[comp]);
-        console.log(res);
-    }
+
+/**
+ * Add all objects to the database
+ * @param {the user object to add to the database} users 
+ * @param {the availability object to add to the database} avails 
+ * @param {the competence object to add to the database} competences 
+ * @param {the competence profile object to add to the database} compProfiles 
+ * @returns a list of everything added in the database
+ */
+async function addToDatabase(users, avails, competences, compProfiles) {
+    const session = await mongoose.startSession();
+    let savedUser;
+    let savedAvailability;
+    let savedComp;
+    let savedCompProf;
+    await session.withTransaction(async () => {
+        savedUser = await Promise.all(users.map(user => {
+            return user.save({ session });
+        }));
+        savedAvailability = await Promise.all(avails.map(avail => {
+            return avail.save({ session });
+        }));
+        savedComp = await Promise.all(competences.map(comp => {
+            return comp.save({ session });
+        }));
+        savedCompProf = await Promise.all(compProfiles.map(compProf => {
+            return compProf.save({ session });
+        }));
+    });
+    session.endSession();
+    return {
+        user: savedUser,
+        availability: savedAvailability,
+        competence: savedComp,
+        competenceProfile: savedCompProf,
+    };
 }
 
 /**
+ * Create a random string that consists of lowercase, uppercase letters and numbers
+ * It is six characters long
+ */
+ function generateRandomString() {
+    var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let randString = '';
+    var len = string.length;
+    for (let i = 0; i < 6; i++) {
+        randString += string[Math.floor(Math.random() * len)];
+    }
+    return randString;
+}
+
+/**
+ * Placeholder for sending email to user
+ * @param { the email address to send to} email 
+ * @param { the data to include in the email} data 
+ */
+function sendEmail(email, _id) {
+    console.log("send email to: " + email + " message: Missing user data go to link" +
+        " https://localhost/updateUser/ and input email");
+    //send email to user with data
+}
+
+
+main()
+    .then(() => {
+        console.log('Done');
+    })
+    .catch(err => {
+        console.error("Database replication errored out.");
+        console.error(err);
+    });
+
+
+
+
+
+
+/**
+ * Not used
  * Create new user in new database
  * @param { object to add in database} newUser 
  */
@@ -243,6 +285,7 @@ async function createUser(newUser) {
 }
 
 /**
+ * Not used
  * Create new availability in new database
  * @param { object to add in database} newAvail 
  */
@@ -265,6 +308,7 @@ async function createAvail(newAvail) {
 }
 
 /**
+ * Not used
  * Create new competence in new database
  * @param { object to add in database} newComp 
  */
@@ -285,6 +329,7 @@ async function createComp(newComp) {
 }
 
 /**
+ * Not used
  * Create new competence profile in new database
  * @param { object to add in database} newComp 
  */
@@ -305,38 +350,3 @@ async function createCompProfile(newComp) {
         });
     return savedComp;
 }
-
-/**
- * Create a random string that consists of lowercase, uppercase letters and numbers
- * It is six characters long
- */
-function generateRandomString() {
-    var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let randString = '';
-    var len = string.length;
-    for (let i = 0; i < 6; i++) {
-        randString += string[Math.floor(Math.random() * len)];
-    }
-    return randString;
-}
-
-/**
- * Placeholder for sending email to user
- * @param { the email address to send to} email 
- * @param { the data to include in the email} data 
- */
-function sendEmail(email, _id) {
-    console.log("send email to: " + email + " message: Missing user data go to link" + 
-    " https://localhost/updateUser/ and input email");
-    //send email to user with data
-}
-
-
-main()
-    .then(() => {
-        console.log('Done');
-    })
-    .catch(err => {
-        console.error("Database replication errored out.");
-        console.error(err);
-    });
