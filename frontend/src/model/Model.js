@@ -251,9 +251,6 @@ class Model {
      * Used with database migration
      */
     async updateUserByEmail() {
-        let email = this.user.email.replace("@", "_");
-        email = email.replaceAll(".", "_");
-        console.log(email);
         return fetch("https://recruitment-app-api.herokuapp.com/signup/update_userByEmail/" + this.user.email, {
             method: 'PUT',
             credentials: 'include',
@@ -268,10 +265,22 @@ class Model {
                 username: this.user.username,
                 password: this.user.password
             })
-        }).then(response => {
-            return response;
-        }).catch(error => {
-            throw error
+        })
+        .then(response => {
+            responseStatus = response;
+            return response.json();
+        }).then(data => {
+            console.log(data);
+            if (responseStatus.status == 200) {
+                this.user._id = data.result._id;
+                return responseStatus;
+            }
+            else {
+                throw {responseStatus,data};
+            }
+        })
+        .catch(error => {
+            throw error;
         })
     }
 

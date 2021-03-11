@@ -57,7 +57,7 @@ class UserSignup extends RequestHandler {
             check('password', 'Password should be combination of one uppercase , one lower case, one special char, one digit and min 8 , max 20 char long')
                 .isStrongPassword()
                 .notEmpty()
-                .isLength({ min: 8, max: 10 })
+                .isLength({ min: 8, max: 20 })
                 .stripLow(true)
                 .escape(),
             check('username', 'user name should be string, minimum 5 and max 20 characters')
@@ -121,7 +121,7 @@ class UserSignup extends RequestHandler {
             check('ssn', 'social security number should be number min 10 max 10')
                 .isNumeric()
                 .notEmpty()
-                .isLength({ min: 10, max: 10 })
+                .isLength({ min: 10, max: 12 })
                 .stripLow(true)
                 .escape(),
             check('email', 'email should include something@domain.com and min 5 max 20')
@@ -133,7 +133,7 @@ class UserSignup extends RequestHandler {
             check('password', 'Password should be combination of one uppercase , one lower case, one special char, one digit and min 8 , max 20 char long')
                 .isStrongPassword()
                 .notEmpty()
-                .isLength({ min: 10, max: 10 })
+                .isLength({ min: 8, max: 20 })
                 .stripLow(true)
                 .escape(),
             check('username', 'user name should be string, minimum 5 and max 20 characters')
@@ -189,7 +189,7 @@ class UserSignup extends RequestHandler {
             check('ssn', 'social security number should be number min 10 max 10')
                 .isNumeric()
                 .notEmpty()
-                .isLength({ min: 10, max: 10 })
+                .isLength({ min: 10, max: 12 })
                 .stripLow(true)
                 .escape(),
             check('email', 'email should include something@domain.com and min 5 max 20')
@@ -201,7 +201,7 @@ class UserSignup extends RequestHandler {
             check('password', 'Password should be combination of one uppercase , one lower case, one special char, one digit and min 8 , max 20 char long')
                 .isStrongPassword()
                 .notEmpty()
-                .isLength({ min: 10, max: 10 })
+                .isLength({ min: 8, max: 20 })
                 .stripLow(true)
                 .escape(),
             check('username', 'user name should be string, minimum 5 and max 20 characters')

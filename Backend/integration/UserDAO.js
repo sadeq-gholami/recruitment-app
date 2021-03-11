@@ -95,7 +95,7 @@ class UserDAO {
       password: hashedPassword,
       username: user.username,
       role: user.role,
-    }, { new: true, upsert: true }).session(session);
+    }, { new: true }).session(session);
     await session.commitTransaction();
     session.endSession();
     return update;
