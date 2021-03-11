@@ -25,10 +25,17 @@ class RecruiterFirstPage extends Component {
                     applicants: applicants.result
                 });
             })
-            .catch(() => {
+            .catch(err => {
                 this.setState({
                     status: "ERROR"
                 });
+                if(err.status == 401){
+                    window.alert("Not logged routing to home");
+                } else {
+                    window.alert("Server error routing to home");
+                }
+                console.log(err);
+                window.location.replace("/");
             });
     }
     /**
