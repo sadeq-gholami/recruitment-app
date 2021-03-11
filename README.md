@@ -28,6 +28,11 @@ which installs the required npm packages in both frontend and backend since this
 * body-parser
 * cookie-parser 
 * express-validor
+* express-session
+* pg
+* cors
+* bcrypt
+
 
 ## Check-List tasks:
 
