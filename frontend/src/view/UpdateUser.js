@@ -78,7 +78,7 @@ class UpdateUser extends Component {
         const surnameRegex = new RegExp("(?=.{1,})");
         const emailRegex = new RegExp("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
         const ssnRegex = /^(\d{6}|\d{8})[-|(\s)]{0,1}\d{4}$/;
-        const usernameRegex = new RegExp("(?=.{4,})");
+        const usernameRegex = new RegExp("(?=.{5,})");
         const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})(?=.*[!@#$%^&*])");
 
         if (!firstnameRegex.test(this.state.firstname)) {
@@ -90,7 +90,7 @@ class UpdateUser extends Component {
         } else if (!ssnRegex.test(this.state.ssn)) {
             window.alert("SSN must be format YYMMDD-XXXX");
         } else if (!usernameRegex.test(this.state.username)) {
-            window.alert("Username must be at least 4 characters");
+            window.alert("Username must be at least 5 characters");
         } else if (!passwordRegex.test(this.state.password)) {
             window.alert("Password must be at least 8 characters, one lowercase letter, one uppercase letter, one symbol and contain at least one number");
         } else {
@@ -107,20 +107,16 @@ class UpdateUser extends Component {
                     window.location.replace('/');
                 }
             }).catch(err => {
-                console.log(err.error.data.err);
-                console.log(err.data);
+                console.log(err);
                 if (err.responseStatus == null) {
                     window.alert("Server error");
                 } else if (err.responseStatus.status == 401) {
                     const error = Object.keys(err.data.err.keyValue)[0];
                     window.alert("Update up failed, " + error + " already taken.")
                 } else if (err.responseStatus.status == 400) {
-                    if (err.error != null) {
-                        if (err.error.data.err === "Wrong email") {
-                            window.alert("Wrong Email, please try again");
-                        }
-                    }
-                    else {
+                    if (err.data.err === "Wrong email") {
+                        window.alert("Wrong Email, please try again");
+                    } else {
                         const error = err.data.error[0].msg;
                         window.alert("Sign up failed, " + error)
                     }

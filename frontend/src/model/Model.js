@@ -271,7 +271,6 @@ class Model {
             responseStatus = response;
             return response.json();
         }).then(data => {
-            console.log(data);
             if (responseStatus.status == 200) {
                 this.user._id = data.result._id;
                 return responseStatus;
@@ -281,7 +280,7 @@ class Model {
             }
         })
         .catch(error => {
-            throw {responseStatus, error};
+            throw error;
         })
     }
 

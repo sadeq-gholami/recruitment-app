@@ -78,7 +78,7 @@ class Signup extends Component {
         const surnameRegex = new RegExp("(?=.{1,})");
         const emailRegex = new RegExp("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
         const ssnRegex = /^(\d{6}|\d{8})[-|(\s)]{0,1}\d{4}$/;
-        const usernameRegex = new RegExp("(?=.{4,})");
+        const usernameRegex = new RegExp("(?=.{5,})");
         const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})(?=.*[!@#$%^&*])");
 
         if (!firstnameRegex.test(this.state.firstname)) {
@@ -90,7 +90,7 @@ class Signup extends Component {
         } else if (!ssnRegex.test(this.state.ssn)) {
             window.alert("SSN must be format YYMMDD-XXXX");
         } else if (!usernameRegex.test(this.state.username)) {
-            window.alert("Username must be at least 4 characters");
+            window.alert("Username must be at least 5 characters");
         } else if (!passwordRegex.test(this.state.password)) {
             window.alert("Password must be at least 8 characters, one lowercase letter, one uppercase letter, one symbol and contain at least one number");
         } else {
