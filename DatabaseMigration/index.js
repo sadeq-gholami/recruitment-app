@@ -19,7 +19,7 @@ async function main() {
     client.connect();
 
     await mongoose.set('useFindAndModify', false);
-    await mongoose.connect("mongodb+srv://IV1201:IV1201@cluster0.ctnb8.mongodb.net/Cluster0?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }
+    await mongoose.connect("get from env", { useNewUrlParser: true, useUnifiedTopology: true }
     ).then(() => console.log("connected")).catch(err => (console.log(err)));
     let users = await addUser(client);
     let avails = await addAvailability(client);

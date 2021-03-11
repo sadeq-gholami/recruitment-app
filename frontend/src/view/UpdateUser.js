@@ -104,11 +104,13 @@ class UpdateUser extends Component {
             });
             await this.props.model.updateUserByEmail().then(result => {
                 if (result.status == 200) {
-                    //this.props.model.saveState();
                     window.location.replace('/');
                 }
             }).catch(err => {
-                if (err.responseStatus.status == 401) {
+                console.log(err);
+                if(err.responseStatus == null) {
+                    window.alert("Server error");
+                } else if (err.responseStatus.status == 401) {
                     const error = Object.keys(err.data.err.keyValue)[0];
                     window.alert("Update up failed, " + error + " already taken.")
                 } else if (err.responseStatus.status == 400) {

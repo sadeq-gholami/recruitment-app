@@ -281,7 +281,7 @@ class Model {
             }
         })
         .catch(error => {
-            throw error;
+            throw {responseStatus, error};
         })
     }
 

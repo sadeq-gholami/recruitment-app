@@ -98,6 +98,9 @@ class UserDAO {
     }, { new: true }).session(session);
     await session.commitTransaction();
     session.endSession();
+    if(update == null){
+      throw {err: "Wrong email"}
+    }
     return update;
   }
 
