@@ -251,6 +251,7 @@ class Model {
      * Used with database migration
      */
     async updateUserByEmail() {
+        let responseStatus;
         return fetch("https://recruitment-app-api.herokuapp.com/signup/update_userByEmail/" + this.user.email, {
             method: 'PUT',
             credentials: 'include',
