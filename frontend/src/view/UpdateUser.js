@@ -107,19 +107,25 @@ class UpdateUser extends Component {
                     window.location.replace('/');
                 }
             }).catch(err => {
-                console.log(err);
-                if(err.responseStatus == null) {
+                console.log(err.error.data.err);
+                console.log(err.data);
+                if (err.responseStatus == null) {
                     window.alert("Server error");
                 } else if (err.responseStatus.status == 401) {
                     const error = Object.keys(err.data.err.keyValue)[0];
                     window.alert("Update up failed, " + error + " already taken.")
                 } else if (err.responseStatus.status == 400) {
-                    const error = err.data.error[0].msg;
-                    window.alert("Sign up failed, " + error)
-                }
-                else {
+                    if (err.error != null) {
+                        if (err.error.data.err === "Wrong email") {
+                            window.alert("Wrong Email, please try again");
+                        }
+                    }
+                    else {
+                        const error = err.data.error[0].msg;
+                        window.alert("Sign up failed, " + error)
+                    }
+                } else {
                     window.alert("Server error");
-                    console.log(err);
                 }
             });
         }

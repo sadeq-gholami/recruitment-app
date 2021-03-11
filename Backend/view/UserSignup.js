@@ -230,7 +230,11 @@ class UserSignup extends RequestHandler {
                     res.status(200).json({ result: result });
                 }).catch(err => {
                     console.log(err);
-                    res.status(500).json({ err: err });
+                    if (err = "Wrong email") {
+                        res.status(400).json({ err: err });
+                    } else {
+                        res.status(500).json({ err: err });
+                    }
                 });
         });
 
