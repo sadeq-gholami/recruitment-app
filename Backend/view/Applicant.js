@@ -35,7 +35,6 @@ class Applicant extends RequestHandler {
                     res.status(200).json({ result: result });
                 })
                 .catch(err => {
-                    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     res.status(500).json({ err: err });
                 });
 
